@@ -51,6 +51,7 @@ import MainView from '../views/main/MainView.vue';
 import WelcomeDogRegistrationView from '../views/pet/WelcomeDogRegistrationView.vue';
 import PetRegistrationView from '../views/pet/PetRegistrationView.vue';
 import WelcomeDogWalkerIntroView from '../views/dogwalker/WelcomeDogWalkerIntroView.vue';
+import WalkTrack from '@/views/walk/WalkTrack.vue';
 
 const routes = [
   { path: '/', component: LoginPageView }, // 로그인 페이지
@@ -67,6 +68,7 @@ const routes = [
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
+  { path: '/walk', component: WalkTrack },
 ];
 
 const router = createRouter({
