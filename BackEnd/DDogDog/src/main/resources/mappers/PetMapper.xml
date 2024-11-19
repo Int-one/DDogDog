@@ -14,8 +14,8 @@
     </select>
 
     <insert id="insertPet" parameterType="Pet">
-        INSERT INTO Pet (name, birth, gender, castration, `group`, breed, weight, user_id)
-        VALUES (#{name}, #{birth}, #{gender}, #{castration}, #{group}, #{breed}, #{weight}, #{userId})
+        INSERT INTO Pet (pet_name, pet_birth, pet_gender, castration, `group`, breed, pet_weight, user_id)
+        VALUES (#{petName}, #{petBirth}, #{petGender}, #{castration}, #{group}, #{breed}, #{petWeight}, #{userId})
     </insert>
 
     <update id="updatePet" parameterType="Pet">
