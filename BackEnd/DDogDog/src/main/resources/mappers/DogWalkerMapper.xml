@@ -7,18 +7,18 @@
 
     <!-- DogWalker 등록 -->
     <insert id="insertDogWalker" parameterType="com.ddogdog.model.dto.DogWalker">
-        INSERT INTO DogWalker (user_id, weekday_am, weekday_pm, weekend_am, weekend_pm, all, time, handle, introduce)
-        VALUES (#{userId}, #{weekdayAm}, #{weekdayPm}, #{weekendAm}, #{weekendPm}, #{all}, #{time}, #{handle}, #{introduce})
+        INSERT INTO DogWalker (user_id)
+        VALUES (#{userId})
     </insert>
 
     <!-- 사용자 ID로 DogWalker 조회 -->
     <select id="getDogWalkerByUserId" parameterType="string" resultType="com.ddogdog.model.dto.DogWalker">
-        SELECT * FROM DogWalker WHERE user_id = #{userId}
+        SELECT * FROM DogWalker JOIN User using (user_id) WHERE user_id = #{userId}
     </select>
 
     <!-- 모든 DogWalker 조회 -->
     <select id="getAllDogWalkers" resultType="com.ddogdog.model.dto.DogWalker">
-        SELECT * FROM DogWalker
+        SELECT * FROM DogWalker JOIN User using (user_id)
     </select>
 
     <!-- DogWalker 정보 업데이트 -->
