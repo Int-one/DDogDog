@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.ResultDao">
+
+    <!-- Result 등록 -->
+    <insert id="insertResult" parameterType="com.ddogdog.model.dto.Result">
+        INSERT INTO Result (log_id, price, bpm, review)
+        VALUES (#{logId}, #{price}, #{bpm}, #{review})
+    </insert>
+
+    <!-- 로그 ID로 Result 조회 -->
+    <select id="getResultByLogId" parameterType="long" resultType="com.ddogdog.model.dto.Result">
+        SELECT * FROM Result WHERE log_id = #{logId}
+    </select>
+
+    <!-- 모든 Result 조회 -->
+    <select id="getAllResults" resultType="com.ddogdog.model.dto.Result">
+        SELECT * FROM Result
+    </select>
+
+    <!-- Result 업데이트 -->
+    <update id="updateResult" parameterType="com.ddogdog.model.dto.Result">
+        UPDATE Result
+        SET price = #{price},
+            bpm = #{bpm},
+            review = #{review}
+        WHERE log_id = #{logId}
+    </update>
+
+    <!-- Result 삭제 -->
+    <delete id="deleteResult" parameterType="long">
+        DELETE FROM Result WHERE log_id = #{logId}
+    </delete>
+
+</mapper>

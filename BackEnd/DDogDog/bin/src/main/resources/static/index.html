@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Front - Back Test</h1>
+	<button onclick="callApi()">Call API</button>	<!-- 이 버튼 누르면 데이터 불러 -->
+    <p>API Response: <span id="api-response"></span></p>
+</body>
+<script type="text/javascript">
+	async function callApi() {
+	    try {
+	        const response = await fetch('/api/user');
+	        const data = await response.text();
+	        document.getElementById('api-response').innerText = data;
+	    } catch (error) {
+	        document.getElementById('api-response').innerText = 'Error: ' + error;
+	    }
+	}
+</script>
+</html>

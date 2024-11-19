@@ -7,7 +7,7 @@ import com.ddogdog.model.dto.Pet;
 public interface PetDao {
 	public int insertPet(Pet user);
 	
-	public List<Pet> getAllPet();
+	public List<Pet> getPetByUser(String userId);
 	
 	public Pet selectOne(int petId);
 	

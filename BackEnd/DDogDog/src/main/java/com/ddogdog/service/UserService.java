@@ -14,4 +14,6 @@ public interface UserService {
 	public boolean removeUser(String userId);
 	
 	public boolean modifyUser(User user);
+	
+	public boolean modifyDogWalker(User user);
 }
