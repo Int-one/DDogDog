@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.TogetherDao">
+
+    <!-- Together 등록 -->
+    <insert id="insertTogether" parameterType="com.ddogdog.model.dto.Together">
+        INSERT INTO Together (trade_id, pet_id)
+        VALUES (#{tradeId}, #{petId})
+    </insert>
+
+    <!-- 모든 Together 조회 -->
+    <select id="getAllTogether" resultType="com.ddogdog.model.dto.Together">
+        SELECT * FROM Together
+    </select>
+
+    <!-- 특정 거래 ID로 Together 조회 -->
+    <select id="getTogetherByTradeId" parameterType="long" resultType="com.ddogdog.model.dto.Together">
+        SELECT * FROM Together WHERE trade_id = #{tradeId}
+    </select>
+
+    <!-- 특정 펫 ID로 Together 조회 -->
+    <select id="getTogetherByPetId" parameterType="int" resultType="com.ddogdog.model.dto.Together">
+        SELECT * FROM Together WHERE pet_id = #{petId}
+    </select>
+
+    <!-- Together 삭제 -->
+    <delete id="deleteTogether" parameterType="long">
+        DELETE FROM Together WHERE together_id = #{togetherId}
+    </delete>
+
+</mapper>

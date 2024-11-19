@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.CandDao">
+
+    <!-- Cand 등록 -->
+    <insert id="insertCand" parameterType="com.ddogdog.model.dto.Cand">
+        INSERT INTO Cand (trade_id, user_id)
+        VALUES (#{tradeId}, #{userId})
+    </insert>
+
+    <!-- 모든 Cand 조회 -->
+    <select id="getAllCands" resultType="com.ddogdog.model.dto.Cand">
+        SELECT * FROM Cand
+    </select>
+
+    <!-- 특정 거래 ID로 Cand 조회 -->
+    <select id="getCandsByTradeId" parameterType="long" resultType="com.ddogdog.model.dto.Cand">
+        SELECT * FROM Cand WHERE trade_id = #{tradeId}
+    </select>
+
+    <!-- 특정 사용자 ID로 Cand 조회 -->
+    <select id="getCandsByUserId" parameterType="string" resultType="com.ddogdog.model.dto.Cand">
+        SELECT * FROM Cand WHERE user_id = #{userId}
+    </select>
+
+    <!-- Cand 삭제 -->
+    <delete id="deleteCand" parameterType="map">
+        DELETE FROM Cand WHERE trade_id = #{tradeId} AND user_id = #{userId}
+    </delete>
+
+</mapper>

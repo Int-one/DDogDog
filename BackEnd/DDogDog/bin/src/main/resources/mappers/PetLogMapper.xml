@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.PetLogDao">
+
+    <!-- PetLog 등록 -->
+    <insert id="insertPetLog" parameterType="com.ddogdog.model.dto.PetLog">
+        INSERT INTO PetLog (note, small, big, log_id, pet_id)
+        VALUES (#{note}, #{small}, #{big}, #{logId}, #{petId})
+    </insert>
+
+    <!-- 모든 PetLog 조회 -->
+    <select id="getAllPetLogs" resultType="com.ddogdog.model.dto.PetLog">
+        SELECT * FROM PetLog
+    </select>
+
+    <!-- 특정 PetLog ID로 조회 -->
+    <select id="getPetLogById" parameterType="long" resultType="com.ddogdog.model.dto.PetLog">
+        SELECT * FROM PetLog WHERE plog_id = #{plogId}
+    </select>
+
+    <!-- 특정 WalkLog ID로 PetLog 조회 -->
+    <select id="getPetLogsByLogId" parameterType="long" resultType="com.ddogdog.model.dto.PetLog">
+        SELECT * FROM PetLog WHERE log_id = #{logId}
+    </select>
+
+    <!-- 특정 Pet ID로 PetLog 조회 -->
+    <select id="getPetLogsByPetId" parameterType="int" resultType="com.ddogdog.model.dto.PetLog">
+        SELECT * FROM PetLog WHERE pet_id = #{petId}
+    </select>
+
+    <!-- PetLog 업데이트 -->
+    <update id="updatePetLog" parameterType="com.ddogdog.model.dto.PetLog">
+        UPDATE PetLog
+        SET note = #{note},
+            small = #{small},
+            big = #{big},
+            log_id = #{logId},
+            pet_id = #{petId}
+        WHERE plog_id = #{plogId}
+    </update>
+
+    <!-- PetLog 삭제 -->
+    <delete id="deletePetLog" parameterType="long">
+        DELETE FROM PetLog WHERE plog_id = #{plogId}
+    </delete>
+
+</mapper>

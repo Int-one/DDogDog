@@ -9,15 +9,15 @@ import com.ddogdog.interceptor.JwtInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 	
-	private JwtInterceptor jwtInterceptor;
-	
-	public WebConfig(JwtInterceptor jwtInterceptor) {
-		this.jwtInterceptor = jwtInterceptor;
-	}
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
-		.excludePathPatterns("/api/user/**", "/swagger-ui/**", "/v3/api-docs/**");
-	}
+//	private JwtInterceptor jwtInterceptor;
+//	
+//	public WebConfig(JwtInterceptor jwtInterceptor) {
+//		this.jwtInterceptor = jwtInterceptor;
+//	}
+//	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
+//		.excludePathPatterns("/api/user/**", "/swagger-ui/**", "/v3/api-docs/**");
+//	}
 }

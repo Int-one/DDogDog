@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.DogWalkerDao">
+
+    <!-- DogWalker 등록 -->
+    <insert id="insertDogWalker" parameterType="com.ddogdog.model.dto.DogWalker">
+        INSERT INTO DogWalker (user_id, weekday_am, weekday_pm, weekend_am, weekend_pm, all, time, handle, introduce)
+        VALUES (#{userId}, #{weekdayAm}, #{weekdayPm}, #{weekendAm}, #{weekendPm}, #{all}, #{time}, #{handle}, #{introduce})
+    </insert>
+
+    <!-- 사용자 ID로 DogWalker 조회 -->
+    <select id="getDogWalkerByUserId" parameterType="string" resultType="com.ddogdog.model.dto.DogWalker">
+        SELECT * FROM DogWalker WHERE user_id = #{userId}
+    </select>
+
+    <!-- 모든 DogWalker 조회 -->
+    <select id="getAllDogWalkers" resultType="com.ddogdog.model.dto.DogWalker">
+        SELECT * FROM DogWalker
+    </select>
+
+    <!-- DogWalker 정보 업데이트 -->
+    <update id="updateDogWalker" parameterType="com.ddogdog.model.dto.DogWalker">
+        UPDATE DogWalker
+        SET weekday_am = #{weekdayAm},
+            weekday_pm = #{weekdayPm},
+            weekend_am = #{weekendAm},
+            weekend_pm = #{weekendPm},
+            all = #{all},
+            time = #{time},
+            handle = #{handle},
+            introduce = #{introduce}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- DogWalker 삭제 -->
+    <delete id="deleteDogWalker" parameterType="string">
+        DELETE FROM DogWalker WHERE user_id = #{userId}
+    </delete>
+
+</mapper>

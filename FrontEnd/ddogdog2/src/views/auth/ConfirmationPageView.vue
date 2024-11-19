@@ -19,18 +19,6 @@ import { useRouter } from 'vue-router'
 
 const signupStore = useSignupStore()
 const router = useRouter()
-
-function formatDate(input) {
-    
-    // 연도, 월, 일 추출
-    const year = input.substring(0, 4);
-    const month = input.substring(4, 6);
-    const day = input.substring(6, 8);
-    
-    // 형식화된 문자열 생성
-    return `${year}-${month}-${day}T00:00:00`;
-}
-
 const completeSignup = async () => {
   
   try {

@@ -84,10 +84,10 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 로그인 상태 확인
-  if (!authStore.token && to.path !== '/') {
-    alert("로그인이 필요합니다.");
-    return next('/'); // 로그인 페이지로 리디렉션
-  }
+  // if (!authStore.token && to.path !== '/') {
+  //   alert("로그인이 필요합니다.");
+  //   return next('/'); // 로그인 페이지로 리디렉션
+  // }
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   if (to.path === '/main') {

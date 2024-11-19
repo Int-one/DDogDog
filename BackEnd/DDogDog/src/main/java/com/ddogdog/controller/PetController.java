@@ -22,7 +22,7 @@ public class PetController {
 
     // 사용자 ID로 펫 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Pet>> getPetByUserId(@PathVariable String userId) {
+    public ResponseEntity<List<Pet>> getPetByUserId(@PathVariable("userId") String userId) {
         try {
             List<Pet> pets = petService.getPetByUser(userId);
             return ResponseEntity.ok(pets);

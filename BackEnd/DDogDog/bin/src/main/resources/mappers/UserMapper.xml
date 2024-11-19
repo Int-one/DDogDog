@@ -27,4 +27,10 @@
 		SET nickname = #{nickname}, region = #{region}
 		WHERE user_id = #{userId};
 	</update>
+	
+	<update id="updateDogwalker" parameterType="User">
+		UPDATE user
+		SET dog_walker = #{dogWalker}
+		WHERE user_id = #{userId};
+	</update>
 </mapper>
