@@ -47,6 +47,15 @@ public class WalkLogController {
         }
         return ResponseEntity.ok(walkLog);
     }
+    
+    @GetMapping("/latest/{userId}")
+    public ResponseEntity<?> getLatestWalkLogById(@PathVariable String userId) {
+    	WalkLog walkLog = walkLogService.getLatestWalkLogById(userId);
+    	if (walkLog == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("WalkLog not found");
+    	}
+    	return ResponseEntity.ok(walkLog);
+    }
 
     @PutMapping("/{logId}")
     public ResponseEntity<Map<String, String>> updateWalkLog(@PathVariable Long logId, @RequestBody WalkLog walkLog) {

@@ -1,14 +1,18 @@
 package com.ddogdog.model.dto;
 
+import java.time.LocalDateTime;
+
 public class Pet {
     private Integer petId;
-    private String name;
-    private String birth;
-    private Boolean gender;
+    private String petName;
+    private LocalDateTime petBirth;
+    private Boolean petGender;
     private Boolean castration;
     private String group;
-    private String breed = "";
-    private double weight = 0;
+    private String breed;
+    private double petWeight;
+    private String petPhoto;
+    private String ps;
     private String userId;
 	public Integer getPetId() {
 		return petId;
@@ -16,23 +20,23 @@ public class Pet {
 	public void setPetId(Integer petId) {
 		this.petId = petId;
 	}
-	public String getName() {
-		return name;
+	public String getPetName() {
+		return petName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setPetName(String petName) {
+		this.petName = petName;
 	}
-	public String getBirth() {
-		return birth;
+	public LocalDateTime getPetBirth() {
+		return petBirth;
 	}
-	public void setBirth(String birth) {
-		this.birth = birth;
+	public void setPetBirth(LocalDateTime petBirth) {
+		this.petBirth = petBirth;
 	}
-	public Boolean getGender() {
-		return gender;
+	public Boolean getPetGender() {
+		return petGender;
 	}
-	public void setGender(Boolean gender) {
-		this.gender = gender;
+	public void setPetGender(Boolean petGender) {
+		this.petGender = petGender;
 	}
 	public Boolean getCastration() {
 		return castration;
@@ -52,11 +56,23 @@ public class Pet {
 	public void setBreed(String breed) {
 		this.breed = breed;
 	}
-	public double getWeight() {
-		return weight;
+	public double getPetWeight() {
+		return petWeight;
 	}
-	public void setWeight(double weight) {
-		this.weight = weight;
+	public void setPetWeight(double petWeight) {
+		this.petWeight = petWeight;
+	}
+	public String getPetPhoto() {
+		return petPhoto;
+	}
+	public void setPetPhoto(String petPhoto) {
+		this.petPhoto = petPhoto;
+	}
+	public String getPs() {
+		return ps;
+	}
+	public void setPs(String ps) {
+		this.ps = ps;
 	}
 	public String getUserId() {
 		return userId;
@@ -64,9 +80,5 @@ public class Pet {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	@Override
-	public String toString() {
-		return "Pet [petId=" + petId + ", name=" + name + ", birth=" + birth + ", gender=" + gender + ", castration="
-				+ castration + ", group=" + group + ", userId=" + userId + "]";
-	}
+    
 }

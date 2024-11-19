@@ -9,6 +9,8 @@ public interface WalkLogDao {
     List<WalkLog> getAllWalkLogs();
 
     WalkLog getWalkLogById(Long logId);
+    
+    WalkLog getLatestWalkLogById(String userId);
 
     List<WalkLog> getWalkLogsByUserId(String userId);
 

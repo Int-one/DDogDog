@@ -46,4 +46,9 @@ public class WalkLogServiceImpl implements WalkLogService {
         int result = walkLogDao.deleteWalkLog(logId);
         return result > 0;
     }
+
+	@Override
+	public WalkLog getLatestWalkLogById(String userId) {
+		return walkLogDao.getLatestWalkLogById(userId);
+	}
 }
