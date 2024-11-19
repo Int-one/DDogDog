@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ddogdog.model.dto.DogWalker;
 import com.ddogdog.model.dto.User;
+import com.ddogdog.service.DogWalkerService;
 import com.ddogdog.service.UserService;
 import com.ddogdog.utill.JwtUtil;
 
@@ -18,11 +20,13 @@ import com.ddogdog.utill.JwtUtil;
 public class UserController {
 
     private final UserService userService;
+    private final DogWalkerService dogWalkerService;
     private final JwtUtil jwtUtil;
 
-    public UserController(UserService userService, JwtUtil jwtUtil) {
+    public UserController(UserService userService, JwtUtil jwtUtil, DogWalkerService dogWalkerService) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
+        this.dogWalkerService = dogWalkerService;
     }
 
     // 사용자 생성
@@ -108,6 +112,9 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
 
         if (result) {
+        	DogWalker d = new DogWalker();
+        	d.setUserId(user.getUserId());
+        	dogWalkerService.createDogWalker(d);
             response.put("message", "Dog walker information updated successfully");
             return ResponseEntity.ok(response);
         }
