@@ -20,7 +20,7 @@ const termsAccepted = ref(false)
 const router = useRouter()
 
 const handleSignup = () => {
-  router.push('/signup/email') // 이메일 입력 페이지 이동
+  router.push('/signup/email') // 이메일 입력 페이지로 이동
 }
 </script>
 

@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
 		return result != 0;
 	}
 
+	@Override
+	public boolean modifyDogWalker(User user) {
+		int result = userDao.updateDogwalker(user);
+		return result != 0;
+	}
+
 }

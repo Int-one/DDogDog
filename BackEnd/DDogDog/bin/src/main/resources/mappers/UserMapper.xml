@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddogdog.model.dao.UserDao">
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO user (user_id, password, nickname, birth, phone, gender, region, height, weight)
+		VALUES (#{userId}, #{password}, #{nickname}, #{birth}, #{phone}, #{gender}, #{region}, #{height}, #{weight});
+	</insert>
+	
+	<select id="getAllUser" resultType="User">
+		SELECT * FROM user;
+	</select>
+	
+	<select id="selectOne" parameterType="String" resultType="User">
+		SELECT * FROM user
+		WHERE user_id = #{userId};
+	</select>
+	
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM user
+		WHERE user_id = #{userId};
+	</delete>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE user
+		SET nickname = #{nickname}, region = #{region}
+		WHERE user_id = #{userId};
+	</update>
+</mapper>

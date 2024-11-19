@@ -17,14 +17,14 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
-	public boolean create(Pet pet) {
+	public boolean createPet(Pet pet) {
 		int result = petdao.insertPet(pet); 
 		return result != 0;
 	}
 
 	@Override
-	public List<Pet> getAllPet() {
-		List<Pet> list = petdao.getAllPet();
+	public List<Pet> getPetByUser(String userId) {
+		List<Pet> list = petdao.getPetByUser(userId);
 		return list;
 	}
 
@@ -35,13 +35,13 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
-	public boolean removePet(int petId) {
+	public boolean deletePet(int petId) {
 		int result = petdao.deletePet(petId);
 		return result != 0;
 	}
 
 	@Override
-	public boolean modifyPet(Pet pet) {
+	public boolean updatePet(Pet pet) {
 		int result = petdao.updatePet(pet);
 		return result != 0;
 	}

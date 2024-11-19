@@ -6,13 +6,13 @@ import com.ddogdog.model.dto.Pet;
 
 public interface PetService {
 
-	public boolean create(Pet pet);
+	public boolean createPet(Pet pet);
 	
-	public List<Pet> getAllPet();
+	public List<Pet> getPetByUser(String userId);
 	
 	public Pet getPetById(int petId);
 	
-	public boolean removePet(int petId);
+	public boolean deletePet(int petId);
 	
-	public boolean modifyPet(Pet pet);
+	public boolean updatePet(Pet pet);
 }

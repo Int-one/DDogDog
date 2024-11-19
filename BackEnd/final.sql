@@ -31,8 +31,10 @@ CREATE TABLE Pet (
     gender BOOLEAN NOT NULL,
     castration BOOLEAN NOT NULL,
     `group` VARCHAR(10) NOT NULL,
+    breed VARCHAR(30),
+    weight DOUBLE DEFAULT 0,
     user_id VARCHAR(30) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
 
 -- Trade Table
@@ -44,10 +46,10 @@ CREATE TABLE Trade (
     cost BIGINT(20) NOT NULL,
     region VARCHAR(30) NOT NULL,
     detail TEXT,
-    super_id VARCHAR(30) NOT NULL,
+    super_id VARCHAR(30),
     user_id VARCHAR(30),
-    FOREIGN KEY (super_id) REFERENCES User(user_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (super_id) REFERENCES User(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE SET NULL
 );
 
 -- Cand Table
@@ -55,8 +57,8 @@ CREATE TABLE Cand (
     trade_id BIGINT NOT NULL,
     user_id VARCHAR(30) NOT NULL,
     PRIMARY KEY (trade_id, user_id),
-    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
 
 -- Together Table
@@ -64,8 +66,8 @@ CREATE TABLE Together (
     together_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     trade_id BIGINT NOT NULL,
     pet_id INT NOT NULL,
-    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id),
-    FOREIGN KEY (pet_id) REFERENCES Pet(pet_id)
+    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id) ON DELETE CASCADE,
+    FOREIGN KEY (pet_id) REFERENCES Pet(pet_id) ON DELETE CASCADE
 );
 
 -- Photo Table
@@ -73,7 +75,7 @@ CREATE TABLE Photo (
     photo_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     photo_url VARCHAR(255) NOT NULL,
     user_id VARCHAR(30) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
 
 -- WalkLog Table
@@ -85,11 +87,10 @@ CREATE TABLE WalkLog (
     total DOUBLE NOT NULL,
     dog_walking boolean NOT NULL DEFAULT FALSE,
     user_id VARCHAR(30) NOT NULL,
-    trade_id BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
-    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id)
+    trade_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (trade_id) REFERENCES Trade(trade_id) ON DELETE SET NULL
 );
-
 -- PetLog Table
 CREATE TABLE PetLog (
     plog_id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -98,8 +99,8 @@ CREATE TABLE PetLog (
     big INT NOT NULL DEFAULT 0,
     log_id BIGINT NOT NULL,
     pet_id INT NOT NULL,
-    FOREIGN KEY (log_id) REFERENCES WalkLog(log_id),
-    FOREIGN KEY (pet_id) REFERENCES Pet(pet_id)
+    FOREIGN KEY (log_id) REFERENCES WalkLog(log_id) ON DELETE CASCADE,
+    FOREIGN KEY (pet_id) REFERENCES Pet(pet_id) ON DELETE CASCADE
 );
 
 -- Result Table
@@ -111,43 +112,56 @@ CREATE TABLE Result (
     FOREIGN KEY (log_id) REFERENCES WalkLog(log_id) ON DELETE CASCADE
 );
 
--- User Table 데이터 추가
+-- DogWalker Table
+CREATE TABLE DogWalker (
+	user_id varchar(30) PRIMARY KEY,
+    weekday_am boolean NOT NULL DEFAULT FALSE,
+    weekday_pm boolean NOT NULL DEFAULT FALSE,
+    weekend_am boolean NOT NULL DEFAULT FALSE,
+    weekend_pm boolean NOT NULL DEFAULT FALSE,
+    `all` boolean NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
+);
+
+-- User Table 더미 데이터
 INSERT INTO User (user_id, password, nickname, birth, phone, gender, height, weight, region, exp, dog_walker, hire_cnt, hired_cnt, bpm)
 VALUES
 ('user01', 'password123', '강아지사랑', '1990-01-15', '01012345678', 1, 175.5, 70.0, '서울', 10, TRUE, 5, 3, 120),
-('user02', 'password234', '냥이사랑', '1985-05-20', '01023456789', 0, 160.2, 55.0, '부산', 8, FALSE, 2, 4, 125);
+('user02', 'password234', '냥이사랑', '1985-05-20', '01023456789', 0, 160.2, 55.0, '부산', 8, FALSE, 2, 4, 125),
+('user03', 'password345', '펫시터', '1992-09-10', '01034567890', 1, 180.0, 80.0, '대구', 20, TRUE, 10, 5, 115);
 
--- Pet Table 데이터 추가
-INSERT INTO Pet (name, birth, gender, castration, `group`, user_id)
+-- Pet Table 더미 데이터
+INSERT INTO Pet (name, birth, gender, castration, `group`, breed, weight, user_id)
 VALUES
-('코코', '2021-03-10', 1, TRUE, '강아지', 'user01'),
-('미미', '2019-07-25', 0, FALSE, '고양이', 'user02');
+('코코', '2021-03-10', 1, TRUE, '강아지', '푸들', 5.0, 'user01'),
+('미미', '2019-07-25', 0, FALSE, '고양이', '샴', 4.5, 'user02'),
+('초코', '2020-05-05', 1, TRUE, '강아지', '말티즈', 3.2, 'user01');
 
--- Trade Table 데이터 추가
+-- Trade Table 더미 데이터
 INSERT INTO Trade (kind, startTime, endTime, cost, region, detail, super_id, user_id)
 VALUES
-('산책', '2024-11-15 10:00:00', '2024-11-15 11:00:00', 15000, '서울', '서울숲에서 강아지 산책', 'user01', 'user02'),
-('펫 시터', '2024-11-16 12:00:00', '2024-11-16 15:00:00', 30000, '부산', '부산에서 고양이 돌봄 서비스', 'user02', 'user01');
+('산책', '2024-11-15 10:00:00', '2024-11-15 11:00:00', 15000, '서울', '서울숲에서 산책', 'user01', 'user02'),
+('펫 시터', '2024-11-16 12:00:00', '2024-11-16 15:00:00', 30000, '부산', '부산에서 고양이 돌봄 서비스', 'user02', 'user03');
 
--- Cand Table 데이터 추가
+-- Cand Table 더미 데이터
 INSERT INTO Cand (trade_id, user_id)
 VALUES
 (1, 'user02'),
-(2, 'user01');
+(2, 'user03');
 
--- Together Table 데이터 추가
+-- Together Table 더미 데이터
 INSERT INTO Together (trade_id, pet_id)
 VALUES
 (1, 1),
 (2, 2);
 
--- Photo Table 데이터 추가
+-- Photo Table 더미 데이터
 INSERT INTO Photo (photo_url, user_id)
 VALUES
 ('/images/coco_walk.jpg', 'user01'),
 ('/images/mimi_sitter.jpg', 'user02');
 
--- WalkLog Table 데이터 추가
+-- WalkLog Table 더미 데이터
 INSERT INTO WalkLog (walk_path, start_time, end_time, total, dog_walking, user_id, trade_id)
 VALUES
 ('{
@@ -167,17 +181,24 @@ VALUES
     "duration": "1시간"
 }', '2024-11-16 12:00:00', '2024-11-16 13:00:00', 3.0, FALSE, 'user02', 2);
 
--- PetLog Table 데이터 추가
+-- PetLog Table 더미 데이터
 INSERT INTO PetLog (note, small, big, log_id, pet_id)
 VALUES
 ('산책 중 소변 1회', 1, 0, 1, 1),
 ('돌봄 중 배변 1회', 0, 1, 2, 2);
 
--- Result Table 데이터 추가
+-- Result Table 더미 데이터
 INSERT INTO Result (log_id, price, bpm, review)
 VALUES
-(1, 15000, 120.5, '산책 서비스가 아주 좋았습니다! 강아지가 행복해했어요.'),
-(2, 30000, 115.0, '고양이 돌봄 서비스가 매우 만족스러웠습니다. 고양이가 편안해 했어요.');
+(1, 15000, 120.5, '산책 서비스가 매우 좋았습니다. 강아지가 행복해했어요.'),
+(2, 30000, 115.0, '펫 시터 서비스가 매우 만족스러웠습니다.');
+
+-- DogWalker Table 더미 데이터
+INSERT INTO DogWalker (user_id, weekday_am, weekday_pm, weekend_am, weekend_pm, `all`)
+VALUES
+('user01', TRUE, TRUE, FALSE, TRUE, FALSE),
+('user03', FALSE, TRUE, TRUE, TRUE, TRUE);
+
 
 
 select * from user;

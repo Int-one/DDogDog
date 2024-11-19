@@ -14,4 +14,6 @@ public interface UserDao {
 	public int deleteUser(String userId);
 	
 	public int updateUser(User user);
+	
+	public int updateDogwalker(User user);
 }

@@ -14,6 +14,12 @@ public class User {
 	private boolean gender;
 	private double height;
 	private double weight;
+	private String region;
+	private int exp;
+	private boolean dogWalker;
+	private int hireCnt;
+	private int hiredCnt;
+	private double bpm;
 	public double getHeight() {
 		return height;
 	}
@@ -26,12 +32,6 @@ public class User {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	private String region;
-	private int exp;
-	private boolean dogWalker;
-	private int hireCnt;
-	private int hiredCnt;
-	private double bpm;
 	public String getUserId() {
 		return userId;
 	}
