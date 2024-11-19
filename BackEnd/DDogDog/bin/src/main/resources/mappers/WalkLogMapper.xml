@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.WalkLogDao">
+
+    <!-- WalkLog 등록 -->
+    <insert id="insertWalkLog" parameterType="com.ddogdog.model.dto.WalkLog">
+        INSERT INTO WalkLog (walk_path, start_time, end_time, total, dog_walking, user_id, trade_id)
+        VALUES (#{walkPath, typeHandler=com.ddogdog.handler.CustomJsonTypeHandler}, #{startTime}, #{endTime}, #{total}, #{dogWalking}, #{userId}, #{tradeId})
+    </insert>
+
+    <!-- 모든 WalkLog 조회 -->
+    <select id="getAllWalkLogs" resultType="com.ddogdog.model.dto.WalkLog">
+        SELECT * FROM WalkLog ORDER BY end_time DESC LIMIT 10
+    </select>
+
+    <!-- 특정 로그 ID로 WalkLog 조회 -->
+    <select id="getWalkLogById" parameterType="long" resultType="com.ddogdog.model.dto.WalkLog">
+        SELECT * FROM WalkLog WHERE log_id = #{logId}
+    </select>
+
+    <!-- 특정 로그 ID로 가장 최근 WalkLog 조회 -->
+    <select id="getLatestWalkLogById" parameterType="string" resultType="com.ddogdog.model.dto.WalkLog">
+        SELECT * FROM WalkLog WHERE user_id = #{userId} ORDER BY end_time DESC LIMIT 1
+    </select>
+    
+    <!-- 사용자 ID로 WalkLog 조회 -->
+    <select id="getWalkLogsByUserId" parameterType="string" resultType="com.ddogdog.model.dto.WalkLog">
+        SELECT * FROM WalkLog WHERE user_id = #{userId}
+    </select>
+
+    <!-- WalkLog 업데이트 -->
+    <update id="updateWalkLog" parameterType="WalkLog">
+        UPDATE WalkLog
+        SET walk_path = #{walkPath, typeHandler=com.ddogdog.handler.CustomJsonTypeHandler},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            total = #{total},
+            dog_walking = #{dogWalking},
+            user_id = #{userId},
+            trade_id = #{tradeId}
+        WHERE log_id = #{logId}
+    </update>
+
+    <!-- WalkLog 삭제 -->
+    <delete id="deleteWalkLog" parameterType="long">
+        DELETE FROM WalkLog WHERE log_id = #{logId}
+    </delete>
+
+</mapper>

@@ -1,4 +1,4 @@
-<!-- 
+
 <template>
   <div>
     <h1>로그인</h1>
@@ -38,7 +38,7 @@ export default {
     },
   },
 };
-</script> -->
+</script>
 
 <!-- <template>
   <div>
@@ -79,7 +79,7 @@ export default {
 };
 </script> -->
 
-<template>
+<!-- <template>
   <div>
     <h1>로그인</h1>
     <form @submit.prevent="handleLogin">
@@ -125,4 +125,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

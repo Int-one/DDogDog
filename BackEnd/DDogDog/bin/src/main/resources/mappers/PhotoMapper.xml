@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddogdog.model.dao.PhotoDao">
+
+    <!-- 사진 등록 -->
+    <insert id="insertPhoto" parameterType="com.ddogdog.model.dto.Photo">
+        INSERT INTO Photo (photo_url, user_id)
+        VALUES (#{photoUrl}, #{userId})
+    </insert>
+
+    <!-- 모든 사진 조회 -->
+    <select id="getAllPhotos" resultType="com.ddogdog.model.dto.Photo">
+        SELECT * FROM Photo
+    </select>
+
+    <!-- 사용자 ID로 사진 조회 -->
+    <select id="getPhotosByUserId" parameterType="string" resultType="com.ddogdog.model.dto.Photo">
+        SELECT * FROM Photo WHERE user_id = #{userId}
+    </select>
+
+    <!-- 사진 ID로 조회 -->
+    <select id="getPhotoById" parameterType="long" resultType="com.ddogdog.model.dto.Photo">
+        SELECT * FROM Photo WHERE photo_id = #{photoId}
+    </select>
+
+    <!-- 사진 URL 업데이트 -->
+    <update id="updatePhoto" parameterType="com.ddogdog.model.dto.Photo">
+        UPDATE Photo
+        SET photo_url = #{photoUrl}
+        WHERE photo_id = #{photoId}
+    </update>
+
+    <!-- 사진 삭제 -->
+    <delete id="deletePhoto" parameterType="long">
+        DELETE FROM Photo WHERE photo_id = #{photoId}
+    </delete>
+
+</mapper>
