@@ -18,6 +18,14 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+/* 페이지 전체 스크롤바 숨기기 */
+body {
+  overflow-y: scroll; /* 세로 스크롤 기능 유지 */
+  -ms-overflow-style: none; /* IE 및 Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
-/* 추가적인 전역 스타일을 여기에 작성 */
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 </style>

@@ -14,6 +14,7 @@ public class Pet {
     private String petPhoto;
     private String ps;
     private String userId;
+    private LocalDateTime endTime;
 	public Integer getPetId() {
 		return petId;
 	}
@@ -80,5 +81,11 @@ public class Pet {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-    
+	public LocalDateTime getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
+	}
+	    
 }
