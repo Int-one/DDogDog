@@ -47,9 +47,8 @@ public class DogWalkerController {
         return ResponseEntity.ok(dogWalkers);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Map<String, String>> updateDogWalker(@PathVariable String userId, @RequestBody DogWalker dogWalker) {
-        dogWalker.setUserId(userId);
+    @PutMapping("")
+    public ResponseEntity<Map<String, String>> updateDogWalker(@RequestBody DogWalker dogWalker) {
         boolean result = dogWalkerService.updateDogWalker(dogWalker);
         Map<String, String> response = new HashMap<>();
         if (result) {

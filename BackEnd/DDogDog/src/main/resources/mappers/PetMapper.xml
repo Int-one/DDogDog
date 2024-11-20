@@ -5,8 +5,10 @@
 <mapper namespace="com.ddogdog.model.dao.PetDao">
 
     <select id="getPetByUser" parameterType="String" resultType="Pet">
-        SELECT * FROM Pet
-        WHERE user_id = #{userId}
+        SELECT * FROM Pet p
+        left join petlog using (pet_id)
+        left join walklog using (log_id)
+        WHERE p.user_id = #{userId}
     </select>
 
     <select id="selectOne" parameterType="int" resultType="Pet">
