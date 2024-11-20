@@ -61,19 +61,20 @@ router.beforeEach(async (to, from, next) => {
   // }
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
-  if (to.path === '/main') {
-    try {
-      await petStore.fetchPets();
-      if (petStore.pets.length === 0) {
-        alert("등록된 반려견이 없습니다. 반려견을 등록해주세요.");
-        return next('/welcome-dog');
-      }
-    } catch (error) {
-      console.error("반려견 데이터 확인 실패:", error);
-      alert("문제가 발생했습니다. 다시 시도해주세요.");
-      return next('/');
-    }
-  }
+  
+  // if (to.path === '/main') {
+  //   try {
+  //     await petStore.fetchPets();
+  //     if (petStore.pets.length === 0) {
+  //       alert("등록된 반려견이 없습니다. 반려견을 등록해주세요.");
+  //       return next('/welcome-dog');
+  //     }
+  //   } catch (error) {
+  //     console.error("반려견 데이터 확인 실패:", error);
+  //     alert("문제가 발생했습니다. 다시 시도해주세요.");
+  //     return next('/');
+  //   }
+  // }
 
   next(); // 기본 이동
 });
