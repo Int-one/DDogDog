@@ -20,6 +20,9 @@ import WalkTrack from '@/views/walk/WalkTrack.vue';
 import WalkLog from '@/views/walk/WalkLog.vue';
 import DataTest from '@/views/walk/DataTest.vue';
 
+import DogWalkerSignupView from '@/views/dogwalker/DogWalkerSignupView.vue'; // 추가
+import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; // 추가
+
 const routes = [
   { path: '/', component: LoginPageView }, // 로그인 페이지
   { path: '/signup', component: SignupPageView }, // 회원가입 페이지
@@ -36,9 +39,18 @@ const routes = [
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
   { path: '/walk', component: WalkTrack },
+
+
   { path: '/walklog', component: WalkLog   },
-  { path: '/walklogdata', component: DataTest}
+  { path: '/walklogdata', component: DataTest},
+
+  { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
+  { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
+
 ];
+
+
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -75,6 +87,22 @@ router.beforeEach(async (to, from, next) => {
   //     return next('/');
   //   }
   // }
+
+   // 도그워커 관련 페이지 접근 제어
+   if (to.path === "/dog-walker-profile" || to.path === "/dog-walker-signup") {
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      return next("/");
+    }
+
+    // // 추가로 도그워커 상태를 확인하려면 API 요청 또는 authStore에서 확인
+    // const isDogWalker = authStore.user?.dogWalker;
+    // if (to.path === "/dog-walker-profile" && !isDogWalker) {
+    //   alert("도그워커가 아닙니다. 도그워커 가입을 진행하세요.");
+    //   return next("/dog-walker-signup");
+    // }
+  }
 
   next(); // 기본 이동
 });
