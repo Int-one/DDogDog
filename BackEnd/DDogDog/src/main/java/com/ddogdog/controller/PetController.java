@@ -83,7 +83,7 @@ public class PetController {
                 file.transferTo(destinationFile);
 
                 // 저장된 파일 경로를 Pet 객체에 설정
-                pet.setPetPhoto("static/petPhoto/" + fileName); // 상대 경로로 저장
+                pet.setPetPhoto("petPhoto/" + fileName); // 상대 경로로 저장
             }
 //            System.out.println("before");
 //            // 파일 저장
