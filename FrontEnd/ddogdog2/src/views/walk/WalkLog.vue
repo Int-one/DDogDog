@@ -40,8 +40,8 @@ const drawPolyline = async () => {
   // console.log(response.json())
   const data = await response.json();
 
-  // WalkLog 데이터 중 하나를 선택 (샘플)
-  const sampleWalk = data.walkPath.path; // 배열 형태라고 가정
+  // WalkLog 데이터 선택
+  const sampleWalk = data.walkPath;
   coordinates.value = sampleWalk
 
   // Polyline 좌표 변환
