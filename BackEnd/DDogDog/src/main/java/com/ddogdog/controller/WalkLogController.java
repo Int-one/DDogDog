@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/walklog")
+@CrossOrigin("*")
 public class WalkLogController {
 
     private final WalkLogService walkLogService;

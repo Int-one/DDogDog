@@ -18,6 +18,7 @@ import PetRegistrationView from '../views/pet/PetRegistrationView.vue';
 import WelcomeDogWalkerIntroView from '../views/dogwalker/WelcomeDogWalkerIntroView.vue';
 import WalkTrack from '@/views/walk/WalkTrack.vue';
 import WalkLog from '@/views/walk/WalkLog.vue';
+import DataTest from '@/views/walk/DataTest.vue';
 
 const routes = [
   { path: '/', component: LoginPageView }, // 로그인 페이지
@@ -35,7 +36,8 @@ const routes = [
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
   { path: '/walk', component: WalkTrack },
-  { path: '/walklog', component: WalkLog   }
+  { path: '/walklog', component: WalkLog   },
+  { path: '/walklogdata', component: DataTest}
 ];
 
 const router = createRouter({
