@@ -67,6 +67,20 @@ export const useAuthStore = defineStore('auth', {
         this.logout(); // 토큰이 유효하지 않으면 로그아웃 처리
       }
     },
+
+    async updateDogWalkerStatus(userId, dogWalkerStatus) {
+      try {
+        console.log({userId, dogWalker: dogWalkerStatus})
+        const response = await axios.put("http://localhost:8081/api/user/dogwalker", {
+          userId,
+          dogWalker: dogWalkerStatus,
+        });
+        console.log("도그워커 상태 업데이트 성공:", response.data);
+      } catch (error) {
+        console.error("도그워커 상태 업데이트 실패:", error);
+        throw error;
+      }
+    },
   },
 });
 

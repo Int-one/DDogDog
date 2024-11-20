@@ -101,7 +101,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // 도그워커 정보 수정
+    // 도그워커 가입
     @PutMapping("/dogwalker")
     public ResponseEntity<Map<String, String>> updateDogWalker(@RequestBody User user) {
         boolean result = userService.modifyDogWalker(user);
