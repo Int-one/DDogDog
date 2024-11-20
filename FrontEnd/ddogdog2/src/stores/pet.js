@@ -41,7 +41,8 @@ export const usePetStore = defineStore("pet", {
     // 사용자 반려견 목록 가져오기
     async fetchPets() {
       try {
-        const userId = localStorage.getItem("user_id"); // 로컬스토리지에서 user_id 가져오기
+        // const userId = localStorage.getItem("user_id"); // 로컬스토리지에서 user_id 가져오기
+        const userId = "test@test.com";
         if (!userId) {
           throw new Error("사용자 ID를 찾을 수 없습니다.");
         }
@@ -52,6 +53,7 @@ export const usePetStore = defineStore("pet", {
           },
         });
         this.pets = response.data; // 반려견 목록 업데이트
+        console.log(this.pets)
       } catch (error) {
         console.error("반려견 목록 가져오기 실패:", error);
         throw error;
