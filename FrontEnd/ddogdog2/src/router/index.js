@@ -42,7 +42,7 @@ const routes = [
 
 
   { path: '/walklog', component: WalkLog   },
-  { path: '/walklogdata', component: DataTest}
+  { path: '/walklogdata', component: DataTest},
 
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
