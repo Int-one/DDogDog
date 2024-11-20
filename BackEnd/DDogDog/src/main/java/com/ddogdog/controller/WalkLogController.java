@@ -36,7 +36,6 @@ public class WalkLogController {
     @GetMapping("")
     public ResponseEntity<List<WalkLog>> getAllWalkLogs() {
         List<WalkLog> walkLogs = walkLogService.getAllWalkLogs();
-        System.out.println(walkLogs.get(0).getWalkPath());
         return ResponseEntity.ok(walkLogs);
     }
 
