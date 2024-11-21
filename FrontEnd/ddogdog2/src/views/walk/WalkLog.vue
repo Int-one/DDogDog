@@ -36,7 +36,7 @@ const drawPolyline = async () => {
   // ];
 
   // 서버에서 데이터를 가져온다고 가정
-  const response = await fetch("http://localhost:8081/api/walklog/1"); // 선택한 walklog의 id를 마지막에 넣어줘야 한다.
+  const response = await fetch("http://localhost:8081/api/walklog/8"); // 선택한 walklog의 id를 마지막에 넣어줘야 한다.
   // console.log(response.json())
   const data = await response.json();
 
