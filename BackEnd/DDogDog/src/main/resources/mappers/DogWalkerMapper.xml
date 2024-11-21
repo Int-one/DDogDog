@@ -23,17 +23,19 @@
 
     <!-- DogWalker 정보 업데이트 -->
     <update id="updateDogWalker" parameterType="com.ddogdog.model.dto.DogWalker">
-        UPDATE DogWalker
-        SET weekday_am = #{weekdayAm},
-            weekday_pm = #{weekdayPm},
-            weekend_am = #{weekendAm},
-            weekend_pm = #{weekendPm},
-            all = #{all},
-            time = #{time},
-            handle = #{handle},
-            introduce = #{introduce}
-        WHERE user_id = #{userId}
-    </update>
+    UPDATE DogWalker
+    <set>
+        <if test="weekdayAm != null">weekday_am = #{weekdayAm},</if>
+        <if test="weekdayPm != null">weekday_pm = #{weekdayPm},</if>
+        <if test="weekendAm != null">weekend_am = #{weekendAm},</if>
+        <if test="weekendPm != null">weekend_pm = #{weekendPm},</if>
+        <if test="all != null">`all` = #{all},</if>
+        <if test="ableTime != null">albeTime = #{ableTime},</if>
+        <if test="handle != null">handle = #{handle},</if>
+        <if test="introduce != null">introduce = #{introduce},</if>
+    </set>
+    WHERE user_id = #{userId}
+</update>
 
     <!-- DogWalker 삭제 -->
     <delete id="deleteDogWalker" parameterType="string">
