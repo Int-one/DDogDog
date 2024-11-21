@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/cand")
+@CrossOrigin("*")
 public class CandController {
 
     private final CandService candService;

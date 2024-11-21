@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/dogwalker")
+@CrossOrigin("*")
 public class DogWalkerController {
 
     private final DogWalkerService dogWalkerService;

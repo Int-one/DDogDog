@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/trade")
+@CrossOrigin("*")
 public class TradeController {
 
     private final TradeService tradeService;

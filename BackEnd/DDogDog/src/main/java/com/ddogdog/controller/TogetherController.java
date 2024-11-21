@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/together")
+@CrossOrigin("*")
 public class TogetherController {
 
     private final TogetherService togetherService;
