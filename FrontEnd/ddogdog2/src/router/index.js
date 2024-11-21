@@ -38,7 +38,7 @@ const routes = [
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
-  { path: '/walk', component: WalkTrack },
+  { path: '/walk', name: 'walk', component: WalkTrack },
 
 
   { path: '/walklog', component: WalkLog   },

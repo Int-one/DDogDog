@@ -5,10 +5,14 @@
 <mapper namespace="com.ddogdog.model.dao.PetDao">
 
     <select id="getPetByUser" parameterType="String" resultType="Pet">
-        SELECT * FROM Pet p
-        left join petlog using (pet_id)
-        left join walklog using (log_id)
-        WHERE p.user_id = #{userId}
+        SELECT 
+		    p.*,
+		    MAX(wl.end_time) AS end_time
+		FROM Pet p
+		LEFT JOIN petlog USING (pet_id)
+		LEFT JOIN walklog wl USING (log_id)
+		WHERE p.user_id = #{userId}
+		GROUP BY p.pet_id, p.pet_name, p.user_id;
     </select>
 
     <select id="selectOne" parameterType="int" resultType="Pet">
