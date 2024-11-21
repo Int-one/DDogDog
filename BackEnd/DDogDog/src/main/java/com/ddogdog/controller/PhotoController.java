@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/photo")
+@CrossOrigin("*")
 public class PhotoController {
 
     private final PhotoService photoService;

@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/result")
+@CrossOrigin("*")
 public class ResultController {
 
     private final ResultService resultService;

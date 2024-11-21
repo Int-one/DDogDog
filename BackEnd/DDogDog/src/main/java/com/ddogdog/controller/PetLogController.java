@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/petlog")
+@CrossOrigin("*")
 public class PetLogController {
 
     private final PetLogService petLogService;
