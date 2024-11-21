@@ -156,6 +156,8 @@ VALUES
 ('하늘', '2019-04-30', 1, 0, '고양이', '페르시안', 4.7, 'https://example.com/photos/pet7.jpg', '부드럽고 긴 털이 매력적입니다.', 'thomasjames@hotmail.com'),
 ('보리', '2020-11-05', 0, 1, '강아지', '비숑프리제', 6.5, 'https://example.com/photos/pet8.jpg', '사람을 좋아하고 잘 따릅니다.', 'vlee@murphy-lewis.com'),
 ('구름', '2016-06-17', 1, 1, '강아지', '웰시코기', 11.3, 'https://example.com/photos/pet9.jpg', '짧은 다리와 긴 몸이 특징입니다.', 'thomas05@gmail.com'),
+('Bud', '2016-06-17', 1, 1, 'Small', 'Beagle', 12.5, 'petPhoto/1732081391173_하츄핑.jpeg', 'My lovely dog', 'test@test.com'),
+('Buddy', '2018-06-27', 1, 0, 'Big', '웰시코기', 11.3, 'petPhoto/1732067779355_input.jpg', '짧은 다리와 긴 몸이 특징입니다.', 'test@test.com'),
 ('별이', '2015-03-25', 1, 0, '고양이', '먼치킨', 3.2, 'https://example.com/photos/pet10.jpg', '활발하고 장난기 많은 성격입니다.', 'kristina65@mckay.com');
 
 -- Trade Table 더미 데이터
@@ -280,6 +282,7 @@ VALUES
 ('활발하게 움직이며 산책을 즐겼고 강아지가 건강해 보였습니다.', 1, 0, 2, 9),
 ('주변 환경에 대한 관심을 보이며 긴장을 풀고 산책했습니다.', 1, 1, 2, 10),
 ('산책 중 흥미롭게 주변을 살피며 활동적이었습니다.', 1, 0, 3, 4),
+('산책 중 흥미롭게 주변을 살피며 활동적이었습니다.', 1, 0, 2, 10),
 ('조용하고 차분하게 산책을 즐겼습니다.', 0, 1, 3, 5);
 
 
@@ -301,8 +304,7 @@ VALUES
 ('thomasjames@hotmail.com', TRUE, TRUE, TRUE, TRUE, TRUE, 3, TRUE, '대형견을 포함하여 다양한 크기의 강아지를 돌볼 수 있습니다. 언제든지 가능합니다.'),
 ('kristina65@mckay.com', FALSE, FALSE, FALSE, TRUE, FALSE, 1, FALSE, '반려동물 돌봄 초보자지만 강아지와의 상호작용을 즐깁니다. 주말 오후만 가능합니다.');
 
-
-
+        
 
 select * from user;
 select * from pet;
