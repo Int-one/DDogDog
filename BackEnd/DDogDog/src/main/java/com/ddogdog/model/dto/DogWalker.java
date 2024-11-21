@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 
 public class DogWalker {
     private String userId;
-    private Boolean weekdayAm;
-    private Boolean weekdayPm;
-    private Boolean weekendAm;
-    private Boolean weekendPm;
-    private Boolean all;
-    private Integer time;
-    private Boolean handle;
-    private String introduce;
+    private Boolean weekdayAm = false;
+    private Boolean weekdayPm = false;
+    private Boolean weekendAm = false;
+    private Boolean weekendPm = false;
+    private Boolean all = false;
+    private Integer ableTime = 0;
+    private Boolean handle = false;
+    private String introduce = "";
     private String nickname;
 	private LocalDateTime birth;
 	private String phone;
@@ -169,12 +169,12 @@ public class DogWalker {
         this.all = all;
     }
 
-    public Integer getTime() {
-        return time;
+    public Integer getAbleTime() {
+        return ableTime;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setAbleTime(Integer time) {
+        this.ableTime = time;
     }
 
     public Boolean getHandle() {
