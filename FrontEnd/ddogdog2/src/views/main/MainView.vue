@@ -93,6 +93,7 @@ const fetchDogData = async () => {
     dogs.value.forEach((dog) => {
       calculateLastWalkTime(dog);
     });
+    petStore.pets = dogs.value;
   } catch (error) {
     console.error("Failed to fetch dog data:", error);
   }
@@ -150,7 +151,7 @@ const formatDate = (dateString) => {
 
 // 페이지 로드 시 데이터 로드
 onMounted(() => {
-  petStore.fetchPets();
+  // petStore.fetchPets();
   fetchDogData();
   fetchRecentLogs();
 });

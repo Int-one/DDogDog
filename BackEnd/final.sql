@@ -15,7 +15,7 @@ CREATE TABLE User (
     gender BOOLEAN NOT NULL,
     height DOUBLE NOT NULL,
     weight DOUBLE NOT NULL,
-    region VARCHAR(30) NOT NULL,
+    region VARCHAR(255) NOT NULL,
     exp INT NOT NULL DEFAULT 0,
     dog_walker BOOLEAN NOT NULL DEFAULT FALSE,
     hire_cnt BIGINT NOT NULL DEFAULT 0,

@@ -39,9 +39,9 @@ public class WalkLogController {
         return ResponseEntity.ok(walkLogs);
     }
 
-    @GetMapping("/{logId}")
-    public ResponseEntity<?> getWalkLogById(@PathVariable Long logId) {
-        WalkLog walkLog = walkLogService.getWalkLogById(logId);
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getWalkLogById(@PathVariable String userId) {
+        List<WalkLog> walkLog = walkLogService.getWalkLogsByUserId(userId);
         if (walkLog == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("WalkLog not found");
         }

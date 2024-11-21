@@ -4,6 +4,7 @@ import axios from "axios";
 
 export const useWalkStore = defineStore("walk", () => {
   const walkLogs = ref([]); // 모든 산책 기록을 저장
+  const myWalkLogs = ref([]); // 나의 산책 기록을 저장
   const currentWalk = reactive({
     walkPath: [], // 현재 산책 경로
     startTime: null, // 산책 시작 시간
@@ -72,12 +73,24 @@ export const useWalkStore = defineStore("walk", () => {
     }
   };
 
+  const fetchMyWalkLogs = async() => {
+    try {
+      const response = await axios.get(`${apiUrl}/${localStorage.getItem('user_id')}`);
+      myWalkLogs.value = response.data
+      console.log(myWalkLogs.value);
+    } catch (e) {
+      console.error("Failed", e);
+    }
+  };
+
   return {
     walkLogs,
+    myWalkLogs,
     currentWalk,
     startWalk,
     addPathPoint,
     endWalk,
     fetchWalkLogs,
+    fetchMyWalkLogs,
   };
 });

@@ -37,7 +37,7 @@ const routes = [
   { path: '/signup/height-weight', component: HeightWeightInputView }, // 신장 및 체중 입력 페이지
   { path: '/signup/location', component: LocationInputView }, // 위치 정보 입력 페이지
   { path: '/signup/confirmation', component: ConfirmationPageView }, // 입력 정보 확인 페이지
-  { path: '/main', component: MainView }, // 메인 페이지
+  { path: '/main', name: 'main', component: MainView }, // 메인 페이지
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   
