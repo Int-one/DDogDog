@@ -1,8 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- 상단 반려견 정보 Carousel -->
-    <div v-if="dogs">
-      <h5 class="mb-3 text-center">반려견 정보</h5>
+    <div v-if="dogs" class="dog-carousel-container">
       <div id="dogCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div
@@ -18,7 +17,7 @@
                 class="dog-image"
               />
               <div class="mt-3 text-center">
-                <h5 class="dog-name">{{ dog.name }}</h5>
+                <h5 class="dog-name">{{ dog.petName || '이름 없음' }}</h5>
                 <p class="last-walk">{{ dog.endTime }}</p>
               </div>
             </div>
@@ -46,11 +45,13 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-sm mt-3" @click="router.push({name: 'walk'})">산책 가기</button>
+    <div class="text-center mt-3">
+      <button class="btn btn-primary btn-block" @click="router.push({ name: 'walk' })">산책 가기</button>
+    </div>
 
     <!-- 최근 산책 기록 스크롤 -->
-    <div>
-      <h5 class="mb-3">실시간 산책 인증</h5>
+    <div class="recent-logs">
+      <h5 class="mb-3 text-center">실시간 산책 인증</h5>
       <div class="scroll-container">
         <div
           v-for="(log, index) in recentLogs"
@@ -85,7 +86,6 @@ const recentLogs = ref([]); // 최근 산책 기록
 // API 호출 함수들
 const fetchDogData = async () => {
   try {
-    const userId = localStorage.getItem("user_id");
     const response = await axios.get("http://localhost:8081/api/pet/test@test.com"); // 반려견 데이터 API
     dogs.value = response.data;
 
@@ -157,36 +157,49 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 반려견 사진 스타일 */
-.dog-image {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 50%;
+/* 메인 컨테이너 크기 조정 */
+.container {
+  max-width: 600px;
+  margin: auto;
 }
 
+/* 반려견 Carousel 컨테이너 */
+.dog-carousel-container {
+  width: 100%;
+  max-width: 360px;
+  margin: auto;
+}
+
+/* 반려견 사진 스타일 */
+.dog-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%; /* 항상 원형 유지 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 반려견 카드 스타일 */
 .dog-card {
-  min-height: 400px; /* 고정 높이 설정으로 위치 움직임 방지 */
+  min-height: 300px; /* 고정 높이 설정으로 위치 움직임 방지 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .dog-name {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  margin-top: 10px;
+  color: black;
 }
 
 .last-walk {
   font-size: 1rem;
   color: gray;
-}
-
-/* Carousel 배경색 제거 */
-.carousel-item {
-  background-color: transparent !important;
+  margin-top: 5px;
 }
 
 /* 스크롤 컨테이너 스타일 */
@@ -200,11 +213,23 @@ onMounted(() => {
 
 .scroll-item {
   flex: 0 0 auto;
-  width: 80%;
-  max-width: 300px;
+  width: 90%; /* 아이템 크기 */
+  max-width: 360px;
 }
 
 .scroll-container::-webkit-scrollbar {
-  display: none;
+  display: none; /* 스크롤바 숨김 */
+}
+
+/* 버튼 스타일 */
+button.btn {
+  width: 80%;
+  margin: auto;
+  display: block;
+}
+
+/* Carousel 배경색 제거 */
+.carousel-item {
+  background-color: transparent !important;
 }
 </style>
