@@ -17,6 +17,14 @@ export const useWalkStore = defineStore("walk", () => {
 
   const apiUrl = "http://localhost:8081/api/walklog"; // API 엔드포인트
 
+  const calcTime = (time) => {
+    const t = new Date(time);
+    const period = t < 12 ? '오전' : '오후';
+    const formattedHours = t % 12 || 12; // 0시를 12시로 변환
+    const formattedMinutes = t.toString().padStart(2, '0'); // 두 자리로 변환
+    return `${period} ${formattedHours}시 ${formattedMinutes}분`
+  }
+
   // 새로운 산책 기록 추가
   const startWalk = (userId, dogWalking = false) => {
     currentWalk.startTime = new Date().toISOString(); // 시작 시간 저장
@@ -73,6 +81,7 @@ export const useWalkStore = defineStore("walk", () => {
     }
   };
 
+  // 유저의 산책 기록 불러오기
   const fetchMyWalkLogs = async() => {
     try {
       const response = await axios.get(`${apiUrl}/${localStorage.getItem('user_id')}`);
@@ -87,6 +96,7 @@ export const useWalkStore = defineStore("walk", () => {
     walkLogs,
     myWalkLogs,
     currentWalk,
+    calcTime,
     startWalk,
     addPathPoint,
     endWalk,

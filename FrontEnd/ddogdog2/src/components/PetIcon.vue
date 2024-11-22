@@ -7,7 +7,7 @@
     >
       <div
         class="rounded-circle mb-2 pet-image-container"
-        :class="{ 'selected': goWith.includes(pet.petId) }"
+        :class="{ 'selected': petStore.goWith.includes(pet.petId) }"
       >
         <img
           :src="`http://localhost:8081/${pet.petPhoto}`"
@@ -28,20 +28,19 @@ import { usePetStore } from "@/stores/pet";
 
 const walkStore = useWalkStore();
 const petStore = usePetStore();
-const goWith = ref([]); // 선택된 반려견 ID 배열
 
 
-defineProps({
+const { onImageClick } = defineProps({
   onImageClick: {
     type: Function,
-    required: false,
+    default: (pet) => console.log("기본 클릭 동작: ", pet),
   },
 });
 
 const handleImageClick = (pet) => {
   // Props로 전달된 함수 실행
   if (typeof onImageClick === "function") {
-    onImageClick(pet);
+    onImageClick(pet.petId);
   } else {
     console.log(pet);
   }

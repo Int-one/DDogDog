@@ -1,6 +1,6 @@
 <template>
   <div class="container walk-tracker">
-    <!-- 상단 헤더 -->
+    <!-- 상단 헤더
     <header class="text-center my-3">
       <h1>산책</h1>
       <div class="btn-group" role="group" aria-label="탭 메뉴">
@@ -29,7 +29,7 @@
           주간
         </button>
       </div>
-    </header>
+    </header> -->
 
     <!-- 산책 기록 -->
     <!-- <section class="record-section my-3">
@@ -39,7 +39,7 @@
       </div>
     </section> -->
 
-    <section class="record-section my-3">
+    <!-- <section class="record-section my-3">
       <h2 class="text-center">산책기록</h2>
       <div class="border border-primary rounded p-2 text-primary text-center">
         <div>산책 횟수: {{ totalWalks }}</div>
@@ -47,13 +47,13 @@
         <div>산책 거리: {{ totalDistance.toFixed(2) }} km</div>
         <div>산책 시간: {{ totalWalkTimeFormatted }}</div>
       </div>
-    </section>
+    </section> -->
 
 
     <!-- 반려견 섹션 -->
     <section class="pets-section my-4">
       <h2 class="text-center">산책 대기 중 반려견</h2>
-      <div class="pets-container d-flex overflow-auto">
+      <!-- <div class="pets-container d-flex overflow-auto">
         <div
           v-for="dog in petStore.pets"
           :key="dog.id"
@@ -72,11 +72,21 @@
           </div>
           <p class="text-muted">{{ dog.endTime }}</p>
         </div>
-      </div>
+      </div> -->
+      <PetIcon :onImageClick="togglePetSelection" />
       <div class="border bg-light rounded p-3 text-center mt-3">
         산책 준비물 체크
       </div>
     </section>
+
+
+    <div>
+      <div v-for="mylog in walkStore.myWalkLogs">
+        <p>{{ mylog.startTime }}</p>
+        <p></p>
+      </div>
+    </div>
+    
 
     <!-- 하단 버튼 -->
     <footer class="text-center my-4">
@@ -101,13 +111,14 @@ const tracking = ref(false);
 const selectedTab = ref("누적");
 const walkStore = useWalkStore();
 const petStore = usePetStore();
-const goWith = ref([]); // 선택된 반려견 ID 배열
+// const goWith = petStore.goWith // 선택된 반려견 ID 배열
 
 
 
 
 
 import { computed } from "vue";
+import PetIcon from "@/components/PetIcon.vue";
 
 const now = new Date();
 
@@ -140,15 +151,6 @@ const totalCalories = computed(() => {
   return Math.round(calories * 100) / 100;
 });
 
-
-
-// const totalCalories = computed(() => {
-//   // 필터링된 데이터의 칼로리를 합산
-//   return filteredWalkLogs.value.reduce(
-//     (sum, walk) => sum + (walk.total || 0),
-//     0
-//   );
-// });
 
 const totalDistance = computed(() => {
   // 필터링된 데이터의 총 거리 계산
@@ -207,34 +209,18 @@ const formatDuration = (seconds) => {
     .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 };
 
-// const totalWalkTimeFormatted = computed(() =>
-//   formatDuration(totalWalkTime.value)
-// );
-
-
-
-
-
-
-
-
-
-
-
-
-
 const walkData = walkStore.currentWalk;
 walkData.userId = "test@test.com";
 
 // 반려견 선택/해제 함수
 const togglePetSelection = (petId) => {
-  const index = goWith.value.indexOf(petId);
+  const index = petStore.goWith.indexOf(petId);
   if (index === -1) {
     // 선택되지 않았다면 추가
-    goWith.value.push(petId);
+    petStore.goWith.push(petId);
   } else {
     // 이미 선택된 경우 제거
-    goWith.value.splice(index, 1);
+    petStore.goWith.splice(index, 1);
   }
 };
 
@@ -260,7 +246,7 @@ const startTracking = () => {
 
   walkData.startTime = formatTime(new Date());
   walkData.walkPath = [];
-  walkData.goWith = goWith.value; // 선택된 반려견 정보 저장
+  walkData.goWith = petStore.goWith.value; // 선택된 반려견 정보 저장
 
   trackingInterval = setInterval(() => {
     navigator.geolocation.getCurrentPosition(

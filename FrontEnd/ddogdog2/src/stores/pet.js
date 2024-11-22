@@ -5,6 +5,7 @@ import axios from "axios";
 export const usePetStore = defineStore("pet", {
   state: () => ({
     pets: [], // 사용자 반려견 목록
+    goWith: [],
   }),
   actions: {
     // 사용자 반려견 목록 가져오기
