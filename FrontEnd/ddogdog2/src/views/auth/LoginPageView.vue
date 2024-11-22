@@ -31,7 +31,7 @@ export default {
       const authStore = useAuthStore();
       try {
         await authStore.login(this.email, this.password);
-        this.$router.push("/main"); // 메인 페이지로 이동
+        this.$router.push("/"); // 메인 페이지로 이동
       } catch (error) {
         this.errorMessage = "로그인 실패. 이메일 또는 비밀번호를 확인하세요.";
       }

@@ -23,7 +23,7 @@ const completeSignup = async () => {
   
   try {
     await signupStore.signup() // 회원가입 API 호출
-    router.push('/main') // 메인 페이지로 이동
+    router.push('/') // 메인 페이지로 이동
   } catch (error) {
     console.error('회원가입 완료 실패:', error)
   }

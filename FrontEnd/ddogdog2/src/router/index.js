@@ -27,7 +27,7 @@ import DogWalkerListView from '@/views/dogwalker/DogWalkerListView.vue'; // 추�
 import TestView from '../views/TestView.vue';
 
 const routes = [
-  { path: '/', component: LoginPageView }, // 로그인 페이지
+  { path: '/login', component: LoginPageView }, // 로그인 페이지
   { path: '/signup', component: SignupPageView }, // 회원가입 페이지
   { path: '/signup/email', component: EmailInputView }, // 이메일 입력 페이지
   { path: '/signup/password', component: PasswordInputView }, // 비밀번호 입력 페이지
@@ -37,7 +37,7 @@ const routes = [
   { path: '/signup/height-weight', component: HeightWeightInputView }, // 신장 및 체중 입력 페이지
   { path: '/signup/location', component: LocationInputView }, // 위치 정보 입력 페이지
   { path: '/signup/confirmation', component: ConfirmationPageView }, // 입력 정보 확인 페이지
-  { path: '/main', name: 'main', component: MainView }, // 메인 페이지
+  { path: '/', name: 'main', component: MainView }, // 메인 페이지
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
   { path: '/walk', component: WalkTrack },
@@ -71,14 +71,14 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 로그인 상태 확인
-  // if (!authStore.token && to.path !== '/') {
+  // if (!authStore.token && to.path !== '/login') {
   //   alert("로그인이 필요합니다.");
-  //   return next('/'); // 로그인 페이지로 리디렉션
+  //   return next('/login'); // 로그인 페이지로 리디렉션
   // }
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   
-  if (to.path === '/main') {
+  if (to.path === '/') {
     try {
       await petStore.fetchPets();
       if (petStore.pets.length === 0) {
@@ -88,7 +88,7 @@ router.beforeEach(async (to, from, next) => {
     } catch (error) {
       console.error("반려견 데이터 확인 실패:", error);
       alert("문제가 발생했습니다. 다시 시도해주세요.");
-      return next('/');
+      return next('/login');
     }
   }
 
@@ -97,7 +97,7 @@ router.beforeEach(async (to, from, next) => {
     const userId = localStorage.getItem("user_id");
     if (!userId) {
       alert("로그인이 필요합니다.");
-      return next("/");
+      return next("/login");
     }
 
     // // 추가로 도그워커 상태를 확인하려면 API 요청 또는 authStore에서 확인

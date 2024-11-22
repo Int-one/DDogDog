@@ -18,7 +18,7 @@ export default {
       this.$router.push("/dog-walker-list");
     },
     goToMain() {
-      this.$router.push("/main");
+      this.$router.push("/");
     },
   },
 };
