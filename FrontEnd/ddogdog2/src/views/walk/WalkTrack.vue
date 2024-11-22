@@ -313,7 +313,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  stopTracking();
+  // stopTracking();
 });
 </script>
 

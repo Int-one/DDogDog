@@ -22,6 +22,7 @@ import DataTest from '@/views/walk/DataTest.vue';
 
 import DogWalkerSignupView from '@/views/dogwalker/DogWalkerSignupView.vue'; // 추가
 import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; // 추가
+import TestView from '../views/TestView.vue';
 
 const routes = [
   { path: '/', component: LoginPageView }, // 로그인 페이지
@@ -47,6 +48,7 @@ const routes = [
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
 
+  { path: "/test", name: 'test', component: TestView}
 ];
 
 

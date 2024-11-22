@@ -38,9 +38,18 @@ public class WalkLogController {
         List<WalkLog> walkLogs = walkLogService.getAllWalkLogs();
         return ResponseEntity.ok(walkLogs);
     }
+    
+    @GetMapping("/log/{logId}")
+    public ResponseEntity<?> getWalkLogById(@PathVariable Long logId) {
+    	WalkLog walkLog = walkLogService.getWalkLogById(logId);
+    	if (walkLog == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("WalkLog not found");
+    	}
+    	return ResponseEntity.ok(walkLog);
+    }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getWalkLogById(@PathVariable String userId) {
+    public ResponseEntity<?> getWalkLogByUserId(@PathVariable String userId) {
         List<WalkLog> walkLog = walkLogService.getWalkLogsByUserId(userId);
         if (walkLog == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("WalkLog not found");
