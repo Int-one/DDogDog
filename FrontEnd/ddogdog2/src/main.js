@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+import '@flaticon/flaticon-uicons/css/all/all.css';
 import App from './App.vue'
 import router from './router'
 
