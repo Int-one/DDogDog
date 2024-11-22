@@ -16,7 +16,7 @@ import MainView from '../views/main/MainView.vue';
 import WelcomeDogRegistrationView from '../views/pet/WelcomeDogRegistrationView.vue';
 import PetRegistrationView from '../views/pet/PetRegistrationView.vue';
 import WelcomeDogWalkerIntroView from '../views/dogwalker/WelcomeDogWalkerIntroView.vue';
-import WalkTrack from '@/views/walk/WalkTrack.vue';
+import WalkMainView from '@/views/walk/WalkMainView.vue';
 import WalkLog from '@/views/walk/WalkLog.vue';
 import DataTest from '@/views/walk/DataTest.vue';
 
@@ -25,6 +25,8 @@ import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; /
 import DogWalkerDetailView from '@/views/dogwalker/DogWalkerDetailView.vue';
 import DogWalkerListView from '@/views/dogwalker/DogWalkerListView.vue'; // 추가
 import TestView from '../views/TestView.vue';
+import WalkingView from '@/views/walk/WalkingView.vue';
+import WalkView from '@/views/walk/WalkView.vue';
 
 const routes = [
   { path: '/login', component: LoginPageView }, // 로그인 페이지
@@ -40,7 +42,10 @@ const routes = [
   { path: '/', name: 'main', component: MainView }, // 메인 페이지
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
-  { path: '/walk', component: WalkTrack },
+  { path: '/walk', name: 'walk', component: WalkView, children: [
+    { path: '', name: 'walkMain', component: WalkMainView },
+    { path: 'walking', name: 'walking', component: WalkingView },
+  ]},
   { path: '/walklog', component: WalkLog   },
   { path: '/walklogdata', component: DataTest},
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가

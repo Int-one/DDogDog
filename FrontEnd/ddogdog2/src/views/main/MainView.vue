@@ -96,7 +96,7 @@
         >
           <div class="card text-center shadow-sm mx-2">
             <div class="card-body">
-              <h6 class="card-title">산책 기록 {{ index + 1 }}</h6>
+              <!-- <h6 class="card-title">산책 기록 {{ index + 1 }}</h6> -->
               <p class="card-text">거리: {{ log.total }} km</p>
               <p class="card-text">시간: {{ calculateDuration(log.startTime, log.endTime) }}</p>
               <p class="card-text">날짜: {{ formatDate(log.startTime) }}</p>
@@ -315,6 +315,10 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.card-body > p {
+  margin-bottom: 0.5rem;
 }
 
 .dog-name {
