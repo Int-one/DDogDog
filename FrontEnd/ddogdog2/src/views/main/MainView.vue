@@ -1,5 +1,45 @@
 <template>
   <div class="container mt-3">
+
+
+    <header class="text-center my-3">
+      <div class="btn-group" role="group" aria-label="탭 메뉴">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          :class="{ active: selectedTab === '누적' }"
+          @click="selectedTab = '누적'"
+        >
+          누적
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          :class="{ active: selectedTab === '월간' }"
+          @click="selectedTab = '월간'"
+        >
+          월간
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          :class="{ active: selectedTab === '주간' }"
+          @click="selectedTab = '주간'"
+        >
+          주간
+        </button>
+      </div>
+    </header>
+    <section class="record-section my-3">
+      <div class="border border-primary rounded p-2 text-primary text-center">
+        <div>산책 횟수: {{ totalWalks }}</div>
+        <div>소비 칼로리: {{ totalCalories }} kcal</div>
+        <div>산책 거리: {{ totalDistance.toFixed(2) }} km</div>
+        <div>산책 시간: {{ totalWalkTimeFormatted }}</div>
+      </div>
+    </section>
+
+
     <!-- 상단 반려견 정보 Carousel -->
     <div v-if="dogs" class="dog-carousel-container">
       <div id="dogCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -45,10 +85,6 @@
       </div>
     </div>
 
-    <div class="text-center mt-3">
-      <button class="btn btn-primary btn-block" @click="router.push({ name: 'walk' })">산책 가기</button>
-    </div>
-
     <!-- 최근 산책 기록 스크롤 -->
     <div class="recent-logs">
       <h5 class="mb-3 text-center">실시간 산책 인증</h5>
@@ -73,13 +109,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { usePetStore } from "@/stores/pet";
 import router from "@/router";
+import { useWalkStore } from "@/stores/walk";
 
 const petStore = usePetStore();
-
+const walkStore = useWalkStore();
+const now = new Date();
 const dogs = ref([]);
 const recentLogs = ref([]); // 최근 산책 기록
 
@@ -149,11 +187,100 @@ const formatDate = (dateString) => {
   });
 };
 
+// 상단 페이지 관련
+const selectedTab = ref("누적");
+
+const filteredWalkLogs = computed(() => {
+  if (selectedTab.value === "누적") {
+    return walkStore.myWalkLogs; // 전체 데이터
+  }
+
+  const daysAgo = selectedTab.value === "월간" ? 30 : 7;
+  const startDate = new Date();
+  startDate.setDate(now.getDate() - daysAgo);
+
+  return walkStore.myWalkLogs.filter((walk) => {
+    const walkDate = new Date(walk.startTime);
+    return walkDate >= startDate && walkDate <= now;
+  });
+});
+
+const totalWalks = computed(() => {
+  // 필터링된 데이터의 총 개수
+  return filteredWalkLogs.value.length;
+});
+
+const totalCalories = computed(() => {
+  // 칼로리 소모 계산: 1km당 60kcal 기준
+  const caloriesPerKm = 60;
+  const calories = totalDistance.value * caloriesPerKm;
+
+  // 소수 셋째자리에서 반올림
+  return Math.round(calories * 100) / 100;
+});
+
+const totalDistance = computed(() => {
+  // 필터링된 데이터의 총 거리 계산
+  return filteredWalkLogs.value.reduce((sum, walk) => {
+    if (!walk.walkPath || walk.walkPath.length < 2) return sum;
+
+    const calculateDistance = (path) => {
+      let distance = 0;
+      for (let i = 1; i < path.length; i++) {
+        const { lat: lat1, lng: lng1 } = path[i - 1];
+        const { lat: lat2, lng: lng2 } = path[i];
+        const toRad = (value) => (value * Math.PI) / 180;
+
+        const R = 6371; // Earth radius in km
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRad(lat1)) *
+            Math.cos(toRad(lat2)) *
+            Math.sin(dLng / 2) *
+            Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        distance += R * c;
+      }
+      return distance;
+    };
+
+    return sum + calculateDistance(walk.walkPath);
+  }, 0);
+});
+
+const totalWalkTime = computed(() => {
+  // 필터링된 데이터의 총 시간 계산
+  return filteredWalkLogs.value.reduce((sum, walk) => {
+    const start = new Date(walk.startTime);
+    const end = new Date(walk.endTime);
+    const duration = (end - start) / 1000; // 초 단위
+    return sum + duration;
+  }, 0);
+});
+
+const totalWalkTimeFormatted = computed(() =>
+  formatDuration(totalWalkTime.value)
+);
+
+// 시간을 "hh:mm:ss" 형식으로 변환
+const formatDuration = (seconds) => {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  return `${hrs.toString().padStart(2, "0")}:${mins
+    .toString()
+    .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+};
+
+
 // 페이지 로드 시 데이터 로드
 onMounted(() => {
   // petStore.fetchPets();
   fetchDogData();
   fetchRecentLogs();
+  walkStore.fetchMyWalkLogs();
 });
 </script>
 
@@ -233,4 +360,22 @@ button.btn {
 .carousel-item {
   background-color: transparent !important;
 }
+
+/* 상단 헤더 관련 */
+header {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.btn-group .btn {
+  margin-right: 0.5rem;
+}
+
+.btn-group .btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
 </style>
