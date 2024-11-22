@@ -26,6 +26,11 @@ import DogWalkerDetailView from '@/views/dogwalker/DogWalkerDetailView.vue';
 import DogWalkerListView from '@/views/dogwalker/DogWalkerListView.vue'; // 추가
 import TestView from '../views/TestView.vue';
 
+import DoForMeTab from '@/components/DoForMeTab.vue';
+import DoForYouTab from '@/components/DoForYouTab.vue'
+import DogWalkerTab from '@/components/DogWalkerTab.vue'
+import DogWalkerView from '@/views/dogwalker/DogwalkerView.vue';
+
 const routes = [
   { path: '/login', component: LoginPageView }, // 로그인 페이지
   { path: '/signup', component: SignupPageView }, // 회원가입 페이지
@@ -51,6 +56,13 @@ const routes = [
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 
   { path: "/dogwalker/:id", component: DogWalkerDetailView }, // 특정 도그워커 상세 페이지
   { path: '/dogwalker-list', component: DogWalkerListView }, // 도그워커 리스트 페이지 추가
+
+  { path: '/dogwalker', name: 'DogWalker', component: DogWalkerView, children: [
+    { path: '', name: 'DogWalkerTab', component: DogWalkerTab },
+    { path: 'doforme', name: 'DoForMeTab', component: DoForMeTab },
+    { path: 'doforyou', name: 'DoForYouTab', component: DoForYouTab },
+    ],
+  },
 ];
 
 
@@ -78,7 +90,7 @@ router.beforeEach(async (to, from, next) => {
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   
-  if (to.path === '/') {
+  if (to.path === '/login') {
     try {
       await petStore.fetchPets();
       if (petStore.pets.length === 0) {

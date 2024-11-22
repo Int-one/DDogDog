@@ -13,10 +13,18 @@ import BottomNavBar from "@/components/BottomNavBar.vue";
 
 <style>
 /* 전역 스타일 설정 */
-#app {
+/* #app {
   position: relative;
   width: 360px;
   height: 780px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  overflow: hidden;
+} */
+
+#app {
+  max-width: 360px;
+  height: 100vh;
   margin: 0 auto;
   background-color: #f9f9f9;
   overflow: hidden;
