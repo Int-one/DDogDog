@@ -22,10 +22,34 @@ export const usePetStore = defineStore("pet", {
           },
         });
         this.pets = response.data; // 반려견 목록 업데이트
+
+        this.pets.forEach((pet) => {
+          this.calculateLastWalkTime(pet);
+        });
         console.log(this.pets)
       } catch (error) {
         console.error("반려견 목록 가져오기 실패:", error);
         throw error;
+      }
+    },
+
+
+    calculateLastWalkTime(dog) {
+      if (!dog.endTime) {
+        dog.endTime = "산책 가고 싶어요";
+        return;
+      }
+    
+      const lastWalkDate = new Date(dog.endTime);
+      const now = new Date();
+      const days = Math.floor((now - lastWalkDate) / (1000 * 60 * 60 * 24));
+    
+      if (days === 0) {
+        dog.endTime = "마지막 산책 오늘";
+      } else if (days === 1) {
+        dog.endTime = "마지막 산책 1일 전";
+      } else {
+        dog.endTime = `마지막 산책 ${days}일 전`;
       }
     },
 

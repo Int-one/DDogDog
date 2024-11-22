@@ -24,7 +24,7 @@ import DogWalkerSignupView from '@/views/dogwalker/DogWalkerSignupView.vue'; // 
 import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; // 추가
 import DogWalkerDetailView from '@/views/dogwalker/DogWalkerDetailView.vue';
 import DogWalkerListView from '@/views/dogwalker/DogWalkerListView.vue'; // 추가
-
+import TestView from '../views/TestView.vue';
 
 const routes = [
   { path: '/', component: LoginPageView }, // 로그인 페이지
@@ -40,12 +40,12 @@ const routes = [
   { path: '/main', name: 'main', component: MainView }, // 메인 페이지
   { path: '/welcome-dog', component: WelcomeDogRegistrationView }, // 웰컴 반려견 등록 페이지
   { path: '/pet-registration', component: PetRegistrationView }, // 반려견 등록 페이지
-  
   { path: '/walk', component: WalkTrack },
-
   { path: '/walklog', component: WalkLog   },
   { path: '/walklogdata', component: DataTest},
-
+  { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
+  { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
+  { path: "/test", name: 'test', component: TestView}
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 
