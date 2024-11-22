@@ -2,7 +2,7 @@
   <div>
     <h1>test</h1>
     <button @click="getData">GetData</button>
-    <p v-for="log in logs">{{ log }}</p>
+    <p v-for="log in logs" :key="log.time">{{ log }}</p>
   </div>
 </template>
 
