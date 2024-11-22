@@ -48,6 +48,8 @@ CREATE TABLE Trade (
     cost BIGINT(20) NOT NULL,
     region VARCHAR(30) NOT NULL,
     detail TEXT,
+    state int DEFAULT 0,
+    large_dog boolean DEFAULT FALSE,
     super_id VARCHAR(255),
     user_id VARCHAR(255),
     FOREIGN KEY (super_id) REFERENCES User(user_id) ON DELETE SET NULL,
@@ -161,18 +163,18 @@ VALUES
 ('별이', '2015-03-25', 1, 0, '고양이', '먼치킨', 3.2, 'https://example.com/photos/pet10.jpg', '활발하고 장난기 많은 성격입니다.', 'kristina65@mckay.com');
 
 -- Trade Table 더미 데이터
-INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, super_id, user_id)
+INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, state, large_dog, super_id, user_id)
 VALUES 
-('해드려요', '2024-11-15 10:00:00', '2024-11-15 12:00:00', 50000, '서울', '강아지 산책 대행 요청', 'harrisanita@hotmail.com', 'levidixon@yahoo.com'),
-('해드려요', '2024-11-16 09:00:00', '2024-11-16 18:00:00', 120000, '부산', '고양이 하루 종일 돌봄 요청', 'jennifermartinez@brown-carr.com', 'johnathan93@summers-thomas.com'),
-('해주세요', '2024-11-17 15:00:00', '2024-11-17 16:30:00', 30000, '광주', '작은 강아지 산책', NULL, 'lori35@gmail.com'),
-('해주세요', '2024-11-18 08:00:00', '2024-11-18 19:00:00', 150000, '대전', '노령견 하루 돌봄', 'thomasjames@hotmail.com', NULL),
-('해드려요', '2024-11-19 14:00:00', '2024-11-19 15:30:00', 40000, '인천', '말티즈 산책 대행', 'vlee@murphy-lewis.com', 'jackallen@alvarado-pena.com'),
-('해주세요', '2024-11-20 10:00:00', '2024-11-20 16:00:00', 80000, '울산', '강아지 반나절 돌봄', 'kristina65@mckay.com', 'thomas05@gmail.com'),
-('해드려요', '2024-11-21 17:00:00', '2024-11-21 18:30:00', 35000, '성남', '활동적인 강아지 산책', 'harrisanita@hotmail.com', 'jennifermartinez@brown-carr.com'),
-('해주세요', '2024-11-22 08:00:00', '2024-11-22 20:00:00', 180000, '청주', '페르시안 고양이 돌봄 요청', NULL, 'levidixon@yahoo.com'),
-('해드려요', '2024-11-23 13:00:00', '2024-11-23 14:30:00', 45000, '대구', '소형견 산책 대행', 'johnathan93@summers-thomas.com', 'lori35@gmail.com'),
-('해주세요', '2024-11-24 07:00:00', '2024-11-24 21:00:00', 200000, '서울', '하루 종일 돌봄 요청', 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
+('해드려요', '2024-11-15 10:00:00', '2024-11-15 12:00:00', 50000, '서울', '강아지 산책 대행 요청', 0, FALSE, 'harrisanita@hotmail.com', 'levidixon@yahoo.com'),
+('해드려요', '2024-11-16 09:00:00', '2024-11-16 18:00:00', 120000, '부산', '고양이 하루 종일 돌봄 요청', 0, FALSE, 'jennifermartinez@brown-carr.com', 'johnathan93@summers-thomas.com'),
+('해주세요', '2024-11-17 15:00:00', '2024-11-17 16:30:00', 30000, '광주', '작은 강아지 산책', 0, FALSE, NULL, 'lori35@gmail.com'),
+('해주세요', '2024-11-18 08:00:00', '2024-11-18 19:00:00', 150000, '대전', '노령견 하루 돌봄', 0, FALSE, 'thomasjames@hotmail.com', NULL),
+('해드려요', '2024-11-19 14:00:00', '2024-11-19 15:30:00', 40000, '인천', '말티즈 산책 대행', 0, FALSE, 'vlee@murphy-lewis.com', 'jackallen@alvarado-pena.com'),
+('해주세요', '2024-11-20 10:00:00', '2024-11-20 16:00:00', 80000, '울산', '강아지 반나절 돌봄', 0, TRUE, 'kristina65@mckay.com', 'thomas05@gmail.com'),
+('해드려요', '2024-11-21 17:00:00', '2024-11-21 18:30:00', 35000, '성남', '활동적인 강아지 산책', 0, TRUE, 'harrisanita@hotmail.com', 'jennifermartinez@brown-carr.com'),
+('해주세요', '2024-11-22 08:00:00', '2024-11-22 20:00:00', 180000, '청주', '페르시안 고양이 돌봄 요청', 0, FALSE, NULL, 'levidixon@yahoo.com'),
+('해드려요', '2024-11-23 13:00:00', '2024-11-23 14:30:00', 45000, '대구', '소형견 산책 대행', 0, FALSE, 'johnathan93@summers-thomas.com', 'lori35@gmail.com'),
+('해주세요', '2024-11-24 07:00:00', '2024-11-24 21:00:00', 200000, '서울', '하루 종일 돌봄 요청', 0, FALSE, 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
 
 -- Cand Table 더미 데이터
 INSERT INTO Cand (trade_id, user_id)
