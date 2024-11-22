@@ -123,7 +123,7 @@ CREATE TABLE DogWalker (
     weekend_am boolean NOT NULL DEFAULT FALSE,
     weekend_pm boolean NOT NULL DEFAULT FALSE,
     `all` boolean NOT NULL DEFAULT FALSE,
-    albe_time int NOT NULL DEFAULT 0,
+    able_time int NOT NULL DEFAULT 0,
     handle boolean NOT NULL DEFAULT FALSE,
     introduce text,
     FOREIGN KEY (user_id) REFERENCES User(user_id) ON DELETE CASCADE
@@ -320,7 +320,7 @@ VALUES
 
 
 -- DogWalker Table 더미 데이터
-INSERT INTO DogWalker (user_id, weekday_am, weekday_pm, weekend_am, weekend_pm, `all`, albe_time, handle, introduce)
+INSERT INTO DogWalker (user_id, weekday_am, weekday_pm, weekend_am, weekend_pm, `all`, able_time, handle, introduce)
 VALUES
 ('harrisanita@hotmail.com', TRUE, TRUE, TRUE, TRUE, FALSE, 3, TRUE, '강아지와 오랜 산책 경험이 있습니다. 주중과 주말 모두 가능하며, 특히 활발한 강아지를 잘 다룹니다.'),
 ('levidixon@yahoo.com', FALSE, TRUE, TRUE, FALSE, FALSE, 2, FALSE, '작은 강아지를 돌보는 데 익숙하며, 주말 오전 산책에 주력합니다.'),

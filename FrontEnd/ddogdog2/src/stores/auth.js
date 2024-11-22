@@ -16,14 +16,18 @@ export const useAuthStore = defineStore('auth', {
 
         // 사용자 정보와 토큰 저장
         this.token = response.data['access-token'];
-
+        const region = response.data['region']; // 사용자 지역 정보
         const tokens = this.token.split('.');
         const user_id = JSON.parse(atob(tokens[1]))['userId']
         console.log(user_id)
         console.log(this.token)
+        
         // 로컬 스토리지에 JWT 저장
         localStorage.setItem('token', this.token);
         localStorage.setItem('user_id', user_id);
+        localStorage.setItem('region', region);
+        
+
 
         // Axios 헤더에 토큰 설정
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;

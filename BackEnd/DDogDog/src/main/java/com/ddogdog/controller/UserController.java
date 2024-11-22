@@ -59,6 +59,7 @@ public class UserController {
             String token = jwtUtil.createToken(loginUser.getUserId());
             response.put("access-token", token);
             response.put("message", "Login successful");
+            response.put("region", loginUser.getRegion());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
 
