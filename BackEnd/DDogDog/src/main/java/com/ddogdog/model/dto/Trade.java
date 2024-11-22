@@ -1,6 +1,7 @@
 package com.ddogdog.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Trade {
     private Long tradeId;
@@ -10,8 +11,11 @@ public class Trade {
     private Long cost;
     private String region;
     private String detail;
+    private int state;
+    private boolean largeDog;
     private String superId;
     private String userId;
+    private List<Integer> pets;
 	public Long getTradeId() {
 		return tradeId;
 	}
@@ -54,6 +58,18 @@ public class Trade {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public boolean isLargeDog() {
+		return largeDog;
+	}
+	public void setLargeDog(boolean largeDog) {
+		this.largeDog = largeDog;
+	}
 	public String getSuperId() {
 		return superId;
 	}
@@ -65,6 +81,12 @@ public class Trade {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public List<Integer> getPets() {
+		return pets;
+	}
+	public void setPets(List<Integer> pets) {
+		this.pets = pets;
 	}
 
 }

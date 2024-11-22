@@ -14,14 +14,14 @@
     </select>
 
     <insert id="insertTrade" parameterType="com.ddogdog.model.dto.Trade">
-        INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, super_id, user_id)
-        VALUES (#{kind}, #{tradeStartTime}, #{tradeEndTime}, #{cost}, #{region}, #{detail}, #{superId}, #{userId})
+        INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, state, large_dog, super_id, user_id)
+        VALUES (#{kind}, #{tradeStartTime}, #{tradeEndTime}, #{cost}, #{region}, #{detail}, #{state}, #{largeDog}, #{superId}, #{userId})
     </insert>
 
     <update id="updateTrade" parameterType="com.ddogdog.model.dto.Trade">
         UPDATE Trade
         SET kind = #{kind}, tradeStartTime = #{tradeStartTime}, tradeEndTime = #{tradeEndTime},
-            cost = #{cost}, region = #{region}, detail = #{detail},
+            cost = #{cost}, region = #{region}, detail = #{detail}, state = #{state}, large_dog = #{largeDog},
             super_id = #{superId}, user_id = #{userId}
         WHERE trade_id = #{tradeId}
     </update>
