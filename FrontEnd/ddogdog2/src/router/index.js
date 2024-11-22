@@ -45,7 +45,7 @@ const routes = [
   { path: '/walklogdata', component: DataTest},
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
-  { path: "/test", name: 'test', component: TestView}
+  { path: "/test", name: 'test', component: TestView},
   { path: '/dog-walker-intro', component: WelcomeDogWalkerIntroView }, // 웰컴 도그워커 소개 페이지
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 
