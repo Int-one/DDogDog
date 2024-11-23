@@ -9,6 +9,8 @@ public interface TradeService {
     List<Trade> getAllTrades();
 
     Trade getTradeById(Long tradeId);
+    
+    Trade getLatestTradeById(Trade trade);
 
     boolean updateTrade(Trade trade);
 

@@ -8,7 +8,9 @@ public interface TradeDao {
 
     List<Trade> getAllTrades();
 
-    Trade selectOne(Long tradeId);
+    Trade getTradeById(Long tradeId);
+    
+    Trade getLatestTradeById(Trade trade);
 
     int updateTrade(Trade trade);
 
