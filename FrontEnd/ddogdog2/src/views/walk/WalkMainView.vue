@@ -43,7 +43,8 @@
       <button
         @click.prevent="() => {
           petStore.updateTogether();
-          petStore.goWith = [];
+          if(petStore.goWith.length > 0)
+            petStore.goWith = [petStore.goWith[0]];
           router.push({name: 'walking'})
           }"
         class="btn btn-primary btn-lg w-100 rounded-pill"
