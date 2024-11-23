@@ -21,14 +21,14 @@
         SELECT * FROM WalkLog WHERE log_id = #{logId}
     </select>
 
-    <!-- 특정 로그 ID로 가장 최근 WalkLog 조회 -->
+    <!-- 특정 유저 ID로 가장 최근 WalkLog 조회 -->
     <select id="getLatestWalkLogById" parameterType="string" resultType="com.ddogdog.model.dto.WalkLog">
         SELECT * FROM WalkLog WHERE user_id = #{userId} ORDER BY end_time DESC LIMIT 1
     </select>
     
     <!-- 사용자 ID로 WalkLog 조회 -->
     <select id="getWalkLogsByUserId" parameterType="string" resultType="com.ddogdog.model.dto.WalkLog">
-        SELECT * FROM WalkLog WHERE user_id = #{userId}
+        SELECT * FROM WalkLog WHERE user_id = #{userId} ORDER BY log_id DESC
     </select>
 
     <!-- WalkLog 업데이트 -->
