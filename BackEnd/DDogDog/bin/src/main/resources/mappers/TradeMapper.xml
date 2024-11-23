@@ -12,16 +12,28 @@
     <select id="getTradeById" parameterType="long" resultType="com.ddogdog.model.dto.Trade">
         SELECT * FROM Trade WHERE trade_id = #{tradeId}
     </select>
+    <!--  -->
+    <select id="getLatestTradeById" parameterType="Trade" resultType="com.ddogdog.model.dto.Trade">
+        SELECT * FROM Trade 
+        WHERE
+        <if test="kind == '해주세요'">
+        	super_id = #{superId}
+        </if>
+        <if test="kind == '해드려요'">
+        	user_id = #{userId}
+        </if>
+        ORDER BY trade_id DESC LIMIT 1
+    </select>
 
     <insert id="insertTrade" parameterType="com.ddogdog.model.dto.Trade">
-        INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, super_id, user_id)
-        VALUES (#{kind}, #{tradeStartTime}, #{tradeEndTime}, #{cost}, #{region}, #{detail}, #{superId}, #{userId})
+        INSERT INTO Trade (kind, trade_start_time, trade_end_time, cost, region, detail, state, large_dog, super_id, user_id)
+        VALUES (#{kind}, #{tradeStartTime}, #{tradeEndTime}, #{cost}, #{region}, #{detail}, #{state}, #{largeDog}, #{superId}, #{userId})
     </insert>
 
     <update id="updateTrade" parameterType="com.ddogdog.model.dto.Trade">
         UPDATE Trade
         SET kind = #{kind}, tradeStartTime = #{tradeStartTime}, tradeEndTime = #{tradeEndTime},
-            cost = #{cost}, region = #{region}, detail = #{detail},
+            cost = #{cost}, region = #{region}, detail = #{detail}, state = #{state}, large_dog = #{largeDog},
             super_id = #{superId}, user_id = #{userId}
         WHERE trade_id = #{tradeId}
     </update>

@@ -33,6 +33,9 @@ import DoForYouTab from '@/components/DoForYouTab.vue'
 import DogWalkerTab from '@/components/DogWalkerTab.vue'
 import DogWalkerView from '@/views/dogwalker/DogwalkerView.vue';
 
+import DoForMeRequestView from '@/views/dogwalker/DoForMeRequestView.vue';
+
+
 const routes = [
   { path: '/login', component: LoginPageView }, // 로그인 페이지
   { path: '/signup', component: SignupPageView }, // 회원가입 페이지
@@ -68,6 +71,9 @@ const routes = [
     { path: 'doforyou', name: 'DoForYouTab', component: DoForYouTab },
     ],
   },
+
+  {path: '/dogwalker/doforme/request', name: 'DoForMeRequest', component: DoForMeRequestView},
+  
 ];
 
 
@@ -95,7 +101,7 @@ router.beforeEach(async (to, from, next) => {
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   
-  if (to.path === '/login') {
+  if (to.path === '/') {
     try {
       await petStore.fetchPets();
       if (petStore.pets.length === 0) {
