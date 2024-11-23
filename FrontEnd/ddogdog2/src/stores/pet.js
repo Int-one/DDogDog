@@ -5,7 +5,8 @@ import axios from "axios";
 export const usePetStore = defineStore("pet", {
   state: () => ({
     pets: [], // 사용자 반려견 목록
-    goWith: [],
+    goWith: [], // 함께 산책갈 반려견 아이디 목록
+    together: [], // 함께 산책갈 반려견 목록
   }),
   actions: {
     // 사용자 반려견 목록 가져오기
@@ -30,6 +31,18 @@ export const usePetStore = defineStore("pet", {
         console.log(this.pets)
       } catch (error) {
         console.error("반려견 목록 가져오기 실패:", error);
+        throw error;
+      }
+    },
+
+
+    updateTogether() {
+      try {
+        // goWith에 해당하는 petId를 가진 pet들을 필터링
+        this.together = this.pets.filter(pet => this.goWith.includes(pet.petId));
+        console.log("Together 업데이트 완료:", this.together);
+      } catch (error) {
+        console.error("Together 업데이트 실패:", error);
         throw error;
       }
     },

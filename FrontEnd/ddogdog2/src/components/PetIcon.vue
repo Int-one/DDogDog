@@ -1,24 +1,24 @@
 <template>
   <div class="pets-container d-flex overflow-auto">
     <div
-      v-for="pet in petStore.pets"
-      :key="pet.id"
-      class="pet-item text-center me-3"
+    v-for="pet in pets"
+    :key="pet.petId"
+    class="pet-item text-center me-3"
     >
-      <div
-        class="rounded-circle mb-2 pet-image-container"
-        :class="{ 'selected': petStore.goWith.includes(pet.petId) }"
-      >
-        <img
-          :src="`http://localhost:8081/${pet.petPhoto}`"
-          alt="반려견 사진"
-          class="pet-image"
-          @click="handleImageClick(pet)"
-        />
-      </div>
-      <p class="text-muted">{{ pet.endTime }}</p>
-    </div>
+    <div
+    class="rounded-circle mb-2 pet-image-container"
+    :class="{ 'selected': petStore.goWith.includes(pet.petId) }"
+    >
+    <img
+    :src="`http://localhost:8081/${pet.petPhoto}`"
+    alt="반려견 사진"
+    class="pet-image"
+    @click="handleImageClick(pet)"
+    />
   </div>
+  <p class="text-muted">{{ pet.endTime }}</p>
+</div>
+</div>
 </template>
 
 <script setup>
@@ -30,12 +30,17 @@ const walkStore = useWalkStore();
 const petStore = usePetStore();
 
 
-const { onImageClick } = defineProps({
+const { onImageClick, pets } = defineProps({
   onImageClick: {
     type: Function,
     default: (pet) => console.log("기본 클릭 동작: ", pet),
   },
+  pets: {
+    type: Array,
+  },
 });
+
+
 
 const handleImageClick = (pet) => {
   // Props로 전달된 함수 실행
