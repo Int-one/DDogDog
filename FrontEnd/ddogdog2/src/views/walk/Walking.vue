@@ -73,7 +73,7 @@
           <p class="text-muted">{{ dog.endTime }}</p>
         </div>
       </div> -->
-      <PetIcon :onImageClick="togglePetSelection" />
+      <PetIcon :pets="petStore.together" :onImageClick="togglePetSelection" />
       <div class="border bg-light rounded p-3 text-center mt-3">
         산책 준비물 체크
       </div>

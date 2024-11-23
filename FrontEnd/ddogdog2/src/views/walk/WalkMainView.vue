@@ -3,7 +3,7 @@
     <!-- 반려견 섹션 -->
     <section class="pets-section my-4">
       <h2 class="text-center">산책 대기 중 반려견</h2>
-      <PetIcon :onImageClick="togglePetSelection" />
+      <PetIcon :pets="petStore.pets" :onImageClick="togglePetSelection" />
       <div class="border bg-light rounded p-3 text-center mt-3">
         <div class="d-flex justify-content-center mt-2">
           <label class="form-check-label me-3">
@@ -41,7 +41,11 @@
     <!-- 하단 버튼 -->
     <footer class="text-center my-4">
       <button
-        @click.prevent="router.push({name: 'walking'})"
+        @click.prevent="() => {
+          petStore.updateTogether();
+          petStore.goWith = [];
+          router.push({name: 'walking'})
+          }"
         class="btn btn-primary btn-lg w-100 rounded-pill"
       >
         <!-- {{ tracking ? '종료' : '산책 하러가기' }} -->
