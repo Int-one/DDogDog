@@ -1,6 +1,8 @@
 package com.ddogdog.controller;
 
+import com.ddogdog.model.dto.Together;
 import com.ddogdog.model.dto.Trade;
+import com.ddogdog.service.TogetherService;
 import com.ddogdog.service.TradeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,11 @@ import java.util.HashMap;
 public class TradeController {
 
     private final TradeService tradeService;
+    private final TogetherService togetherService;
 
-    public TradeController(TradeService tradeService) {
+    public TradeController(TradeService tradeService, TogetherService togetherService) {
         this.tradeService = tradeService;
+        this.togetherService = togetherService;
     }
 
     @GetMapping("")
@@ -39,6 +43,14 @@ public class TradeController {
     @PostMapping("")
     public ResponseEntity<Map<String, String>> createTrade(@RequestBody Trade trade) {
         boolean result = tradeService.createTrade(trade);
+        Trade curr = tradeService.getLatestTradeById(trade);
+        if(trade.getPets() != null)
+	        for(Integer petId : trade.getPets()) {
+	        	Together together = new Together();
+	        	together.setTradeId(curr.getTradeId());
+	        	together.setPetId(petId);
+	        	togetherService.createTogether(together);
+	        }
         Map<String, String> response = new HashMap<>();
         if (result) {
             response.put("message", "Trade created successfully");

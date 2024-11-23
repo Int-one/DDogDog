@@ -27,7 +27,12 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public Trade getTradeById(Long tradeId) {
-        return tradeDao.selectOne(tradeId);
+        return tradeDao.getTradeById(tradeId);
+    }
+    
+    @Override
+    public Trade getLatestTradeById(Trade trade) {
+    	return tradeDao.getLatestTradeById(trade);
     }
 
     @Override
