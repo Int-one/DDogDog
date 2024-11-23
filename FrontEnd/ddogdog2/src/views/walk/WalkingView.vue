@@ -1,78 +1,285 @@
 <template>
   <div class="container walk-tracker">
-    <!-- 상단 헤더
-    <header class="text-center my-3">
-      <h1>산책</h1>
-      <div class="btn-group" role="group" aria-label="탭 메뉴">
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '누적' }"
-          @click="selectedTab = '누적'"
-        >
-          누적
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '월간' }"
-          @click="selectedTab = '월간'"
-        >
-          월간
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '주간' }"
-          @click="selectedTab = '주간'"
-        >
-          주간
-        </button>
-      </div>
-    </header> -->
-
-    <!-- 산책 기록 -->
-    <!-- <section class="record-section my-3">
-      <h2 class="text-center">산책기록</h2>
-      <div class="border border-primary rounded p-2 text-primary text-center">
-        산책 횟수 / 소비칼로리 / 산책 거리 / 산책 시간
-      </div>
-    </section> -->
-
-    <!-- <section class="record-section my-3">
-      <h2 class="text-center">산책기록</h2>
-      <div class="border border-primary rounded p-2 text-primary text-center">
-        <div>산책 횟수: {{ totalWalks }}</div>
-        <div>소비 칼로리: {{ totalCalories }} kcal</div>
-        <div>산책 거리: {{ totalDistance.toFixed(2) }} km</div>
-        <div>산책 시간: {{ totalWalkTimeFormatted }}</div>
-      </div>
-    </section> -->
-
-
     <!-- 반려견 섹션 -->
     <section class="pets-section my-4">
-      <h2 class="text-center">산책 대기 중 반려견</h2>
-      <!-- <div class="pets-container d-flex overflow-auto">
-        <div
-          v-for="dog in petStore.pets"
-          :key="dog.id"
-          class="pet-item text-center me-3"
-        >
-          <div
-            class="rounded-circle mb-2 dog-image-container"
-            :class="{ 'selected': goWith.includes(dog.petId) }"
-          >
-            <img
-              :src="`http://localhost:8081/${dog.petPhoto}`"
-              alt="반려견 사진"
-              class="dog-image"
-              @click="togglePetSelection(dog.petId)"
-            />
+      <h2 class="text-center">산책 중 반려견</h2>
+      <PetIcon :pets="petStore.together" :onImageClick="selectPet" />
+    </section>
+
+    <!-- 세부 일정 작성 폼 -->
+    <div class="detail-form mt-4 p-3 border rounded bg-light" v-if="selectedPet">
+      <h3 class="text-center">{{ selectedPet?.petName }} 세부 일정 작성</h3>
+      <div class="row text-center mb-3">
+        <div class="col">
+          <label class="form-label">소변 횟수</label>
+          <div class="input-group mt-2 justify-content-center">
+            <button class="btn btn-outline-secondary" @click="details.smallWalks = Math.max(0, details.smallWalks - 1)">-</button>
+            <input type="number" class="form-control text-center" v-model.number="details.smallWalks" />
+            <button class="btn btn-outline-secondary" @click="details.smallWalks++">+</button>
           </div>
-          <p class="text-muted">{{ dog.endTime }}</p>
         </div>
-      </div> -->
+        <div class="col">
+          <label class="form-label">대변 횟수</label>
+          <div class="input-group mt-2 justify-content-center">
+            <button class="btn btn-outline-secondary" @click="details.bigWalks = Math.max(0, details.bigWalks - 1)">-</button>
+            <input type="number" class="form-control text-center" v-model.number="details.bigWalks" />
+            <button class="btn btn-outline-secondary" @click="details.bigWalks++">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="notes" class="form-label">특이사항</label>
+        <textarea id="notes" class="form-control" rows="2" v-model="details.notes"></textarea>
+      </div>
+    </div>
+
+    <!-- 실시간 이동 거리 및 경과 시간 -->
+    <div class="row text-center mt-4">
+      <div class="col">
+        <h4>실시간 이동 거리</h4>
+        <p class="fs-3">{{ currentDistance }} km</p>
+      </div>
+      <div class="col">
+        <h4>경과 시간</h4>
+        <p class="fs-3">{{ formattedElapsedTime }}</p>
+      </div>
+    </div>
+
+    <!-- 하단 버튼 -->
+    <footer class="text-center my-4">
+      <button @click="toggleTracking" class="btn btn-primary btn-lg w-100">
+        {{ tracking ? "종료" : "산책 ㄱ" }}
+      </button>
+    </footer>
+  </div>
+</template>
+
+<script setup>
+import axios from "axios";
+import PetIcon from "@/components/PetIcon.vue";
+import router from "@/router";
+import { ref, computed } from "vue";
+import { usePetStore } from "@/stores/pet";
+import { useWalkStore } from "@/stores/walk";
+
+const petStore = usePetStore();
+const walkStore = useWalkStore();
+const walkData = walkStore.currentWalk;
+let trackingInterval = null;
+const apiUrl = "http://localhost:8081/api/walklog";
+
+walkData.userId = "test@test.com";
+const tracking = ref(false);
+const elapsedTime = ref(0); // 타이머 경과 시간 (초 단위)
+const timerInterval = ref(null); // 타이머 간격 ID
+
+const details = ref({
+  bigWalks: 0,
+  smallWalks: 0,
+  notes: "",
+});
+
+// 선택된 반려견
+const selectedPet = computed(() =>
+  petStore.together.find((pet) => pet.petId === petStore.goWith[0])
+);
+
+// 반려견 선택
+const selectPet = (petId) => {
+  petStore.goWith = [petId];
+};
+
+// 거리 변수 (누적)
+const distance = ref(0); // 누적 이동 거리 (km)
+
+// 경로 일부 구간 거리 계산
+const calculateSegmentDistance = (lat1, lng1, lat2, lng2) => {
+  const toRad = (value) => (value * Math.PI) / 180;
+  const R = 6371; // 지구 반지름 (km)
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c * 1000) / 1000; // km 단위, 소수점 3째 자리 반올림
+};
+
+// 새 위치 처리
+const handleNewPosition = (lat, lng, time) => {
+  const path = walkData.walkPath;
+  const newPoint = { lat, lng, time };
+
+  if (path.length > 0) {
+    const lastPoint = path[path.length - 1];
+    const segmentDistance = calculateSegmentDistance(
+      lastPoint.lat,
+      lastPoint.lng,
+      lat,
+      lng
+    );
+    distance.value += segmentDistance; // 누적 거리 업데이트
+  }
+  path.push(newPoint); // 경로에 새 지점 추가
+};
+
+// 타이머 시작
+const startTimer = () => {
+  elapsedTime.value = 0; // 초기화
+  timerInterval.value = setInterval(() => {
+    elapsedTime.value++;
+  }, 1000);
+};
+
+// 타이머 중지
+const stopTimer = () => {
+  clearInterval(timerInterval.value);
+  timerInterval.value = null;
+};
+
+// 타이머 경과 시간 포맷팅
+const formattedElapsedTime = computed(() => {
+  const hours = Math.floor(elapsedTime.value / 3600).toString().padStart(2, "0");
+  const minutes = Math.floor((elapsedTime.value % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = (elapsedTime.value % 60).toString().padStart(2, "0");
+  return `${hours}:${minutes}:${seconds}`;
+});
+
+// 산책 시작
+const startTracking = () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation을 지원하지 않는 브라우저입니다.");
+    return;
+  }
+
+  walkData.startTime = formatTime(new Date());
+  walkData.walkPath = [];
+  distance.value = 0; // 초기 거리 초기화
+  startTimer(); // 타이머 시작
+
+  trackingInterval = setInterval(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude: lat, longitude: lng } = position.coords;
+        const time = formatTime(new Date());
+        handleNewPosition(lat, lng, time); // 새 위치 추가 및 거리 업데이트
+      },
+      (error) => {
+        console.error("위치 추적 오류:", error);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+      }
+    );
+  }, 1000);
+};
+
+// 산책 종료
+const stopTracking = async () => {
+  if (trackingInterval !== null) {
+    clearInterval(trackingInterval);
+    trackingInterval = null;
+  }
+  stopTimer(); // 타이머 중지
+
+  if (walkData.walkPath.length > 1) {
+    walkData.endTime = formatTime(new Date());
+
+    try {
+      await axios.post(apiUrl, walkData);
+      petStore.goWith = [];
+      // alert(`산책 데이터를 성공적으로 저장했습니다. 이동 거리: ${distance.value} km`);
+      router.replace({ name: "main" });
+    } catch (error) {
+      console.error("데이터 저장 실패:", error);
+      alert("산책 데이터를 저장하는 중 문제가 발생했습니다.");
+    }
+  } else {
+    alert("위치 기록이 부족합니다.");
+  }
+};
+
+// 버튼 토글
+const toggleTracking = () => {
+  if (tracking.value) {
+    stopTracking();
+  } else {
+    startTracking();
+  }
+  tracking.value = !tracking.value;
+};
+
+// 실시간 이동 거리
+const currentDistance = computed(() => distance.value);
+
+// 시간 포맷 함수
+const formatTime = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+};
+</script>
+
+<style scoped>
+.pets-container {
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.pet-item {
+  flex: 0 0 auto;
+  width: 80px;
+  cursor: pointer;
+}
+
+.pet-image-container {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pet-image-container.selected {
+  border-color: #007bff;
+}
+
+.pet-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.detail-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+</style>
+
+
+
+
+
+<!-- <template>
+  <div class="container walk-tracker">
+    
+    <section class="pets-section my-4">
+      <h2 class="text-center">산책 중 반려견</h2>
       <PetIcon :pets="petStore.together" />
       <div class="border bg-light rounded p-3 text-center mt-3">
         산책 준비물 체크
@@ -88,7 +295,6 @@
     </div>
     
 
-    <!-- 하단 버튼 -->
     <footer class="text-center my-4">
       <button
         @click="toggleTracking"
@@ -344,4 +550,4 @@ onUnmounted(() => {
 .pets-container::-webkit-scrollbar {
   display: none; /* 스크롤바 숨김 */
 }
-</style>
+</style> -->

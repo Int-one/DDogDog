@@ -28,6 +28,7 @@ import { usePetStore } from "@/stores/pet";
 
 const walkStore = useWalkStore();
 const petStore = usePetStore();
+const selectedPetId = ref(null); // ID of the selected pet
 
 
 const { onImageClick, pets } = defineProps({
@@ -64,6 +65,7 @@ onMounted(() => {
   gap: 1rem;
   overflow-x: auto; /* 가로 스크롤 활성화 */
   padding-bottom: 0.5rem;
+  height: 150px;
 }
 
 .pet-item {

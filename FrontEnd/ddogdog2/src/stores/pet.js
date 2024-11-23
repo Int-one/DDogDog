@@ -7,6 +7,7 @@ export const usePetStore = defineStore("pet", {
     pets: [], // 사용자 반려견 목록
     goWith: [], // 함께 산책갈 반려견 아이디 목록
     together: [], // 함께 산책갈 반려견 목록
+    petlogs: [], // 산책가는 반려견의 petlog
   }),
   actions: {
     // 사용자 반려견 목록 가져오기
