@@ -3,7 +3,7 @@
     <!-- 반려견 섹션 -->
     <section class="pets-section my-4">
       <h2 class="text-center">산책 중 반려견</h2>
-      <PetIcon :pets="petStore.together" :onImageClick="selectPet" />
+      <PetIcon :pets="petStore.together" :onImageClick="selectPet" :showEndTime="false" />
     </section>
 
     <!-- 세부 일정 작성 폼 -->
@@ -29,7 +29,7 @@
       </div>
       <div class="mb-3">
         <label for="notes" class="form-label">특이사항</label>
-        <textarea id="notes" class="form-control" rows="2" v-model="details.notes"></textarea>
+        <textarea id="notes" class="form-control" rows="4" v-model="details.notes"></textarea>
       </div>
     </div>
 
@@ -196,7 +196,7 @@ const stopTracking = async () => {
       await axios.post(apiUrl, walkData);
       petStore.goWith = [];
       // alert(`산책 데이터를 성공적으로 저장했습니다. 이동 거리: ${distance.value} km`);
-      router.replace({ name: "main" });
+      router.replace({ name: "walklog" });
     } catch (error) {
       console.error("데이터 저장 실패:", error);
       alert("산책 데이터를 저장하는 중 문제가 발생했습니다.");

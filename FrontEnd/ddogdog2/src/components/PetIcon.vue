@@ -1,24 +1,26 @@
 <template>
-  <div class="pets-container d-flex overflow-auto">
+  <div class="pets-container d-flex overflow-auto"
+  :style="{ height: showEndTime ? '150px' : '80px' }">
     <div
-    v-for="pet in pets"
-    :key="pet.petId"
-    class="pet-item text-center me-3"
+      v-for="pet in pets"
+      :key="pet.petId"
+      class="pet-item text-center me-3"
     >
-    <div
-    class="rounded-circle mb-2 pet-image-container"
-    :class="{ 'selected': petStore.goWith.includes(pet.petId) }"
-    >
-    <img
-    :src="`http://localhost:8081/${pet.petPhoto}`"
-    alt="반려견 사진"
-    class="pet-image"
-    @click="handleImageClick(pet)"
-    />
+      <div
+        class="rounded-circle mb-2 pet-image-container"
+        :class="{ 'selected': petStore.goWith.includes(pet.petId) }"
+      >
+        <img
+          :src="`http://localhost:8081/${pet.petPhoto}`"
+          alt="반려견 사진"
+          class="pet-image"
+          @click="handleImageClick(pet)"
+        />
+      </div>
+      <!-- showEndTime가 true일 때만 endTime을 표시 -->
+      <p v-if="showEndTime" class="text-muted">{{ pet.endTime }}</p>
+    </div>
   </div>
-  <p class="text-muted">{{ pet.endTime }}</p>
-</div>
-</div>
 </template>
 
 <script setup>
@@ -28,23 +30,25 @@ import { usePetStore } from "@/stores/pet";
 
 const walkStore = useWalkStore();
 const petStore = usePetStore();
-const selectedPetId = ref(null); // ID of the selected pet
 
-
-const { onImageClick, pets } = defineProps({
+// Props
+const { onImageClick, pets, showEndTime } = defineProps({
   onImageClick: {
     type: Function,
     default: (pet) => console.log("기본 클릭 동작: ", pet),
   },
   pets: {
     type: Array,
+    required: true,
+  },
+  showEndTime: {
+    type: Boolean,
+    default: true, // 기본값으로 endTime 표시
   },
 });
 
-
-
+// 반려견 클릭 이벤트 핸들러
 const handleImageClick = (pet) => {
-  // Props로 전달된 함수 실행
   if (typeof onImageClick === "function") {
     onImageClick(pet.petId);
   } else {
@@ -55,37 +59,36 @@ const handleImageClick = (pet) => {
 onMounted(() => {
   walkStore.fetchMyWalkLogs();
   petStore.fetchPets();
-})
-
+});
 </script>
 
 <style scoped>
-
+/* 기존 스타일 그대로 유지 */
 .pets-container {
   gap: 1rem;
-  overflow-x: auto; /* 가로 스크롤 활성화 */
+  overflow-x: auto;
   padding-bottom: 0.5rem;
   height: 150px;
 }
 
 .pet-item {
-  flex: 0 0 auto; /* 가로 방향으로만 확장 */
-  width: 80px; /* 각 반려견 아이템의 고정 너비 */
-  cursor: pointer; /* 클릭 가능 표시 */
+  flex: 0 0 auto;
+  width: 80px;
+  cursor: pointer;
 }
 
 .pet-image-container {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 2px solid transparent; /* 기본 테두리는 투명 */
+  border: 2px solid transparent;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .pet-image-container.selected {
-  border-color: #007bff; /* 선택된 상태에서 테두리 강조 */
+  border-color: #007bff;
 }
 
 .pet-image {
@@ -96,6 +99,6 @@ onMounted(() => {
 }
 
 .pets-container::-webkit-scrollbar {
-  display: none; /* 스크롤바 숨김 */
+  display: none;
 }
 </style>
