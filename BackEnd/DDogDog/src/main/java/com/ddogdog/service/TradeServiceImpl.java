@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -60,26 +61,32 @@ public class TradeServiceImpl implements TradeService {
         return result > 0;
     }
     
-    @Override
     public List<Map<String, Object>> getAllPleaseTrades() {
         // MyBatis 쿼리 결과 가져오기
         List<Map<String, Object>> trades = tradeDao.getAllPleaseTrades();
 
-        // petNames를 JSON 문자열에서 배열로 변환
-        for (Map<String, Object> trade : trades) {
-            if (trade.containsKey("petNames")) {
-                try {
-                    // petNames 값이 문자열인 경우 배열로 파싱
-                    String petNamesJson = (String) trade.get("petNames");
-                    List<String> petNames = objectMapper.readValue(petNamesJson, new TypeReference<List<String>>() {});
-                    trade.put("petNames", petNames);
-                } catch (Exception e) {
-                    // 오류 발생 시 빈 배열로 초기화
-                    trade.put("petNames", List.of());
+        // 키 이름을 camelCase로 변환하고 petNames를 JSON 문자열에서 List<String>으로 변환
+        return trades.stream()
+            .map(trade -> {
+                Map<String, Object> camelCaseTrade = convertKeysToCamelCase(trade);
+                if (camelCaseTrade.containsKey("petNames")) {
+                    try {
+                        Object petNamesObj = camelCaseTrade.get("petNames");
+                        if (petNamesObj instanceof String) {
+                            // JSON 문자열을 List<String>으로 변환
+                            String petNamesJson = (String) petNamesObj;
+                            List<String> petNames = objectMapper.readValue(petNamesJson, new TypeReference<List<String>>() {});
+                            camelCaseTrade.put("petNames", petNames);
+                        }
+                    } catch (Exception e) {
+                        // 변환 실패 시 빈 배열로 초기화
+                        camelCaseTrade.put("petNames", List.of());
+                        e.printStackTrace(); // 디버깅용
+                    }
                 }
-            }
-        }
-        return trades;
+                return camelCaseTrade;
+            })
+            .collect(Collectors.toList());
     }
     
     @Override
@@ -91,4 +98,35 @@ public class TradeServiceImpl implements TradeService {
     public List<Trade> getTradesByCandId(String candId) {
     	return tradeDao.getTradesByCandId(candId);
     }
+    
+
+	/**
+	 * snake_case 키를 camelCase로 변환
+	 */
+	private Map<String, Object> convertKeysToCamelCase(Map<String, Object> snakeCaseMap) {
+	    return snakeCaseMap.entrySet().stream()
+	        .collect(Collectors.toMap(
+	            entry -> toCamelCase(entry.getKey()), // 키 변환
+	            Map.Entry::getValue // 값 그대로
+	        ));
+	}
+	
+	/**
+	 * snake_case를 camelCase로 변환하는 메서드
+	 */
+	private String toCamelCase(String snakeCase) {
+	    StringBuilder result = new StringBuilder();
+	    boolean nextUpperCase = false;
+	    for (char c : snakeCase.toCharArray()) {
+	        if (c == '_') {
+	            nextUpperCase = true;
+	        } else if (nextUpperCase) {
+	            result.append(Character.toUpperCase(c));
+	            nextUpperCase = false;
+	        } else {
+	            result.append(c);
+	        }
+	    }
+	    return result.toString();
+	}
 }
