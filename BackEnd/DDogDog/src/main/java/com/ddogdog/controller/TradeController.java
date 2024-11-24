@@ -1,5 +1,6 @@
 package com.ddogdog.controller;
 
+import com.ddogdog.model.dto.Pet;
 import com.ddogdog.model.dto.Together;
 import com.ddogdog.model.dto.Trade;
 import com.ddogdog.service.TogetherService;
@@ -30,6 +31,27 @@ public class TradeController {
         List<Trade> trades = tradeService.getAllTrades();
         return ResponseEntity.ok(trades);
     }
+    
+    @GetMapping("/will")
+    public ResponseEntity<List<Trade>> getAllWillTrades() {
+        List<Trade> trades = tradeService.getAllTrades();
+        return ResponseEntity.ok(trades);
+    }
+    
+    @GetMapping("/please")
+    public ResponseEntity<?> getAllPlease() {
+    	List<Map<String, Object>> result = tradeService.getAllPleaseTrades();
+    	if (result == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trade not found");
+    	}
+    	return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/pets/{tradeId}")
+    public ResponseEntity<?> getPetsByTradeId(@PathVariable Long tradeId) {
+    	List<Pet> pets = tradeService.getPetsByTradeId(tradeId);
+    	return ResponseEntity.ok(pets);
+    }
 
     @GetMapping("/{tradeId}")
     public ResponseEntity<?> getTradeById(@PathVariable Long tradeId) {
@@ -38,6 +60,12 @@ public class TradeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trade not found");
         }
         return ResponseEntity.ok(trade);
+    }
+    
+    @GetMapping("/cand/{candId}")
+    public ResponseEntity<?> getTradesByCandId(@PathVariable String candId) {
+    	List<Trade> trades = tradeService.getTradesByCandId(candId);
+    	return ResponseEntity.ok(trades);
     }
 
     @PostMapping("")
