@@ -34,6 +34,7 @@ import DogWalkerTab from '@/components/DogWalkerTab.vue'
 import DogWalkerView from '@/views/dogwalker/DogwalkerView.vue';
 
 import DoForMeRequestView from '@/views/dogwalker/DoForMeRequestView.vue';
+import DoForMeDetailView from '@/views/dogwalker/DoForMeDetailView.vue'; // 상세 페이지 컴포넌트 추가
 
 
 const routes = [
@@ -74,6 +75,7 @@ const routes = [
   },
 
   {path: '/dogwalker/doforme/request', name: 'DoForMeRequest', component: DoForMeRequestView},
+  { path: '/doforme/:id', name: 'DoForMeDetail', component: DoForMeDetailView, props: true }, // 해주세요 상세 페이지 라우트 추가
   
 ];
 

@@ -1,213 +1,78 @@
-<!-- <template>
-  <div class="do-for-me-tab">
-    <h2 class="section-title">내가 작성한 '해주세요'</h2>
-    <div class="my-requests">
-      <div
-        v-if="myRequests.length"
-        class="horizontal-scroll"
-      >
-        <div v-for="request in myRequests" :key="request.id" class="request-card-horizontal">
-          <h3 class="request-title">{{ request.detail }}</h3>
-          <p class="request-info">비용: <span>{{ request.cost }}원</span></p>
-          <p class="request-info">지역: <span>{{ request.region }}</span></p>
-        </div>
-      </div>
-      <div v-else class="no-data">
-        <p>아직 작성된 '해주세요'가 없습니다.</p>
-      </div>
-    </div>
-
-    <h2 class="section-title">모든 '해주세요'</h2>
-    <div class="all-requests">
-      <div v-for="request in allRequests" :key="request.id" class="request-card">
-        <h3 class="request-title">{{ request.detail }}</h3>
-        <p class="request-info">비용: <span>{{ request.cost }}원</span></p>
-        <p class="request-info">지역: <span>{{ request.region }}</span></p>
-      </div>
-    </div>
-
-    <router-link to="/dogwalker/doforme/request" class="request-button">
-      새로운 '해주세요' 작성하기
-    </router-link>
-  </div>
-</template>
-
-<script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
-
-const myRequests = ref([]);
-const allRequests = ref([]);
-
-onMounted(async () => {
-  const userId = localStorage.getItem("user_id");
-  try {
-    const response = await axios.get("http://localhost:8081/api/trade", {
-      headers: { "access-token": localStorage.getItem("token") },
-    });
-    allRequests.value = response.data;
-    myRequests.value = response.data.filter((req) => req.superId === userId);
-  } catch (error) {
-    console.error("데이터 로드 실패:", error);
-  }
-});
-</script>
-
-<style scoped>
-/* 전체 컨테이너 */
-.do-for-me-tab {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-}
-
-/* 섹션 제목 */
-.section-title {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-/* 가로 스크롤 섹션 */
-.my-requests {
-  margin-bottom: 30px;
-}
-
-.horizontal-scroll {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: thin; /* Firefox */
-}
-
-.horizontal-scroll::-webkit-scrollbar {
-  height: 6px; /* 가로 스크롤바 높이 */
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb {
-  background-color: #4ba64b;
-  border-radius: 4px;
-}
-
-.horizontal-scroll::-webkit-scrollbar-track {
-  background-color: #ddd;
-}
-
-/* 가로 카드 디자인 */
-.request-card-horizontal {
-  flex: 0 0 auto;
-  width: 200px;
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.request-card-horizontal h3 {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.request-card-horizontal p {
-  font-size: 0.8rem;
-  margin: 5px 0;
-  color: #666;
-}
-
-.request-card-horizontal .request-info span {
-  font-weight: bold;
-  color: #4ba64b;
-}
-
-/* 세로 스크롤 섹션 */
-.all-requests {
-  margin-bottom: 30px;
-}
-
-.request-card {
-  background: #ffffff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.request-card h3 {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.request-card p {
-  font-size: 0.8rem;
-  margin: 5px 0;
-  color: #666;
-}
-
-.request-card .request-info span {
-  font-weight: bold;
-  color: #4ba64b;
-}
-
-/* 버튼 디자인 */
-.request-button {
-  display: block;
-  text-align: center;
-  background-color: #4ba64b;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 20px;
-  transition: background-color 0.3s;
-}
-
-.request-button:hover {
-  background-color: #3d8e3d;
-}
-
-/* "데이터 없음" 메시지 */
-.no-data {
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-}
-</style> -->
 <template>
   <div class="do-for-me-tab">
-    <h2 class="section-title">나의 '해주세요'</h2>
-    <div class="my-requests">
-      <div
-        v-if="myRequests.length"
-        class="horizontal-scroll"
-      >
-        <div v-for="request in myRequests" :key="request.id" class="request-card-horizontal">
-          <h3 class="request-title">{{ request.detail }}</h3>
-          <p class="request-info">비용: <span>{{ request.cost }}원</span></p>
-          <p class="request-info">지역: <span>{{ request.region }}</span></p>
-        </div>
-      </div>
-      <div v-else class="no-data">
-        <p>아직 작성된 '해주세요'가 없습니다.</p>
-      </div>
+    <div class="section-header">
+      <h2 class="section-title">나의 '해주세요'</h2>
+      <router-link to="/dogwalker/doforme/request" class="create-request-button-horizontal">
+        +
+      </router-link>
     </div>
 
-    <!-- '내 반려견 산책 해주세요' 버튼 -->
-    <router-link to="/dogwalker/doforme/request" class="create-request-button">
-      내 반려견 산책 해주세요
-    </router-link>
+    <div class="my-requests horizontal-scroll">
+      <template v-if="myRequests.length > 0">
+        <div
+          v-for="trade in myRequests"
+          :key="trade.tradeId"
+          class="request-card-horizontal"
+          @click="navigateToDetail(trade.tradeId)"
+        >
+          <div class="request-header">
+            <span class="request-title">{{ trade.petNames.join(", ") }} 산책 해주세요!</span>
+            <span class="request-id">#{{ trade.tradeId }}</span>
+          </div>
+          <p class="request-date">
+            {{ formatDate(trade.tradeStartTime) }} ({{ calculateDuration(trade.tradeStartTime, trade.tradeEndTime) }})
+          </p>
+          <p class="request-tags">
+            #{{ trade.largeDog ? "대형견" : "소형견" }} #{{ trade.petNames.length }}마리 #{{ trade.region }}
+          </p>
+          <div class="request-footer">
+            <span class="request-author">{{ trade.nickname || "익명" }}</span>
+            <span class="request-cost">{{ trade.cost }}원</span>
+          </div>
+        </div>
+        <!-- '+ 버튼' -->
+        <router-link
+          to="/dogwalker/doforme/request"
+          class="create-request-button-horizontal"
+        >
+          +
+        </router-link>
+      </template>
+
+      <!-- 목록이 없을 때 대체 카드 -->
+      <router-link
+        v-else
+        to="/dogwalker/doforme/request"
+        class="request-card-horizontal create-request-card"
+      >
+        내 반려견 산책 해주세요
+      </router-link>
+    </div>
+    <!--구분선-->
+    <hr class="divider" />
 
     <h2 class="section-title">실시간 '해주세요'</h2>
     <div class="all-requests">
-      <div v-for="request in allRequests" :key="request.id" class="request-card">
-        <h3 class="request-title">{{ request.detail }}</h3>
-        <p class="request-info">비용: <span>{{ request.cost }}원</span></p>
-        <p class="request-info">지역: <span>{{ request.region }}</span></p>
+      <div
+        v-for="trade in trades"
+        :key="trade.tradeId"
+        class="request-card"
+        @click="navigateToDetail(trade.tradeId)"
+      >
+        <div class="request-header">
+          <span class="request-title">{{ trade.petNames.join(", ") }} 산책 해주세요!</span>
+          <span class="request-id">#{{ trade.tradeId }}</span>
+        </div>
+        <p class="request-date">
+          {{ formatDate(trade.tradeStartTime) }} ({{ calculateDuration(trade.tradeStartTime, trade.tradeEndTime) }})
+        </p>
+        <p class="request-tags">
+          #{{ trade.largeDog ? "대형견" : "소형견" }} #{{ trade.petNames.length }}마리 #{{ trade.region }}
+        </p>
+        <div class="request-footer">
+          <span class="request-author">{{ trade.nickname || "익명" }}</span>
+          <span class="request-cost">{{ trade.cost }}원</span>
+        </div>
       </div>
     </div>
   </div>
@@ -215,148 +80,229 @@ onMounted(async () => {
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import { useRouter } from "vue-router";
+import { useDoForMeStore } from "@/stores/doforme";
+
+const store = useDoForMeStore();
+const router = useRouter();
 
 const myRequests = ref([]);
-const allRequests = ref([]);
+const trades = store.trades;
 
-onMounted(async () => {
-  const userId = localStorage.getItem("user_id");
-  try {
-    const response = await axios.get("http://localhost:8081/api/trade", {
-      headers: { "access-token": localStorage.getItem("token") },
+// 컴포넌트 마운트 시 데이터 필터링
+onMounted(() => {
+  if (!store.trades.length) {
+    store.fetchTrades().then(() => {
+      const userId = localStorage.getItem("user_id");
+      myRequests.value = store.trades.filter((trade) => trade.superId === userId);
     });
-    allRequests.value = response.data;
-    myRequests.value = response.data.filter((req) => req.superId === userId);
-  } catch (error) {
-    console.error("데이터 로드 실패:", error);
+  } else {
+    const userId = localStorage.getItem("user_id");
+    myRequests.value = store.trades.filter((trade) => trade.superId === userId);
   }
 });
+
+// 상세 페이지로 이동
+const navigateToDetail = (tradeId) => {
+  router.push({
+    name: "DoForMeDetail",
+    params: { id: tradeId },
+  });
+};
+
+// 날짜 포맷
+const formatDate = (datetime) => {
+  const date = new Date(datetime);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(
+    2,
+    "0"
+  )} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+};
+
+// 기간 계산
+const calculateDuration = (start, end) => {
+  const startTime = new Date(start);
+  const endTime = new Date(end);
+  const diffMs = endTime - startTime;
+
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (minutes === 0) {
+    return `${hours}h`;
+  }
+  return `${hours}h ${minutes}m`;
+};
 </script>
 
 <style scoped>
-/* 전체 컨테이너 */
 .do-for-me-tab {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
-  min-height: 100vh;
 }
 
 /* 섹션 제목 */
 .section-title {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-/* 가로 스크롤 섹션 */
-.my-requests {
-  margin-bottom: 20px;
+/* 섹션 헤더 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1px;
 }
 
+/* '+ 버튼' (가로 스크롤) */
+.create-request-button-horizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 80px;
+  background-color: #4ba64b;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.create-request-button-horizontal:hover {
+  background-color: #3d8e3d;
+}
+
+/* 가로 스크롤 */
 .horizontal-scroll {
   display: flex;
   gap: 15px;
   overflow-x: auto;
   padding-bottom: 10px;
-  scrollbar-width: thin; /* Firefox */
 }
 
-.horizontal-scroll::-webkit-scrollbar {
-  height: 6px; /* 가로 스크롤바 높이 */
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb {
-  background-color: #4ba64b;
-  border-radius: 4px;
-}
-
-.horizontal-scroll::-webkit-scrollbar-track {
-  background-color: #ddd;
-}
-
-/* 가로 카드 디자인 */
+/* 요청 카드 */
 .request-card-horizontal {
   flex: 0 0 auto;
-  width: 200px;
+  width: 300px;
   background: #ffffff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-bottom: 5px;
 }
 
-.request-card-horizontal h3 {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  color: #333;
+.request-card-horizontal:hover {
+  transform: scale(1.05);
 }
 
-.request-card-horizontal p {
-  font-size: 0.8rem;
-  margin: 5px 0;
-  color: #666;
-}
-
-.request-card-horizontal .request-info span {
+/* 요청 카드 대체 버튼 */
+.create-request-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
   font-weight: bold;
-  color: #4ba64b;
+  background-color: #4ba64b;
+  color: white;
+  text-align: center;
+  text-decoration: none;
 }
 
-/* 세로 스크롤 섹션 */
-.all-requests {
-  margin-top: 30px;
-}
-
+/* 요청 카드 (세로) */
 .request-card {
   background: #ffffff;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.request-card h3 {
-  font-size: 0.9rem;
+.request-card:hover {
+  transform: scale(1.05);
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
-  color: #333;
 }
 
-.request-card p {
-  font-size: 0.8rem;
-  margin: 5px 0;
+.request-title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.request-id {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.request-date {
+  font-size: 0.9rem;
   color: #666;
+  margin: 5px 0;
 }
 
-.request-card .request-info span {
+.request-tags {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.request-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.request-author {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.request-cost {
+  font-size: 0.9rem;
   font-weight: bold;
   color: #4ba64b;
 }
 
-/* '내 반려견 산책 해주세요' 버튼 */
-.create-request-button {
-  display: block;
-  text-align: center;
+.create-request-button-horizontal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
   background-color: #4ba64b;
   color: white;
-  padding: 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  border-radius: 50%;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
 }
 
-.create-request-button:hover {
+.create-request-button-horizontal:hover {
   background-color: #3d8e3d;
 }
 
-/* "데이터 없음" 메시지 */
-.no-data {
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
+/* 구분선 스타일 */
+.divider { /* 추가된 부분 */
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
 }
+
 </style>
