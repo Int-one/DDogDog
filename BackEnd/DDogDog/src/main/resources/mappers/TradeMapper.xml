@@ -9,9 +9,54 @@
         SELECT * FROM Trade
     </select>
 
+    <select id="getAllWillTrades" resultType="com.ddogdog.model.dto.Trade">
+        SELECT * FROM Trade WEHRE kind = '해드려요'
+    </select>
+
     <select id="getTradeById" parameterType="long" resultType="com.ddogdog.model.dto.Trade">
         SELECT * FROM Trade WHERE trade_id = #{tradeId}
     </select>
+    
+    <select id="getAllPleaseTrades" resultType="map">
+	    SELECT 
+	        t.trade_id,
+	        t.kind,
+	        t.trade_start_time,
+	        t.trade_end_time,
+	        t.cost,
+	        t.region,
+	        t.detail,
+	        t.state,
+	        t.large_dog,
+	        CAST(JSON_ARRAYAGG(p.pet_name) AS JSON) AS petNames
+	    FROM 
+	        Trade t
+	    LEFT JOIN Together tg ON t.trade_id = tg.trade_id
+	    LEFT JOIN Pet p ON tg.pet_id = p.pet_id
+	    WHERE 
+	        t.kind = '해주세요'
+	    GROUP BY 
+	        t.trade_id, t.kind, t.trade_start_time, t.trade_end_time, t.cost, 
+	        t.region, t.detail, t.state, t.large_dog
+	</select>
+
+    <select id="getPetsByTradeId" resultType="Pet">
+    	SELECT 
+	        *
+	    FROM 
+	        Together tg
+	    LEFT JOIN Pet p ON tg.pet_id = p.pet_id
+	    WHERE 
+	        tg.trade_id = #{tradeId}
+    </select>
+    
+    <select id="getTradesByCandId" parameterType="String" resultType="Trade">
+    	SELECT * FROM Trade t
+		LEFT JOIN Cand c ON c.trade_id = t.trade_id
+		WHERE
+			c.user_id = #{candId} AND kind = '해주세요';
+    </select>
+    
     <!--  -->
     <select id="getLatestTradeById" parameterType="Trade" resultType="com.ddogdog.model.dto.Trade">
         SELECT * FROM Trade 
