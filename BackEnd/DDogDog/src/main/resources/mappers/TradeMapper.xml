@@ -28,6 +28,8 @@
 	        t.detail,
 	        t.state,
 	        t.large_dog,
+	        t.super_id,
+	        t.user_id,
 	        JSON_ARRAYAGG(p.pet_name) AS petNames,
 	        u.nickname AS nickname
 	    FROM 
