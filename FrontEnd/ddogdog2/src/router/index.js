@@ -113,7 +113,7 @@ router.beforeEach(async (to, from, next) => {
       }
     } catch (error) {
       console.error("반려견 데이터 확인 실패:", error);
-      alert("문제가 발생했습니다. 다시 시도해주세요.");
+      alert("로그인이 필요합니다.");
       return next('/login');
     }
   }
