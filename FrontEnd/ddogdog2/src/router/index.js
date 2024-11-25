@@ -24,7 +24,7 @@ import DogWalkerSignupView from '@/views/dogwalker/DogWalkerSignupView.vue'; // 
 import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; // 추가
 import DogWalkerDetailView from '@/views/dogwalker/DogWalkerDetailView.vue';
 import DogWalkerListView from '@/views/dogwalker/DogWalkerListView.vue'; // 추가
-import TestView from '../views/TestView.vue';
+// import TestView from '../views/TestView.vue';
 import WalkingView from '@/views/walk/WalkingView.vue';
 import WalkView from '@/views/walk/WalkView.vue';
 
@@ -35,6 +35,11 @@ import DogWalkerView from '@/views/dogwalker/DogwalkerView.vue';
 
 import DoForMeRequestView from '@/views/dogwalker/DoForMeRequestView.vue';
 import DoForMeDetailView from '@/views/dogwalker/DoForMeDetailView.vue'; // 상세 페이지 컴포넌트 추가
+import BoardList from '@/components/board/BoardList.vue';
+import BoardCreate from '@/components/board/BoardCreate.vue';
+import BoardDetail from '@/components/board/BoardDetail.vue';
+import BoardUpdate from '@/components/board/BoardUpdate.vue';
+import BoardView from '@/views/BoardView.vue';
 
 
 const routes = [
@@ -76,7 +81,33 @@ const routes = [
 
   {path: '/dogwalker/doforme/request', name: 'DoForMeRequest', component: DoForMeRequestView},
   { path: '/doforme/:id', name: 'DoForMeDetail', component: DoForMeDetailView, props: true }, // 해주세요 상세 페이지 라우트 추가
-  
+  {
+    path: '/board',
+    name: 'board',
+    component: BoardView,
+    children: [
+      {
+        path: "",
+        name: "boardList",
+        component: BoardList
+      },
+      {
+        path: "create",
+        name: "boardCreate",
+        component: BoardCreate
+      },
+      {
+        path: ":id",
+        name: "boardDetail",
+        component: BoardDetail
+      },
+      {
+        path: "update",
+        name: "boardUpdate",
+        component: BoardUpdate,
+      },
+    ]
+  },
 ];
 
 
@@ -97,10 +128,10 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 로그인 상태 확인
-  // if (!authStore.token && to.path !== '/login') {
-  //   alert("로그인이 필요합니다.");
-  //   return next('/login'); // 로그인 페이지로 리디렉션
-  // }
+  if (!authStore.token && to.path !== '/login') {
+    alert("로그인이 필요합니다.");
+    return next('/login'); // 로그인 페이지로 리디렉션
+  }
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   

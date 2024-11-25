@@ -189,11 +189,14 @@ const togglePetSelection = (petId) => {
 
 const detail = (detailWalk) => {
   walkStore.currentWalk = detailWalk;
-  const res = axios.get(`http://localhost:8081/api/pet/pets/${detailWalk.logId}`)
+  const res = axios.get(`http://localhost:8081/api/pet/pets/${detailWalk.logId}`, {
+          headers: { "access-token": localStorage.getItem("token") },
+        })
   .then((res) => {
     petStore.together = res.data;
   })
   petStore.together = res.data;
+  petStore.goWith = [];
   router.push({"name": "walklog"})
 }
 

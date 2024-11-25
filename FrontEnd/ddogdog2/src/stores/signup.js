@@ -47,7 +47,9 @@ export const useSignupStore = defineStore('signup', {
         };
 
 
-        await axios.post('http://localhost:8081/api/user', userData)
+        await axios.post('http://localhost:8081/api/user', userData, {
+          headers: { "access-token": localStorage.getItem("token") },
+        })
       } catch (error) {
         console.error('회원가입 실패:', error)
         throw error // 에러를 호출자에게 전달

@@ -70,7 +70,9 @@ const userRegion = localStorage.getItem("region") || "";
 // API 호출로 도그워커 목록 가져오기
 const fetchDogWalkers = async () => {
   try {
-    const response = await axios.get("http://localhost:8081/api/user");
+    const response = await axios.get("http://localhost:8081/api/user", {
+          headers: { "access-token": localStorage.getItem("token") },
+        });
     dogWalkers.value = response.data.filter((walker) => walker.dogWalker === true);
     applyFilters();
   } catch (error) {
