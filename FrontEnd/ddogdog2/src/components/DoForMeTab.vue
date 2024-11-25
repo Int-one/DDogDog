@@ -90,17 +90,17 @@ const myRequests = ref([]);
 const trades = store.trades;
 
 // 컴포넌트 마운트 시 데이터 필터링
-onMounted(() => {
-  if (!store.trades.length) {
-    store.fetchTrades().then(() => {
-      const userId = localStorage.getItem("user_id");
-      myRequests.value = store.trades.filter((trade) => trade.superId === userId);
-    });
-  } else {
-    const userId = localStorage.getItem("user_id");
-    myRequests.value = store.trades.filter((trade) => trade.superId === userId);
-  }
-});
+// onMounted(() => {
+//   if (!store.trades.length) {
+//     store.fetchTrades().then(() => {
+//       const userId = localStorage.getItem("user_id");
+//       myRequests.value = store.trades.filter((trade) => trade.superId === userId);
+//     });
+//   } else {
+//     const userId = localStorage.getItem("user_id");
+//     myRequests.value = store.trades.filter((trade) => trade.superId === userId);
+//   }
+// });
 
 // 상세 페이지로 이동
 const navigateToDetail = (tradeId) => {

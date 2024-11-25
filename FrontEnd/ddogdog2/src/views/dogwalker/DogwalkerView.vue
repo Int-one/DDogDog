@@ -17,11 +17,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import DogWalkerTab from "@/components/DogWalkerTab.vue"; // '도그워커' 탭 컴포넌트
 import DoForMeTab from "@/components/DoForMeTab.vue"; // '해주세요' 탭 컴포넌트
 import DoForYouTab from "@/components/DoForYouTab.vue"; // '해드려요' 탭 컴포넌트
+import { useDoForMeStore } from "@/stores/doforme";
 
+const store = useDoForMeStore();
 const tabs = [
   { name: "dogwalker", label: "도그워커", component: DogWalkerTab },
   { name: "doforme", label: "해주세요", component: DoForMeTab },
@@ -37,6 +39,18 @@ const activeTabComponent = computed(() => {
 const setActiveTab = (tabName) => {
   activeTab.value = tabName;
 };
+
+onMounted(() => {
+  if (!store.trades.length) {
+    store.fetchTrades().then(() => {
+      const userId = localStorage.getItem("user_id");
+      myRequests.value = store.trades.filter((trade) => trade.superId === userId);
+    });
+  } else {
+    const userId = localStorage.getItem("user_id");
+    myRequests.value = store.trades.filter((trade) => trade.superId === userId);
+  }
+});
 </script>
 
 <style scoped>

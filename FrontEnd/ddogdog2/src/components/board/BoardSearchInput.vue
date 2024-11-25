@@ -14,6 +14,10 @@
             <div class="col-12 col-sm-5">
                 <input type="text" class="form-control form-control-sm" v-model="searchInfo.word" placeholder="검색어를 입력하세요" />
             </div>
+            <!-- 검색 버튼 -->
+            <div class="col-6 col-sm-1">
+                <button class="btn btn-warning btn-sm w-100" @click="searchBoardList">검색</button>
+            </div>
         </div>
     </div>
 </template>
