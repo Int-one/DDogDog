@@ -10,6 +10,15 @@
         INSERT INTO PetLog (note, small, big, log_id, pet_id)
         VALUES (#{note}, #{small}, #{big}, #{logId}, #{petId})
     </insert>
+    
+    <!-- 다중 데이터 삽입 -->
+    <insert id="insertPetLogs" parameterType="java.util.List">
+        INSERT INTO PetLog (big, log_id, note, pet_id, small)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.big}, #{item.logId}, #{item.notes}, #{item.petId}, #{item.small})
+        </foreach>
+    </insert>
 
     <!-- 모든 PetLog 조회 -->
     <select id="getAllPetLogs" resultType="com.ddogdog.model.dto.PetLog">

@@ -18,7 +18,7 @@ import PetRegistrationView from '../views/pet/PetRegistrationView.vue';
 import WelcomeDogWalkerIntroView from '../views/dogwalker/WelcomeDogWalkerIntroView.vue';
 import WalkMainView from '@/views/walk/WalkMainView.vue';
 import WalkLog from '@/components/WalkLog.vue';
-import DataTest from '@/views/walk/DataTest.vue';
+// import DataTest from '@/views/walk/DataTest.vue';
 
 import DogWalkerSignupView from '@/views/dogwalker/DogWalkerSignupView.vue'; // 추가
 import DogWalkerProfileView from '@/views/dogwalker/DogWalkerProfileView.vue'; // 추가
@@ -56,7 +56,7 @@ const routes = [
     { path: 'walklog', name: 'walklog', component: WalkLog},
   ]},
   // { path: '/walklog', component: WalkLog   },
-  { path: '/walklogdata', component: DataTest},
+  // { path: '/walklogdata', component: DataTest},
   { path: "/dog-walker-signup", component: DogWalkerSignupView }, // 도그워커 가입 페이지 추가
   { path: "/dog-walker-profile", component: DogWalkerProfileView }, // 도그워커 프로필 작성 페이지 추가
   { path: "/test", name: 'test', component: WalkLog },

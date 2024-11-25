@@ -4,7 +4,7 @@ import com.ddogdog.model.dto.PetLog;
 import java.util.List;
 
 public interface PetLogDao {
-    int insertPetLog(PetLog petLog);
+    int insertPetLogs(List<PetLog> petLogs);
 
     List<PetLog> getAllPetLogs();
 
