@@ -23,6 +23,7 @@ import DoForMeTab from "@/components/DoForMeTab.vue"; // '해주세요' 탭 컴�
 import DoForYouTab from "@/components/DoForYouTab.vue"; // '해드려요' 탭 컴포넌트
 import { useDoForMeStore } from "@/stores/doforme";
 
+const myRequests = ref([]);
 const store = useDoForMeStore();
 const tabs = [
   { name: "dogwalker", label: "도그워커", component: DogWalkerTab },
