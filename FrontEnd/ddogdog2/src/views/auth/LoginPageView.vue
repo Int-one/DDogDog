@@ -1,7 +1,7 @@
-
+<!-- 
 <template>
   <div class="login-page">
-    <!-- 로고 섹션 -->
+    
     <div class="logo-container">
       <div class="logo-circle">
         <img src="@/asset/ddogdog.png" alt="Logo" class="logo" />
@@ -9,9 +9,8 @@
       <h1 class="logo-title">DDogDog</h1>
     </div>
 
-    <!-- 로그인 폼 -->
     <form class="login-form" @submit.prevent="handleLogin">
-      <!-- 아이디 입력 -->
+  
       <div class="form-group">
         <label for="userId" class="form-label">ID(e-mail)</label>
         <input
@@ -24,7 +23,7 @@
         />
       </div>
 
-      <!-- 비밀번호 입력 -->
+     
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
         <input
@@ -37,7 +36,7 @@
         />
       </div>
 
-      <!-- 버튼 섹션 -->
+     
       <div class="button-group">
         <button type="submit" class="login-button">로그인</button>
         <router-link to="/signup" class="signup-button">DDogDog 회원가입</router-link>
@@ -75,8 +74,79 @@ const handleLogin = async () => {
     alert("로그인에 실패했습니다.");
   }
 };
-</script>
+</script> -->
 
+<template>
+  <div class="login-page">
+    <!-- 로고 섹션 -->
+    <div class="logo-container">
+      <div class="logo-circle">
+        <img src="@/asset/ddogdog.png" alt="Logo" class="logo" />
+      </div>
+      <h1 class="logo-title">DDogDog</h1>
+    </div>
+
+    <!-- 로그인 폼 -->
+    <form class="login-form" @submit.prevent="handleLogin">
+      <!-- 이메일 입력 -->
+      <div class="form-group">
+        <label for="email" class="form-label">이메일</label>
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          placeholder="이메일을 입력하세요"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <!-- 비밀번호 입력 -->
+      <div class="form-group">
+        <label for="password" class="form-label">비밀번호</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          placeholder="비밀번호를 입력하세요"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <!-- 버튼 섹션 -->
+      <div class="button-group">
+        <button type="submit" class="login-button">로그인</button>
+        <router-link to="/signup" class="signup-button">회원가입</router-link>
+      </div>
+    </form>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth"; // 인증 스토어 사용
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
+
+// 로그인 처리 함수
+const handleLogin = async () => {
+  try {
+    await authStore.login(email.value, password.value); // 스토어의 로그인 함수 호출
+    router.push("/"); // 로그인 성공 시 메인 페이지로 이동
+  } catch (error) {
+    console.error("로그인 실패:", error);
+    errorMessage.value = "로그인 실패. 이메일 또는 비밀번호를 확인하세요.";
+  }
+};
+</script>
 <style scoped>
 /* 전체 페이지 스타일 */
 .login-page {
