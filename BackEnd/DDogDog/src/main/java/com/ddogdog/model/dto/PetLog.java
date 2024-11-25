@@ -2,7 +2,7 @@ package com.ddogdog.model.dto;
 
 public class PetLog {
     private Long plogId;
-    private String note;
+    private String notes;
     private Integer small;
     private Integer big;
     private Long logId;
@@ -17,12 +17,12 @@ public class PetLog {
         this.plogId = plogId;
     }
 
-    public String getNote() {
-        return note;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Integer getSmall() {

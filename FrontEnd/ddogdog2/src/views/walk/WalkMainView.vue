@@ -29,9 +29,12 @@
       >
       {{ walkedTime(mylog) }}
         <p class="mb-1">{{ mylog.date }}</p>
-        <p class="mb-1 text-muted small">{{ mylog.started }} ~ {{ mylog.ended }}</p>
         <div class="d-flex justify-content-between small">
+          <span class="mb-1 text-muted small">{{ mylog.started }} ~ {{ mylog.ended }}</span>
           <span>{{ mylog.time }}</span>
+        </div>
+        <div class="d-flex justify-content-between small">
+          <span>{{ mylog.total  }} km</span>
           <span>{{ mylog.cal }} kcal</span>
         </div>
       </div>
@@ -269,18 +272,9 @@ const stopTracking = async () => {
   }
 };
 
-const toggleTracking = () => {
-  if (tracking.value) {
-    stopTracking();
-  } else {
-    startTracking();
-  }
-  tracking.value = !tracking.value;
-};
-
-
 onMounted(() => {
   walkStore.fetchMyWalkLogs();
+  petStore.goWith = [];
 })
 
 onUnmounted(() => {

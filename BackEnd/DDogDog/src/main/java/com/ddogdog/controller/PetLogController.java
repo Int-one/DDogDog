@@ -22,8 +22,9 @@ public class PetLogController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Map<String, String>> createPetLog(@RequestBody PetLog petLog) {
-        boolean result = petLogService.createPetLog(petLog);
+    public ResponseEntity<Map<String, String>> createPetLog(@RequestBody List<PetLog> petLogs) {
+    	System.out.println(petLogs.get(0).getPetId());
+        boolean result = petLogService.createPetLogs(petLogs);
         Map<String, String> response = new HashMap<>();
         if (result) {
             response.put("message", "PetLog created successfully");

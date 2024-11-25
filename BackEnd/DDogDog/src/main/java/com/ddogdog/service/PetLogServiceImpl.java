@@ -15,8 +15,8 @@ public class PetLogServiceImpl implements PetLogService {
     }
 
     @Override
-    public boolean createPetLog(PetLog petLog) {
-        int result = petLogDao.insertPetLog(petLog);
+    public boolean createPetLogs(List<PetLog> petLogs) {
+        int result = petLogDao.insertPetLogs(petLogs);
         return result > 0;
     }
 

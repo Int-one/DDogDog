@@ -26,7 +26,10 @@ public class WalkLogController {
         boolean result = walkLogService.createWalkLog(walkLog);
         Map<String, String> response = new HashMap<>();
         if (result) {
+        	WalkLog Log = walkLogService.getLatestWalkLogById(walkLog.getUserId());
+        	String res = String.valueOf(Log.getLogId());
             response.put("message", "WalkLog created successfully");
+            response.put("logId", res);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
         response.put("error", "Failed to create WalkLog");

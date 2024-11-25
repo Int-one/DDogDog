@@ -87,7 +87,7 @@
 
     <!-- 최근 산책 기록 스크롤 -->
     <div class="recent-logs">
-      <h5 class="mb-3 text-center">실시간 산책 인증</h5>
+      <h5 class="mb-3 text-center">지금 산책중인 사람들</h5>
       <div class="scroll-container">
         <div
           v-for="(log, index) in recentLogs"
@@ -224,31 +224,40 @@ const totalDistance = computed(() => {
   return filteredWalkLogs.value.reduce((sum, walk) => {
     if (!walk.walkPath || walk.walkPath.length < 2) return sum;
 
-    const calculateDistance = (path) => {
-      let distance = 0;
-      for (let i = 1; i < path.length; i++) {
-        const { lat: lat1, lng: lng1 } = path[i - 1];
-        const { lat: lat2, lng: lng2 } = path[i];
-        const toRad = (value) => (value * Math.PI) / 180;
-
-        const R = 6371; // Earth radius in km
-        const dLat = toRad(lat2 - lat1);
-        const dLng = toRad(lng2 - lng1);
-        const a =
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(toRad(lat1)) *
-            Math.cos(toRad(lat2)) *
-            Math.sin(dLng / 2) *
-            Math.sin(dLng / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        distance += R * c;
-      }
-      return distance;
-    };
-
-    return sum + calculateDistance(walk.walkPath);
+    return sum + walk.total;
   }, 0);
 });
+
+// const totalDistance = computed(() => {
+//   // 필터링된 데이터의 총 거리 계산
+//   return filteredWalkLogs.value.reduce((sum, walk) => {
+//     if (!walk.walkPath || walk.walkPath.length < 2) return sum;
+
+//     const calculateDistance = (path) => {
+//       let distance = 0;
+//       for (let i = 1; i < path.length; i++) {
+//         const { lat: lat1, lng: lng1 } = path[i - 1];
+//         const { lat: lat2, lng: lng2 } = path[i];
+//         const toRad = (value) => (value * Math.PI) / 180;
+
+//         const R = 6371; // Earth radius in km
+//         const dLat = toRad(lat2 - lat1);
+//         const dLng = toRad(lng2 - lng1);
+//         const a =
+//           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+//           Math.cos(toRad(lat1)) *
+//             Math.cos(toRad(lat2)) *
+//             Math.sin(dLng / 2) *
+//             Math.sin(dLng / 2);
+//         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//         distance += R * c;
+//       }
+//       return distance;
+//     };
+
+//     return sum + calculateDistance(walk.walkPath);
+//   }, 0);
+// });
 
 const totalWalkTime = computed(() => {
   // 필터링된 데이터의 총 시간 계산

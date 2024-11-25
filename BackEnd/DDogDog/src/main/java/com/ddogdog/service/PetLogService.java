@@ -4,7 +4,7 @@ import com.ddogdog.model.dto.PetLog;
 import java.util.List;
 
 public interface PetLogService {
-    boolean createPetLog(PetLog petLog);
+    boolean createPetLogs(List<PetLog> petLogs);
 
     List<PetLog> getAllPetLogs();
 
