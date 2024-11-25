@@ -124,7 +124,9 @@ const recentLogs = ref([]); // 최근 산책 기록
 // API 호출 함수들
 const fetchDogData = async () => {
   try {
-    const response = await axios.get("http://localhost:8081/api/pet/test@test.com"); // 반려견 데이터 API
+    const response = await axios.get(`http://localhost:8081/api/pet/${localStorage.getItem('user_id')}`, {
+          headers: { "access-token": localStorage.getItem("token") },
+        }); // 반려견 데이터 API
     dogs.value = response.data;
 
     // 각 반려견의 마지막 산책 시간을 계산
@@ -139,7 +141,9 @@ const fetchDogData = async () => {
 
 const fetchRecentLogs = async () => {
   try {
-    const response = await axios.get("http://localhost:8081/api/walklog");
+    const response = await axios.get("http://localhost:8081/api/walklog", {
+          headers: { "access-token": localStorage.getItem("token") },
+        });
     recentLogs.value = response.data.map((log) => ({
       ...log,
       walk_path: typeof log.walk_path === "string" ? JSON.parse(log.walk_path) : log.walk_path,

@@ -49,7 +49,9 @@ export const useWalkStore = defineStore("walk", () => {
 
     // API로 데이터 전송
     try {
-      const response = await axios.post(apiUrl, { ...currentWalk });
+      const response = await axios.post(apiUrl, { ...currentWalk }, {
+        headers: { "access-token": localStorage.getItem("token") },
+      });
       console.log("산책 데이터 저장 성공:", response.data);
       // 저장된 데이터를 walkLogs에 추가
       walkLogs.value.push({ ...currentWalk });
@@ -73,7 +75,9 @@ export const useWalkStore = defineStore("walk", () => {
   // 모든 산책 기록 불러오기
   const fetchWalkLogs = async () => {
     try {
-      const response = await axios.get(apiUrl);
+      const response = await axios.get(apiUrl, {
+        headers: { "access-token": localStorage.getItem("token") },
+      });
       walkLogs.value = response.data;
       console.log("산책 기록 불러오기 성공:", walkLogs.value);
     } catch (error) {
@@ -84,7 +88,9 @@ export const useWalkStore = defineStore("walk", () => {
   // 유저의 산책 기록 불러오기
   const fetchMyWalkLogs = async() => {
     try {
-      const response = await axios.get(`${apiUrl}/${localStorage.getItem('user_id')}`);
+      const response = await axios.get(`${apiUrl}/${localStorage.getItem('user_id')}`, {
+        headers: { "access-token": localStorage.getItem("token") },
+      });
       myWalkLogs.value = response.data
       console.log(myWalkLogs.value);
     } catch (e) {
