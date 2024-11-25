@@ -26,6 +26,7 @@
         v-for="mylog in walkStore.myWalkLogs"
         :key="mylog.startTime"
         class="log-item mb-3"
+        @click=""
       >
       {{ walkedTime(mylog) }}
         <p class="mb-1">{{ mylog.date }}</p>
@@ -96,20 +97,6 @@ const filteredWalkLogs = computed(() => {
   });
 });
 
-const totalWalks = computed(() => {
-  // 필터링된 데이터의 총 개수
-  return filteredWalkLogs.value.length;
-});
-
-const totalCalories = computed(() => {
-  // 칼로리 소모 계산: 1km당 60kcal 기준
-  const caloriesPerKm = 60;
-  const calories = totalDistance.value * caloriesPerKm;
-
-  // 소수 셋째자리에서 반올림
-  return Math.round(calories * 100) / 100;
-});
-
 
 const totalDistance = computed(() => {
   // 필터링된 데이터의 총 거리 계산
@@ -139,16 +126,6 @@ const totalDistance = computed(() => {
     };
 
     return sum + calculateDistance(walk.walkPath);
-  }, 0);
-});
-
-const totalWalkTime = computed(() => {
-  // 필터링된 데이터의 총 시간 계산
-  return filteredWalkLogs.value.reduce((sum, walk) => {
-    const start = new Date(walk.startTime);
-    const end = new Date(walk.endTime);
-    const duration = (end - start) / 1000; // 초 단위
-    return sum + duration;
   }, 0);
 });
 
@@ -211,66 +188,6 @@ const togglePetSelection = (petId) => {
   }
 };
 
-let trackingInterval = null;
-
-const apiUrl = "http://localhost:8081/api/walklog";
-
-const formatTime = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-};
-
-const startTracking = () => {
-  if (!navigator.geolocation) {
-    alert("Geolocation을 지원하지 않는 브라우저입니다.");
-    return;
-  }
-
-  walkData.startTime = formatTime(new Date());
-  walkData.walkPath = [];
-  walkData.goWith = petStore.goWith.value; // 선택된 반려견 정보 저장
-
-  trackingInterval = setInterval(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        const time = formatTime(new Date());
-        walkData.walkPath.push({ lat, lng, time });
-      },
-      (error) => {
-        console.error("위치 추적 오류:", error);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-      }
-    );
-  }, 1000);
-};
-
-const stopTracking = async () => {
-  if (trackingInterval !== null) {
-    clearInterval(trackingInterval);
-    trackingInterval = null;
-  }
-
-  if (walkData.walkPath.length > 0) {
-    walkData.endTime = formatTime(new Date());
-
-    try {
-      const response = await axios.post(apiUrl, walkData);
-      alert("산책 데이터를 성공적으로 저장했습니다.");
-      router.replace({ name: "main" });
-    } catch (error) {
-      alert("산책 데이터를 저장하는 중 문제가 발생했습니다.");
-    }
-  }
-};
 
 onMounted(() => {
   walkStore.fetchMyWalkLogs();
