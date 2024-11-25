@@ -42,6 +42,7 @@
 	    GROUP BY 
 	        t.trade_id, t.kind, t.trade_start_time, t.trade_end_time, t.cost, 
 	        t.region, t.detail, t.state, t.large_dog, u.nickname
+	    ORDER BY t.trade_id DESC
 	</select>
 
 
