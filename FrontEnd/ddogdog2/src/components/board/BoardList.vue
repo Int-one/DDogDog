@@ -50,7 +50,7 @@ onMounted(() => {
 }
 
 .table-wrapper {
-    height: 500px; /* 테이블 전체 높이 고정 */
+    height: 480px; /* 테이블 전체 높이 고정 */
     overflow-y: auto; /* 내용이 많을 경우 스크롤 생성 */
     border: 1px solid #dee2e6; /* 테두리 추가 */
     border-radius: 5px; /* 모서리 둥글게 */
