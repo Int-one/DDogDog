@@ -17,7 +17,7 @@ export const usePetLogStore = defineStore('petLogStore', () => {
       small: 0,
       big: 0,
       logId: null, // WalkLog의 log_id와 연결
-      petId: pet.pet_id,
+      pet_id: pet.petId,
     }));
   };
 

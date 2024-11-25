@@ -59,7 +59,7 @@
 
 <script setup>
 import axios from "axios";
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import PetIcon from "@/components/PetIcon.vue";
 import router from "@/router";
 import { usePetStore } from "@/stores/pet";
@@ -226,8 +226,8 @@ const toggleTracking = () => {
   tracking.value = !tracking.value;
 };
 
-onUnmounted(() => {
-  
+onMounted(() => {
+  petLogStore.initializePetLogs(petStore.together);
 })
 </script>
 
