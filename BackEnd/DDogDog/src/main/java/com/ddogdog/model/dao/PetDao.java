@@ -9,6 +9,8 @@ public interface PetDao {
 	
 	public List<Pet> getPetByUser(String userId);
 	
+	public List<Pet> findPetByLogId(Long logId);
+	
 	public Pet selectOne(int petId);
 	
 	public int deletePet(int petId);

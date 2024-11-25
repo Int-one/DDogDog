@@ -52,6 +52,16 @@ public class PetController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    
+    @GetMapping("/pets/{logId}")
+    public ResponseEntity<List<Pet>> findPetByLogId(@PathVariable("logId") Long logId) {
+    	try {
+            List<Pet> pets = petService.findPetByLogId(logId);
+            return ResponseEntity.ok(pets);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     // 펫 생성
     @PostMapping(consumes = {"multipart/form-data"})
