@@ -1,6 +1,33 @@
 <template>
   <div id="app">
-    <router-view />  <!-- 현재 라우트에 따라 컴포넌트를 렌더링 -->
+    <router-view />
+    <!-- 하단 메뉴바 조건부 렌더링 -->
+    <BottomNavBar v-if="showBottomNavBar" />
+  </div>
+</template>
+
+<script setup>
+import { useRoute } from "vue-router";
+import BottomNavBar from "@/components/BottomNavBar.vue";
+
+const route = useRoute();
+
+// 하단 메뉴바를 숨길 경로를 정의
+const hideBottomNavBarRoutes = ["/login", "/signup"];
+
+// 현재 경로가 하단 메뉴바 숨김 경로인지 확인
+const showBottomNavBar = !hideBottomNavBarRoutes.includes(route.path);
+</script>
+
+<style>
+/* 스타일이 필요하면 추가 */
+</style>
+
+
+<!-- 
+<template>
+  <div id="app">
+    <router-view />  
     <BottomNavBar />
   </div>
 </template>
@@ -39,4 +66,4 @@ body {
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
-</style>
+</style> -->
