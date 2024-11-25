@@ -4,6 +4,17 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ddogdog.model.dao.PetDao">
 
+	<select id="findPetByLogId" parameterType="long" resultType="Pet">
+        SELECT 
+            *
+        FROM 
+            PetLog pl
+        INNER JOIN 
+            Pet p using (pet_id)
+        WHERE 
+            pl.log_id = #{logId}
+    </select>
+
     <select id="getPetByUser" parameterType="String" resultType="Pet">
         SELECT 
 		    p.*,

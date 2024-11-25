@@ -26,7 +26,7 @@
         v-for="mylog in walkStore.myWalkLogs"
         :key="mylog.startTime"
         class="log-item mb-3"
-        @click=""
+        @click="detail(mylog)"
       >
       {{ walkedTime(mylog) }}
         <p class="mb-1">{{ mylog.date }}</p>
@@ -62,12 +62,11 @@
 
 <script setup>
 import { ref, onUnmounted, onMounted } from "vue";
-import axios from "axios";
 import router from "@/router";
 import { useWalkStore } from "@/stores/walk";
 import { usePetStore } from "@/stores/pet";
+import axios from "axios";
 
-const tracking = ref(false);
 const selectedTab = ref("누적");
 const walkStore = useWalkStore();
 const petStore = usePetStore();
@@ -188,6 +187,15 @@ const togglePetSelection = (petId) => {
   }
 };
 
+const detail = (detailWalk) => {
+  walkStore.currentWalk = detailWalk;
+  const res = axios.get(`http://localhost:8081/api/pet/pets/${detailWalk.logId}`)
+  .then((res) => {
+    petStore.together = res.data;
+  })
+  petStore.together = res.data;
+  router.push({"name": "walklog"})
+}
 
 onMounted(() => {
   walkStore.fetchMyWalkLogs();

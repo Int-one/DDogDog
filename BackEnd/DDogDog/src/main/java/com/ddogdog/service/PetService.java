@@ -10,6 +10,8 @@ public interface PetService {
 	
 	public List<Pet> getPetByUser(String userId);
 	
+	public List<Pet> findPetByLogId(Long logId);
+	
 	public Pet getPetById(int petId);
 	
 	public boolean deletePet(int petId);

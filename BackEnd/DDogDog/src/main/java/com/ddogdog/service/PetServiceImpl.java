@@ -27,6 +27,12 @@ public class PetServiceImpl implements PetService {
 		List<Pet> list = petdao.getPetByUser(userId);
 		return list;
 	}
+	
+	@Override
+	public List<Pet> findPetByLogId(Long logId) {
+		List<Pet> list = petdao.findPetByLogId(logId);
+		return list;
+	}
 
 	@Override
 	public Pet getPetById(int petId) {
