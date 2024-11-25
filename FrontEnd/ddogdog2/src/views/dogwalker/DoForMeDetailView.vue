@@ -1,3 +1,4 @@
+
 <template>
   <div class="doforme-detail" v-if="trade">
     <!-- 상단 헤더 -->
@@ -87,9 +88,7 @@
 
     <!-- 반려견 상세 정보 -->
     <div v-if="selectedPet" class="selected-pet-detail">
-      <button class="close-button" @click="closePetDetail">
-        <!-- <i class="fi fi-br-cross"></i> -->
-      </button>
+      <button class="close-button" @click="closePetDetail"></button>
       <h2 class="pet-name">{{ selectedPet.petName }}</h2>
       <table>
         <tbody>
@@ -99,7 +98,7 @@
           </tr>
           <tr>
             <td>성별</td>
-            <td>{{ selectedPet.petGender === true ? "남아" : "여아" }} ({{ selectedPet.castration === true ? "중성화" : "중성화X" }})</td>
+            <td>{{ selectedPet.petGender ? "남아" : "여아" }} ({{ selectedPet.castration ? "중성화" : "중성화X" }})</td>
           </tr>
           <tr>
             <td>견종</td>
@@ -122,6 +121,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useDoForMeStore } from "@/stores/doforme";
 import axios from "axios";
 
 const trade = ref(null); // 거래 데이터
@@ -129,15 +129,16 @@ const pets = ref([]); // 반려견 데이터
 const selectedPet = ref(null); // 선택된 반려견 데이터
 const route = useRoute();
 const router = useRouter();
+const doForMeStore = useDoForMeStore();
 
 // 데이터 로드
 onMounted(async () => {
   try {
-    const tradeResponse = await axios.get(
-      `http://localhost:8081/api/trade/${route.params.id}`
-    );
-    trade.value = tradeResponse.data;
+    // Pinia Store에서 거래 데이터 로드
+    await doForMeStore.fetchTrades();
+    trade.value = doForMeStore.trades.find((item) => item.tradeId === Number(route.params.id));
 
+    // 반려견 데이터 로드
     const petResponse = await axios.get(
       `http://localhost:8081/api/trade/pets/${route.params.id}`
     );
@@ -150,14 +151,11 @@ onMounted(async () => {
 // 반려견 상세 정보 표시
 const showPetDetail = (index) => {
   if (selectedPet.value === pets.value[index]) {
-    // 같은 반려견을 다시 클릭하면 닫기
-    selectedPet.value = null;
+    selectedPet.value = null; // 다시 클릭 시 닫기
   } else {
-    // 다른 반려견을 클릭하면 해당 반려견 표시
-    selectedPet.value = pets.value[index];
+    selectedPet.value = pets.value[index]; // 반려견 정보 열기
   }
 };
-
 
 // 반려견 상세 정보 닫기
 const closePetDetail = () => {
@@ -192,6 +190,9 @@ const goBack = () => {
   router.back();
 };
 </script>
+
+
+
 
 <style scoped>
 /* 전체 스타일 */
