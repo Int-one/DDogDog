@@ -159,7 +159,7 @@ VALUES
 ('보리', '2020-11-05', 0, 1, '강아지', '비숑프리제', 6.5, 'https://example.com/photos/pet8.jpg', '사람을 좋아하고 잘 따릅니다.', 'vlee@murphy-lewis.com'),
 ('구름', '2016-06-17', 1, 1, '강아지', '웰시코기', 11.3, 'https://example.com/photos/pet9.jpg', '짧은 다리와 긴 몸이 특징입니다.', 'thomas05@gmail.com'),
 ('Bud', '2016-06-17', 1, 1, 'Small', 'Beagle', 12.5, 'petPhoto/1732081391173_하츄핑.jpeg', 'My lovely dog', 'test@test.com'),
-('Buddy', '2018-06-27', 1, 0, 'Big', '웰시코기', 11.3, 'petPhoto/1732067779355_input.jpg', '짧은 다리와 긴 몸이 특징입니다.', 'test@test.com'),
+('Buddy', '2018-06-27', 1, 0, 'Big', '웰시코기', 11.3, 'petPhoto/1732067779355_input.jpg', '고양이를 무서워해요.', 'test@test.com'),
 ('별이', '2015-03-25', 1, 0, '고양이', '먼치킨', 3.2, 'https://example.com/photos/pet10.jpg', '활발하고 장난기 많은 성격입니다.', 'kristina65@mckay.com');
 
 -- Trade Table 더미 데이터
