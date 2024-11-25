@@ -67,6 +67,22 @@
       </table>
     </div>
 
+    <button
+      class="apply-button"
+      :disabled="isButtonDisabled"
+      @click="applyForTrade"
+    >
+      {{
+        trade.state !== 0
+          ? "모집이 종료된 거래입니다"
+          : doForMeStore.cands.some((cand) => cand.userId === currentUserId)
+          ? "이미 지원한 거래입니다"
+          : "지원하기"
+      }}
+    </button>
+
+
+
     <!-- 함께 가는 반려견 -->
     <div class="pet-section" v-if="pets.length">
       <div class="pet-photo-container">
@@ -119,7 +135,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDoForMeStore } from "@/stores/doforme";
 import axios from "axios";
@@ -127,6 +143,7 @@ import axios from "axios";
 const trade = ref(null); // 거래 데이터
 const pets = ref([]); // 반려견 데이터
 const selectedPet = ref(null); // 선택된 반려견 데이터
+const currentUserId = localStorage.getItem("user_id"); // 현재 유저 ID
 const route = useRoute();
 const router = useRouter();
 const doForMeStore = useDoForMeStore();
@@ -139,14 +156,53 @@ onMounted(async () => {
     trade.value = doForMeStore.trades.find((item) => item.tradeId === Number(route.params.id));
 
     // 반려견 데이터 로드
-    const petResponse = await axios.get(
-      `http://localhost:8081/api/trade/pets/${route.params.id}`
-    );
+    const petResponse = await axios.get(`http://localhost:8081/api/trade/pets/${route.params.id}`, {
+      headers: {
+        'access-token': localStorage.getItem("token")
+      }
+    });
     pets.value = petResponse.data;
+    await doForMeStore.fetchCands(route.params.id);
   } catch (error) {
     console.error("데이터 로드 실패:", error);
   }
 });
+
+const isButtonDisabled = computed(() => {
+  // 모집 중이 아니거나 이미 지원한 경우 버튼 비활성화
+  return (
+    trade.value?.state !== 0 || // 모집 중이 아닌 경우
+    doForMeStore.cands.some((cand) => cand.userId === currentUserId) // 이미 지원한 경우
+  );
+});
+
+
+// 버튼 활성화 여부 계산 속성
+const isUserAlreadyApplied = computed(() =>
+  doForMeStore.cands.some((cand) => cand.userId === currentUserId)
+);
+
+const applyForTrade = async () => {
+  try {
+    await axios.post(
+      `http://localhost:8081/api/cand`,
+      {
+        tradeId: trade.value.tradeId,
+        userId: currentUserId,
+      },
+      {
+        headers: {
+          "access-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    alert("거래에 지원했습니다.");
+    await doForMeStore.fetchCands(trade.value.tradeId); // 지원자 목록 갱신
+  } catch (error) {
+    console.error("거래 지원에 실패했습니다:", error);
+    alert("지원에 실패했습니다.");
+  }
+};
 
 // 반려견 상세 정보 표시
 const showPetDetail = (index) => {
@@ -384,4 +440,28 @@ td:last-child {
   text-align: left; /* 두 번째 열 좌측 정렬 */
   color: #333;
 }
+
+.apply-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.apply-button {
+  display: block; /* 버튼이 블록 요소로 동작 */
+  margin: 20px auto; /* 버튼을 수평 가운데 정렬 */
+  background-color: #81c784;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.apply-button:disabled {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
+
 </style>

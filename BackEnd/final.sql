@@ -190,7 +190,7 @@ VALUES
 ('해드려요', '2024-11-21 17:00:00', '2024-11-21 18:30:00', 35000, '성남', '활동적인 강아지 산책', 0, TRUE, 'harrisanita@hotmail.com', 'jennifermartinez@brown-carr.com'),
 ('해주세요', '2024-11-22 19:00:00', '2024-11-22 20:00:00', 18000, '서울', '포메라니안 산책해주세요', 0, FALSE, 'jiwoo99@gmail.com', NULL),
 ('해드려요', '2024-11-23 13:00:00', '2024-11-23 14:30:00', 45000, '대구', '소형견 산책 대행', 0, FALSE, 'johnathan93@summers-thomas.com', 'lori35@gmail.com'),
-('해주세요', '2024-11-24 20:00:00', '2024-11-24 21:00:00', 20000, '서울', '저녁 산책 요청', 0, FALSE, 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
+('해주세요', '2024-11-24 20:00:00', '2024-11-24 21:00:00', 20000, '서울', '저녁 산책 요청', 1, FALSE, 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
 
 -- Cand Table 더미 데이터
 INSERT INTO Cand (trade_id, user_id)
