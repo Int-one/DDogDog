@@ -69,12 +69,12 @@
 
     <!-- 내 반려견 섹션 -->
     <section class="pet-section">
-      <h2>내 반려견</h2>
+      <!-- <h2 style="margin-top: 0px; margin-bottom: 3px">내 반려견</h2> -->
       <div class="pet-list">
         <div v-for="pet in pets" :key="pet.pet_id" class="pet-card">
-          <img :src="pet.petPhoto || '/images/default-pet.jpg'" alt="반려견 사진" class="pet-photo" />
+          <img :src="`http://localhost:8081/${pet.petPhoto}`" alt="반려견 사진" class="pet-photo" />
           <div class="pet-info">
-            <p class="pet-name">{{ pet.pet_name }}</p>
+            <p class="pet-name">{{ pet.petName }}</p>
             <p class="last-walk">{{ pet.endTime }}</p>
           </div>
         </div>
@@ -83,15 +83,15 @@
 
     <!-- 도그워커 활동 -->
     <section class="dogwalker-section">
-      <h2>나의 도그워커 활동</h2>
+      <h2 style="margin-top: 10px; margin-bottom: 3px;">나의 도그워커 활동</h2>
       <div class="activity-stats">
         <div class="activity-card">
           <h3>해주세요</h3>
-          <p class="count">{{ user.hireCount }}</p>
+          <p class="count">{{ user.hireCnt }}</p>
         </div>
         <div class="activity-card">
           <h3>해드려요</h3>
-          <p class="count">{{ user.hiredCount }}</p>
+          <p class="count">{{ user.hiredCnt }}</p>
         </div>
       </div>
     </section>
@@ -112,8 +112,8 @@ const user = ref({
   nickname: "",
   exp: 0,
   bpm: 0,
-  hireCount: 0,
-  hiredCount: 0,
+  hireCnt: 0,
+  hiredCnt: 0,
   birth: "",
   phone: "",
   gender: "",
@@ -136,7 +136,9 @@ const fetchUserData = async () => {
         "access-token": localStorage.getItem("token"),
       },
     });
+    console.log(response.data)
     Object.assign(user.value, response.data); // 사용자 정보 업데이트
+    console.log(user.value.hireCount)
   } catch (error) {
     console.error("사용자 정보를 가져오는 데 실패했습니다:", error);
   }
@@ -325,6 +327,7 @@ onMounted(async () => {
 .activity-card {
   background: #fff;
   padding: 15px;
+  padding-bottom: 5px;
   border: 1px solid #ddd;
   border-radius: 8px;
   text-align: center;
