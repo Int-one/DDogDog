@@ -38,9 +38,9 @@ public class TradeController {
         return ResponseEntity.ok(trades);
     }
     
-    @GetMapping("/please")
-    public ResponseEntity<?> getAllPlease() {
-    	List<Map<String, Object>> result = tradeService.getAllPleaseTrades();
+    @GetMapping("/please/{region}")
+    public ResponseEntity<?> getAllPlease(@PathVariable String region) {
+    	List<Map<String, Object>> result = tradeService.getAllPleaseTrades(region);
     	if (result == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trade not found");
     	}

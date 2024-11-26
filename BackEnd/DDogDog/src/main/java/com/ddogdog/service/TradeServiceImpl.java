@@ -61,9 +61,9 @@ public class TradeServiceImpl implements TradeService {
         return result > 0;
     }
     
-    public List<Map<String, Object>> getAllPleaseTrades() {
+    public List<Map<String, Object>> getAllPleaseTrades(String region) {
         // MyBatis 쿼리 결과 가져오기
-        List<Map<String, Object>> trades = tradeDao.getAllPleaseTrades();
+        List<Map<String, Object>> trades = tradeDao.getAllPleaseTrades(region);
 
         // 키 이름을 camelCase로 변환하고 petNames를 JSON 문자열에서 List<String>으로 변환
         return trades.stream()

@@ -9,7 +9,8 @@ export const useDoForMeStore = defineStore("doforme", {
   actions: {
     async fetchTrades() {
       try {
-        const response = await axios.get("http://localhost:8081/api/trade/please", {
+        console.log(localStorage.getItem('region'))
+        const response = await axios.get(`http://localhost:8081/api/trade/please/${localStorage.getItem('region')}`, {
           headers: { "access-token": localStorage.getItem("token") },
         });
         this.trades = response.data;
