@@ -41,6 +41,7 @@ import BoardDetail from '@/components/board/BoardDetail.vue';
 import BoardUpdate from '@/components/board/BoardUpdate.vue';
 import BoardView from '@/views/BoardView.vue';
 
+import MyView from '@/views/my/MyView.vue';
 
 const routes = [
   { path: '/login', component: LoginPageView }, // 로그인 페이지
@@ -108,6 +109,8 @@ const routes = [
       },
     ]
   },
+
+  {path:"/my", name:"my", component: MyView,}
 ];
 
 
