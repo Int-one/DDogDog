@@ -66,10 +66,7 @@
 			WHERE ${key} LIKE concat('%', #{word}, '%')
 		</if>
 		
-		<!-- 검색 조건 -->
-		<if test="orderBy != 'none'">
-			ORDER BY ${orderBy} ${orderByDir}
-		</if>
+		ORDER BY board_id DESC
 		
 	</select>
 </mapper>

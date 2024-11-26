@@ -81,14 +81,14 @@ onMounted(() => {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 3.5px solid transparent;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .pet-image-container.selected {
-  border-color: #007bff;
+  border-color: #4ba64b;
 }
 
 .pet-image {
