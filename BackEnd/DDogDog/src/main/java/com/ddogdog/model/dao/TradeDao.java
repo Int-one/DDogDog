@@ -24,5 +24,5 @@ public interface TradeDao {
 
     int deleteTrade(Long tradeId);
     
-    List<Map<String, Object>> getAllPleaseTrades();
+    List<Map<String, Object>> getAllPleaseTrades(String region);
 }

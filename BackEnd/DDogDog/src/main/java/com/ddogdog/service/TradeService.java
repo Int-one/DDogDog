@@ -24,5 +24,5 @@ public interface TradeService {
 
     boolean deleteTrade(Long tradeId);
     
-    public List<Map<String, Object>> getAllPleaseTrades();
+    public List<Map<String, Object>> getAllPleaseTrades(String region);
 }

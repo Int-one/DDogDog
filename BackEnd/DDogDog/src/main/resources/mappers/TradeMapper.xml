@@ -19,30 +19,31 @@
     
     <select id="getAllPleaseTrades" resultType="map">
 	    SELECT 
-	        t.trade_id,
-	        t.kind,
-	        t.trade_start_time,
-	        t.trade_end_time,
-	        t.cost,
-	        t.region,
-	        t.detail,
-	        t.state,
-	        t.large_dog,
-	        t.super_id,
-	        t.user_id,
-	        JSON_ARRAYAGG(p.pet_name) AS petNames,
-	        u.nickname AS nickname
-	    FROM 
-	        Trade t
-	    LEFT JOIN Together tg ON t.trade_id = tg.trade_id
-	    LEFT JOIN Pet p ON tg.pet_id = p.pet_id
-	    LEFT JOIN User u ON t.super_id = u.user_id
-	    WHERE 
-	        t.kind = '해주세요'
-	    GROUP BY 
-	        t.trade_id, t.kind, t.trade_start_time, t.trade_end_time, t.cost, 
-	        t.region, t.detail, t.state, t.large_dog, u.nickname
-	    ORDER BY t.trade_id DESC
+		    t.trade_id,
+		    t.kind,
+		    t.trade_start_time,
+		    t.trade_end_time,
+		    t.cost,
+		    t.region,
+		    t.detail,
+		    t.state,
+		    t.large_dog,
+		    t.super_id,
+		    t.user_id,
+		    JSON_ARRAYAGG(p.pet_name) AS petNames,
+		    u.nickname AS nickname
+		FROM 
+		    Trade t
+		LEFT JOIN Together tg ON t.trade_id = tg.trade_id
+		LEFT JOIN Pet p ON tg.pet_id = p.pet_id
+		LEFT JOIN User u ON t.super_id = u.user_id
+		WHERE 
+		    t.kind = '해주세요' AND 
+		    t.region LIKE '%서울%'
+		GROUP BY 
+		    t.trade_id, t.kind, t.trade_start_time, t.trade_end_time, t.cost, 
+		    t.region, t.detail, t.state, t.large_dog, u.nickname
+		ORDER BY t.trade_id DESC;
 	</select>
 
 
