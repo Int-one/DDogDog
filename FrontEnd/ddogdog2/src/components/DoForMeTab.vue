@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useDoForMeStore } from "@/stores/doforme";
 
@@ -87,7 +87,9 @@ const store = useDoForMeStore();
 const router = useRouter();
 
 const myRequests = ref([]);
-const trades = store.trades;
+const trades = computed(()=>{
+  return store.trades;
+});
 
 // 컴포넌트 마운트 시 데이터 필터링
 // onMounted(() => {

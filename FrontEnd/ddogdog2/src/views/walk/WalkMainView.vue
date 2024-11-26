@@ -52,6 +52,7 @@
           router.push({name: 'walking'})
           }"
         class="btn btn-primary btn-lg w-100 rounded-pill"
+        style="background-color: #4ba64b; border-color: #4ba64b"
       >
         <!-- {{ tracking ? '종료' : '산책 하러가기' }} -->
           산책 가기
