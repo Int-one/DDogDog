@@ -188,9 +188,9 @@ VALUES
 ('해드려요', '2024-11-19 14:00:00', '2024-11-19 15:30:00', 30000, '인천', '말티즈 산책 대행', 0, FALSE, 'vlee@murphy-lewis.com', 'jackallen@alvarado-pena.com'),
 ('해주세요', '2024-11-20 14:00:00', '2024-11-20 16:00:00', 40000, '울산', '강아지 반나절 돌봄', 0, TRUE, 'kristina65@mckay.com', 'thomas05@gmail.com'),
 ('해드려요', '2024-11-21 17:00:00', '2024-11-21 18:30:00', 35000, '성남', '활동적인 강아지 산책', 0, TRUE, 'harrisanita@hotmail.com', 'jennifermartinez@brown-carr.com'),
-('해주세요', '2024-11-22 19:00:00', '2024-11-22 20:00:00', 18000, '서울', '포메라니안 산책해주세요', 0, FALSE, 'jiwoo99@gmail.com', NULL),
+('해주세요', '2024-11-27 19:00:00', '2024-11-27 20:00:00', 18000, '서울', '포메라니안 산책해주세요', 0, FALSE, 'jiwoo99@gmail.com', NULL),
 ('해드려요', '2024-11-23 13:00:00', '2024-11-23 14:30:00', 45000, '대구', '소형견 산책 대행', 0, FALSE, 'johnathan93@summers-thomas.com', 'lori35@gmail.com'),
-('해주세요', '2024-11-24 20:00:00', '2024-11-24 21:00:00', 20000, '서울', '저녁 산책 요청', 1, TRUE, 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
+('해주세요', '2024-11-28 20:00:00', '2024-11-28 21:00:00', 20000, '서울', '저녁 산책 요청', 1, TRUE, 'jackallen@alvarado-pena.com', 'thomasjames@hotmail.com');
 
 -- Cand Table 더미 데이터
 INSERT INTO Cand (trade_id, user_id)
@@ -421,6 +421,7 @@ VALUES
 ("반려견과 함께 찍은 추억 사진 공유", "johnathan93@summers-thomas.com", "이유진", "오늘 산책하면서 찍은 사진이에요. 우리 아이 너무 귀엽죠?"),
 ("강아지 장난감 추천해주세요!", "lori35@gmail.com", "최서연", "오래 가지고 놀 수 있는 강아지 장난감 뭐가 있을까요? 추천 부탁드립니다.");
 
+UPDATE User SET hired_cnt = 7, hire_cnt = 5 WHERE user_id = 'test@test';
 
 
 select * from user;
