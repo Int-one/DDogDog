@@ -22,16 +22,21 @@ import DogWalkerTab from "@/components/DogWalkerTab.vue"; // '도그워커' 탭 
 import DoForMeTab from "@/components/DoForMeTab.vue"; // '해주세요' 탭 컴포넌트
 import DoForYouTab from "@/components/DoForYouTab.vue"; // '해드려요' 탭 컴포넌트
 import { useDoForMeStore } from "@/stores/doforme";
+import axios from "axios";
 
 const myRequests = ref([]);
 const store = useDoForMeStore();
 const tabs = [
-  { name: "dogwalker", label: "도그워커", component: DogWalkerTab },
+  // { name: "dogwalker", label: "도그워커", component: DogWalkerTab },
   { name: "doforme", label: "해주세요", component: DoForMeTab },
   { name: "doforyou", label: "해드려요", component: DoForYouTab },
 ];
 
 const activeTab = ref(tabs[0].name);
+const dogWalkers = ref([]);
+const filteredDogWalkers = ref([]);
+const searchQuery = ref("");
+const filterByRegion = ref(false);
 
 const activeTabComponent = computed(() => {
   return tabs.find((tab) => tab.name === activeTab.value)?.component || null;
@@ -41,7 +46,39 @@ const setActiveTab = (tabName) => {
   activeTab.value = tabName;
 };
 
+const fetchDogWalkers = async () => {
+  try {
+    const response = await axios.get("http://localhost:8081/api/user", {
+          headers: { "access-token": localStorage.getItem("token") },
+        });
+    dogWalkers.value = response.data.filter((walker) => walker.dogWalker === true);
+    applyFilters();
+  } catch (error) {
+    console.error("도그워커 목록을 불러오지 못했습니다:", error);
+  }
+};
+
+const applyFilters = () => {
+  let results = dogWalkers.value;
+
+  // '내 지역만 보기' 활성화 시 필터링
+  if (filterByRegion.value) {
+    results = results.filter((walker) => walker.region.includes(userRegion));
+  }
+
+  // 검색어 필터링
+  if (searchQuery.value) {
+    results = results.filter((walker) =>
+      walker.region.toLowerCase().includes(searchQuery.value.toLowerCase())
+    );
+  }
+
+  filteredDogWalkers.value = results;
+};
+
+
 onMounted(() => {
+  fetchDogWalkers();
   if (!store.trades.length) {
     store.fetchTrades().then(() => {
       const userId = localStorage.getItem("user_id");

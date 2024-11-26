@@ -1,45 +1,6 @@
 <template>
   <div class="container mt-3">
-
-
-    <header class="text-center my-3">
-      <div class="btn-group" role="group" aria-label="탭 메뉴">
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '누적' }"
-          @click="selectedTab = '누적'"
-        >
-          누적
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '월간' }"
-          @click="selectedTab = '월간'"
-        >
-          월간
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          :class="{ active: selectedTab === '주간' }"
-          @click="selectedTab = '주간'"
-        >
-          주간
-        </button>
-      </div>
-    </header>
-    <section class="record-section my-3">
-      <div class="border border-primary rounded p-2 text-primary text-center">
-        <div>산책 횟수: {{ totalWalks }}</div>
-        <div>소비 칼로리: {{ totalCalories }} kcal</div>
-        <div>산책 거리: {{ totalDistance.toFixed(2) }} km</div>
-        <div>산책 시간: {{ totalWalkTimeFormatted }}</div>
-      </div>
-    </section>
-
-
+    <h3 class="text-center">내 강아지</h3>
     <!-- 상단 반려견 정보 Carousel -->
     <div v-if="dogs" class="dog-carousel-container">
       <div id="dogCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -85,9 +46,48 @@
       </div>
     </div>
 
+    <header class="text-center my-3">
+      <div class="custom-tab-group" role="group" aria-label="탭 메뉴">
+        <button
+          type="button"
+          class="custom-tab-button"
+          :class="{ active: selectedTab === '누적' }"
+          @click="selectedTab = '누적'"
+        >
+          누적
+        </button>
+        <button
+          type="button"
+          class="custom-tab-button"
+          :class="{ active: selectedTab === '월간' }"
+          @click="selectedTab = '월간'"
+        >
+          월간
+        </button>
+        <button
+          type="button"
+          class="custom-tab-button"
+          :class="{ active: selectedTab === '주간' }"
+          @click="selectedTab = '주간'"
+        >
+          주간
+        </button>
+      </div>
+    </header>
+
+
+    <section class="record-section my-3">
+      <div class="border">
+        <div>산책 횟수: {{ totalWalks }}</div>
+        <div>소비 칼로리: {{ totalCalories }} kcal</div>
+        <div>산책 거리: {{ totalDistance.toFixed(2) }} km</div>
+        <div>산책 시간: {{ totalWalkTimeFormatted }}</div>
+      </div>
+    </section>
+
     <!-- 최근 산책 기록 스크롤 -->
     <div class="recent-logs">
-      <h5 class="mb-3 text-center">지금 산책중인 사람들</h5>
+      <h5 class="mb-0 text-center">지금 산책중인 사람들</h5>
       <div class="scroll-container">
         <div
           v-for="(log, index) in recentLogs"
@@ -232,37 +232,6 @@ const totalDistance = computed(() => {
   }, 0);
 });
 
-// const totalDistance = computed(() => {
-//   // 필터링된 데이터의 총 거리 계산
-//   return filteredWalkLogs.value.reduce((sum, walk) => {
-//     if (!walk.walkPath || walk.walkPath.length < 2) return sum;
-
-//     const calculateDistance = (path) => {
-//       let distance = 0;
-//       for (let i = 1; i < path.length; i++) {
-//         const { lat: lat1, lng: lng1 } = path[i - 1];
-//         const { lat: lat2, lng: lng2 } = path[i];
-//         const toRad = (value) => (value * Math.PI) / 180;
-
-//         const R = 6371; // Earth radius in km
-//         const dLat = toRad(lat2 - lat1);
-//         const dLng = toRad(lng2 - lng1);
-//         const a =
-//           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//           Math.cos(toRad(lat1)) *
-//             Math.cos(toRad(lat2)) *
-//             Math.sin(dLng / 2) *
-//             Math.sin(dLng / 2);
-//         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//         distance += R * c;
-//       }
-//       return distance;
-//     };
-
-//     return sum + calculateDistance(walk.walkPath);
-//   }, 0);
-// });
-
 const totalWalkTime = computed(() => {
   // 필터링된 데이터의 총 시간 계산
   return filteredWalkLogs.value.reduce((sum, walk) => {
@@ -313,21 +282,43 @@ onMounted(() => {
 
 /* 반려견 사진 스타일 */
 .dog-image {
-  width: 250px;
-  height: 250px;
+  width: 200px; /* 기존 250px에서 줄임 */
+  height: 200px;
   object-fit: cover;
-  border-radius: 50%; /* 항상 원형 유지 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 50%; /* 원형 유지 */
+  border: 5px solid #f2f2f2; /* 테두리 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
 }
 
 /* 반려견 카드 스타일 */
 .dog-card {
-  min-height: 300px; /* 고정 높이 설정으로 위치 움직임 방지 */
+  background-color: #ffffff; /* 흰색 배경 */
+  border: 1px solid #dcdcdc; /* 박스 테두리 */
+  border-radius: 15px; /* 둥근 모서리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  /* padding: 20px; 내부 여백 */
+  padding-top: 10px;
+  margin: 0px auto; /* 외부 여백 */
+  width: 90%; /* 박스 크기 */
+  max-width: 350px; /* 최대 크기 제한 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
+}
+
+/* 반려견 이름 및 마지막 산책 시간 텍스트 스타일 */
+.dog-card h5 {
+  font-size: 1.4rem; /* 이름 글씨 크기 */
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333; /* 진한 색 */
+}
+
+.dog-card p {
+  font-size: 1rem; /* 산책 시간 글씨 크기 */
+  color: #666; /* 연한 색 */
+  margin-top: 5px;
 }
 
 .card-body > p {
@@ -393,6 +384,67 @@ header {
   background-color: #007bff;
   color: white;
   border-color: #007bff;
+}
+
+.record-section .border {
+  border-color: #d1d1d1 !important; /* 박스 색상 조정 */
+  background-color: #ffffff; /* 배경색 추가 */
+  padding: 1.5rem; /* 패딩 조정 */
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 15px; /* 둥근 모서리 */
+  text-align: center;
+  font-size: 1.1rem; /* 폰트 크기 확대 */
+  font-weight: bold;
+}
+
+/* 탭 버튼 그룹 */
+.custom-tab-group {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 버튼 간격 */
+  margin-top: 20px;
+}
+
+.custom-tab-button {
+  padding: 10px 20px; /* 버튼 크기 */
+  font-size: 1rem; /* 텍스트 크기 */
+  color: #aaaaaa; /* 기본 텍스트 색상 */
+  background: none; /* 배경 제거 */
+  border: none; /* 테두리 제거 */
+  font-weight: bold; /* 텍스트 강조 */
+  cursor: pointer; /* 포인터 커서 */
+  transition: color 0.3s ease, border-bottom 0.3s ease; /* 애니메이션 */
+}
+
+/* 활성화 상태 (글자 색상 및 하단 강조선 추가) */
+.custom-tab-button.active {
+  color: #000000; /* 활성화 텍스트 색상 */
+  border-bottom: 2px solid #000000; /* 하단 강조선 */
+}
+
+/* 호버 효과 */
+.custom-tab-button:hover {
+  color: #000000; /* 호버 시 텍스트 색상 */
+}
+
+
+/* 산책 기록 박스 스타일 */
+.custom-record-box {
+  background-color: #f8f9fa !important; /* 박스 배경색 */
+  border: 1px solid #dcdcdc !important; /* 박스 테두리 */
+  border-radius: 15px !important; /* 둥근 모서리 */
+  padding: 20px !important; /* 내부 여백 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  font-size: 1.1rem; /* 폰트 크기 */
+  color: #343a40; /* 텍스트 색상 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  font-weight: bold; /* 텍스트 강조 */
+}
+
+/* 산책 기록 항목 간격 */
+.custom-record-box div {
+  margin: 10px 0; /* 항목 간격 */
 }
 
 </style>

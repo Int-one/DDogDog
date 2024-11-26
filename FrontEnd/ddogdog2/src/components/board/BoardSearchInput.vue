@@ -16,7 +16,7 @@
             </div>
             <!-- 검색 버튼 -->
             <div class="col-6 col-sm-1">
-                <button class="btn btn-warning btn-sm w-100" @click="searchBoardList">검색</button>
+                <button class="btn btn-primary btn-sm w-100" @click="searchBoardList" style="background-color: #4ba64b; border-color: #4ba64b">검색</button>
             </div>
         </div>
     </div>

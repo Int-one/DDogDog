@@ -50,7 +50,7 @@
 
     <!-- 하단 버튼 -->
     <footer class="text-center my-4">
-      <button @click="toggleTracking" class="btn btn-primary btn-lg w-100 rounded-pill">
+      <button @click="toggleTracking" class="btn btn-primary btn-lg w-100 rounded-pill" style="background-color: #4ba64b; border-color: #4ba64b">
         {{ tracking ? "종료" : "산책 시작" }}
       </button>
     </footer>
@@ -212,9 +212,10 @@ const stopTracking = async () => {
       .then((res) => {
         petLogStore.setLogId(res.data.logId);
       });
-    await axios.post("http://localhost:8081/api/petlog", petLogStore.getPetLogs, {
-          headers: { "access-token": localStorage.getItem("token") },
-        })
+    if(petLogStore.getPetLogs.length > 0)
+      await axios.post("http://localhost:8081/api/petlog", petLogStore.getPetLogs, {
+            headers: { "access-token": localStorage.getItem("token") },
+          })
     petLogStore.resetPetLogs();
     petStore.goWith = [];
     router.replace({ name: "walklog" });
