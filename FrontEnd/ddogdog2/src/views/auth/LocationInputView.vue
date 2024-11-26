@@ -192,8 +192,8 @@ const convertToAddress = async (lat, lng) => {
   const coord = new kakao.maps.LatLng(lat, lng);
 
   return new Promise((resolve, reject) => {
-    // geocoder.coord2Address(coord.getLng(), coord.getLat(), (result, status) => {
-      geocoder.coord2Address(127.2352, 37.64657, (result, status) => {
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), (result, status) => {
+      // geocoder.coord2Address(127.2352, 37.64657, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
         const roadAddress = result[0]?.road_address?.address_name; // 도로명 주소
         const jibunAddress = result[0]?.address?.address_name; // 지번 주소

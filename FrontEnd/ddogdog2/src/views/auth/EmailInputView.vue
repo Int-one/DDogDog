@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div>
     <h1>이메일 입력</h1>
     <input v-model="email" type="email" placeholder="이메일" />
@@ -24,12 +24,12 @@ const nextStep = () => {
 
 <style scoped>
 /* 스타일 추가 */
-</style> -->
+</style>
 
 
 
 
-<template>
+<!-- <template>
   <div class="dogwalker-tab">
     <div class="header">
       <button class="main-button" @click="navigateToSignup">도그워커 가입하기</button>
@@ -38,7 +38,6 @@ const nextStep = () => {
     <div class="profile-list">
       <h2>전체 도그워커 목록</h2>
 
-      <!-- 도그워커 목록 -->
       <div v-if="dogWalkers.length === 0">
         <p>도그워커 목록을 불러오는 중이거나 데이터가 없습니다.</p>
       </div>
@@ -188,4 +187,4 @@ const viewProfile = (userId) => {
   font-size: 0.85rem;
   cursor: pointer;
 }
-</style>
+</style> -->
