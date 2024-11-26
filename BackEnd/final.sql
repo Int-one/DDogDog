@@ -424,7 +424,7 @@ VALUES
 UPDATE User SET hired_cnt = 7, hire_cnt = 5 WHERE user_id = 'test@test';
 
 
-select * from user;
+select * from user;	
 select * from pet;
 select * from trade;
 select * from cand;

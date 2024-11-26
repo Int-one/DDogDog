@@ -76,7 +76,7 @@ const distance = ref(0); // 누적 이동 거리
 const timerInterval = ref(null);
 const trackingInterval = ref(null);
 const walkData = walkStore.currentWalk;
-walkData.userId = "test@test.com";
+walkData.userId = localStorage.getItem('user_id');
 
 // 선택된 반려견
 const selectedPet = computed(() =>
@@ -144,7 +144,7 @@ const calculateSegmentDistance = (lat1, lng1, lat2, lng2) => {
   const toRad = (value) => (value * Math.PI) / 180;
   const R = 6371;
   const dLat = toRad(lat2 - lat1);
-  const dLng = toRad(lng1 - lng2);
+  const dLng = toRad(lat1 - lat2);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
@@ -205,6 +205,7 @@ const stopTracking = async () => {
   clearInterval(trackingInterval.value);
   stopTimer();
   walkData.endTime = formatTime(new Date());
+  walkData.total = distance;
   try {
     await axios.post("http://localhost:8081/api/walklog", walkData, {
           headers: { "access-token": localStorage.getItem("token") },
@@ -218,6 +219,7 @@ const stopTracking = async () => {
           })
     petLogStore.resetPetLogs();
     petStore.goWith = [];
+    walkStore.fetchMyWalkLogs();
     router.replace({ name: "walklog" });
   } catch (err) {
     console.error(err);
