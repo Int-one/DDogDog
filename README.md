@@ -40,7 +40,7 @@ BackEnd/
 
 ### ERD
 
-![ERD](image.png)
+![ERD](docs/img/image.png)
 
 ### 사용 방법
 
@@ -58,7 +58,7 @@ BackEnd/
 
 ### 유즈케이스
 
-![alt text](image-9.png)
+![alt text](docs/img/image-9.png)
 
 ---
 
@@ -93,15 +93,15 @@ FrontEnd/
 
 메인 화면
 
-![alt text](image-1.png)
+![alt text](docs/img/image-1.png)
 
 산책 화면
 
-![alt text](image-2.png)
+![alt text](docs/img/image-2.png)
 
 도그워커 화면
 
-![alt text](image-3.png)
+![alt text](docs/img/image-3.png)
 
 ---
 
@@ -109,19 +109,19 @@ FrontEnd/
 
 메인 화면
 
-![alt text](image-4.png)
+![alt text](docs/img/image-4.png)
 
 산책 화면
 
-![alt text](image-5.png)
+![alt text](docs/img/image-5.png)
 
-![alt text](image-6.png)
+![alt text](docs/img/image-6.png)
 
 도그워커 화면
 
-![alt text](image-7.png)
+![alt text](docs/img/image-7.png)
 
-![alt text](image-8.png)
+![alt text](docs/img/image-8.png)
 
 ## 통합 실행
 
