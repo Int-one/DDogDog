@@ -5,7 +5,7 @@
       <button class="back-button" @click="goBack">
         <i class="fi fi-rr-angle-left"></i>
       </button>
-      <h2 class="header-title">회원가입 약관</h2>
+      <h2 class="header-title">회원가입</h2>
     </header>
 
     <!-- 로고 섹션 -->
@@ -153,7 +153,7 @@ const handleSignup = () => {
   font-size: 1.2rem;
   background: none;
   border: none;
-  color: #333; /* 검정색 */
+  color: #333; 
   cursor: pointer;
   display: flex;
   align-items: center;
