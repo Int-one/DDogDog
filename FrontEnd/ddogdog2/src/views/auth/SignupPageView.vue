@@ -140,16 +140,17 @@ const handleSignup = () => {
 /* 헤더 스타일 */
 .header {
   position: absolute;
-  top: 20px; /* 조금 아래로 이동 */
+  top: 40px; /* 조금 아래로 이동 */
   left: 10px;
-  right: 10px;
+  right: 0px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 
+  0px;
 }
 
 .back-button {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: none;
   border: none;
   color: #333; /* 검정색 */
@@ -159,13 +160,14 @@ const handleSignup = () => {
 }
 
 .back-button i {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .header-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #333; /* 검정색 */
+  margin-top: 5px;
 }
 
 /* 로고 섹션 */
