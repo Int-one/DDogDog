@@ -117,10 +117,14 @@ const detectLength = () => {
   }
 };
 
+
+
 // 성별 선택 버튼 클릭 시 동작
 const selectGender = (selectedGender) => {
   gender.value = selectedGender;
 };
+
+
 </script>
 
 <style scoped>

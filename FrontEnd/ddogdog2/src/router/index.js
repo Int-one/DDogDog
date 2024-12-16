@@ -147,19 +147,19 @@ router.beforeEach(async (to, from, next) => {
 
   // 메인 페이지로 이동할 때 반려견 등록 여부 확인
   
-  if (to.path === '/') {
-    try {
-      await petStore.fetchPets();
-      if (petStore.pets.length === 0) {
-        alert("등록된 반려견이 없습니다. 반려견을 등록해주세요.");
-        return next('/welcome-dog');
-      }
-    } catch (error) {
-      console.error("반려견 데이터 확인 실패:", error);
-      alert("로그인이 필요합니다.");
-      return next('/login');
-    }
-  }
+  // if (to.path === '/') {
+  //   try {
+  //     await petStore.fetchPets();
+  //     if (petStore.pets.length === 0) {
+  //       alert("등록된 반려견이 없습니다. 반려견을 등록해주세요.");
+  //       return next('/welcome-dog');
+  //     }
+  //   } catch (error) {
+  //     console.error("반려견 데이터 확인 실패:", error);
+  //     alert("로그인이 필요합니다.");
+  //     return next('/login');
+  //   }
+  // }
 
    // 도그워커 관련 페이지 접근 제어
    if (to.path === "/dog-walker-profile" || to.path === "/dog-walker-signup") {
