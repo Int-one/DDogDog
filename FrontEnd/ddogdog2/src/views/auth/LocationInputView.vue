@@ -324,9 +324,9 @@ const confirmLocation = () => {
       </button>
 
       <!-- 위치 정보 표시 -->
+      <div v-show="location.latitude" id="map" class="map"></div> <!-- 지도 추가 -->
       <div v-if="location.address" class="location-info">
         <p class="location-text">{{ location.address }}</p>
-        <div id="map" class="map"></div> <!-- 지도 추가 -->
         <div class="confirm-buttons-vertical">
           <button @click="fetchLocation" class="retry-button">아니에요</button>
           <button @click="confirmLocation" class="confirm-button">일치해요</button>
@@ -342,7 +342,7 @@ const confirmLocation = () => {
 </template>
 
 <script setup>
-import { reactive, ref, watch, onMounted } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useSignupStore } from "@/stores/signup";
 
@@ -382,9 +382,8 @@ const convertToAddress = async (lat, lng) => {
 
 // 지도 표시
 const displayMap = () => {
-  const container = document.getElementById("map");
+  const container = document.getElementById('map');
   if (!container) return; // #map 요소가 렌더링되지 않은 경우 안전하게 종료
-
   const options = {
     center: new kakao.maps.LatLng(location.latitude, location.longitude),
     level: 3,
@@ -457,6 +456,7 @@ watch(
   () => location.address,
   (newAddress) => {
     if (newAddress) {
+      console.log(location.latitude, location.longitude)
       displayMap(); // 주소가 업데이트되면 지도 표시
     }
   }
@@ -466,14 +466,6 @@ watch(
 const goBack = () => {
   router.push("/signup/height-weight");
 };
-
-// Kakao 지도 스크립트 로드
-onMounted(() => {
-  const script = document.createElement("script");
-  script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services";
-  script.async = true;
-  document.head.appendChild(script);
-});
 </script>
 
 <style scoped>
