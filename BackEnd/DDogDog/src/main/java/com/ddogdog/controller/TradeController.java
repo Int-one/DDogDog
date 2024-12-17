@@ -32,9 +32,9 @@ public class TradeController {
         return ResponseEntity.ok(trades);
     }
     
-    @GetMapping("/will")
-    public ResponseEntity<List<Trade>> getAllWillTrades() {
-        List<Trade> trades = tradeService.getAllTrades();
+    @GetMapping("/will/{region}")
+    public ResponseEntity<List<Trade>> getAllWillTrades(@PathVariable String region) {
+        List<Trade> trades = tradeService.getAllWillTrades(region);
         return ResponseEntity.ok(trades);
     }
     
