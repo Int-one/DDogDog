@@ -10,7 +10,7 @@ public interface TradeDao {
 
     List<Trade> getAllTrades();
     
-    List<Trade> getAllWillTrades();
+    List<Trade> getAllWillTrades(String region);
     
     List<Pet> getPetsByTradeId(Long tradeId);
     

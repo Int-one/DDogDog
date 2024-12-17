@@ -35,8 +35,8 @@ public class TradeServiceImpl implements TradeService {
     }
     
     @Override
-    public List<Trade> getAllWillTrades() {
-    	return tradeDao.getAllWillTrades();
+    public List<Trade> getAllWillTrades(String region) {
+    	return tradeDao.getAllWillTrades(region);
     }
 
     @Override

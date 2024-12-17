@@ -9,15 +9,15 @@
         SELECT * FROM Trade
     </select>
 
-    <select id="getAllWillTrades" resultType="com.ddogdog.model.dto.Trade">
-        SELECT * FROM Trade WEHRE kind = '해드려요'
+    <select id="getAllWillTrades" resultType="com.ddogdog.model.dto.Trade" parameterType="String">
+        SELECT * FROM Trade WHERE kind = '해드려요' AND region LIKE '%${region}%' ORDER BY trade_id DESC;
     </select>
 
     <select id="getTradeById" parameterType="long" resultType="com.ddogdog.model.dto.Trade">
         SELECT * FROM Trade WHERE trade_id = #{tradeId}
     </select>
     
-    <select id="getAllPleaseTrades" resultType="map">
+    <select id="getAllPleaseTrades" resultType="map" parameterType="String">
 	    SELECT 
 		    t.trade_id,
 		    t.kind,
@@ -39,7 +39,7 @@
 		LEFT JOIN User u ON t.super_id = u.user_id
 		WHERE 
 		    t.kind = '해주세요' AND 
-		    t.region LIKE '%서울%'
+		    t.region LIKE '%${region}%'
 		GROUP BY 
 		    t.trade_id, t.kind, t.trade_start_time, t.trade_end_time, t.cost, 
 		    t.region, t.detail, t.state, t.large_dog, u.nickname
